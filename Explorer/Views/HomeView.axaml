@@ -4,4 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="1900" d:DesignHeight="1024"
              x:Class="Explorer.Views.HomeView">
+    
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Text="Welcome to Explorer!" 
+                   FontSize="24" 
+                   FontWeight="Bold" 
+                   Margin="0,0,0,20" 
+                   HorizontalAlignment="Center"/>
+        <TextBlock Text="This is the home view of the Explorer application. Here you can find quick access to your files, recent activities, and useful tips to get started."
+                   FontSize="16"
+                   TextAlignment="Center"
+                   Margin="0,0,0,20"
+                   HorizontalAlignment="Center"
+                   Width="600"
+                   TextWrapping="Wrap" />
+        <Button Content="Get Started" 
+                Width="150" 
+                Height="40" 
+                HorizontalAlignment="Center"/>
+    </StackPanel>
 </UserControl>
