@@ -24,8 +24,8 @@
     <TransitioningContentControl Content="{Binding CurrentPage}">
         <TransitioningContentControl.PageTransition>
             <CompositePageTransition>
-                <CrossFade Duration="0:0:0.15" />
-                <PageSlide Duration="0:0:0.20"
+                <CrossFade Duration="0:0:0.30" />
+                <PageSlide Duration="0:0:0.38"
                            Orientation="Horizontal" />
             </CompositePageTransition>
         </TransitioningContentControl.PageTransition>
