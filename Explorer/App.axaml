@@ -1,5 +1,6 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:semi="https://irihi.tech/semi"
              x:Class="Explorer.App"
              xmlns:local="using:Explorer"
              RequestedThemeVariant="Default">
@@ -18,6 +19,6 @@
     </Application.Resources>
   
     <Application.Styles>
-        <FluentTheme />
+        <semi:SemiTheme Locale="fr-FR" />
     </Application.Styles>
 </Application>

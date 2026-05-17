@@ -9,7 +9,7 @@
         VerticalAlignment="Center"
         Orientation="Vertical"
         Spacing="64">
-        <Image Width="700" Source="../Assets/Banner.png" Stretch="Uniform">
+        <Image Width="700" Source="avares://Explorer/Assets/Banner.png" Stretch="Uniform">
             <Image.Styles>
                 <Style Selector="Image">
                     <Style.Animations>
@@ -25,5 +25,17 @@
                 </Style>
             </Image.Styles>
         </Image>
+        <ProgressBar
+            Width="50"
+            Height="50"
+            IsIndeterminate="True"
+            Theme="{DynamicResource ProgressRing}">
+            <ProgressBar.Foreground>
+                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                    <GradientStop Color="#60BDFF" Offset="0"/>
+                    <GradientStop Color="#0064AA" Offset="1"/>
+                </LinearGradientBrush>
+            </ProgressBar.Foreground>
+        </ProgressBar>
     </StackPanel>
 </UserControl>
