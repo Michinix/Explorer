@@ -1,0 +1,31 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Explorer.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:Explorer.Views"
+        mc:Ignorable="d" d:DesignWidth="1900" d:DesignHeight="1024"
+        x:Class="Explorer.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Width="1900" Height="1024" Background="{StaticResource PrimaryBrush}"
+        WindowStartupLocation="CenterScreen"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaTitleBarHeightHint="-1"
+        WindowDecorations="BorderOnly"
+        Icon="/Assets/Logo.ico" 
+        Title="Explorer">
+    
+    <Window.DataTemplates>
+        <DataTemplate DataType="vm:SplashViewModel">
+            <views:SplashView />
+        </DataTemplate>
+    </Window.DataTemplates>
+
+    <TransitioningContentControl Content="{Binding CurrentPage}">
+        <TransitioningContentControl.PageTransition>
+            <CompositePageTransition>
+                <CrossFade Duration="0:0:0.2" />
+            </CompositePageTransition>
+        </TransitioningContentControl.PageTransition>
+    </TransitioningContentControl>
+</Window>

@@ -1,0 +1,77 @@
+# Build directories
+bin/
+obj/
+.vs/
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg
+.nuget/
+
+# IDEs
+.idea/
+.vscode/
+*.sln.iml
+*.swp
+*.swo
+*~
+.editorconfig.user
+riderModule.iml
+
+# JetBrains
+/_ReSharper.Caches/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+launch.json
+settings.json
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Testing
+TestResults/
+.coverage/
+*.trx
+
+# AvaloniaUI specific
+bin/
+obj/
+.avalonia/
+
+# Runtime
+.vs/
+*.log
+logs/
+
+# Backup files
+*.bak
+*.backup
+*.tmp
+
+# Compiled files
+*.dll
+*.exe
+*.pdb
+
+# dotnet
+.dotnet/
+.msbuildlog
