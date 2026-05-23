@@ -6,17 +6,21 @@ namespace Explorer.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
+    private readonly HomeViewModel _homeViewModel;
+
     [ObservableProperty] 
     private ObservableObject _currentPage = new SplashViewModel();
     
     [RelayCommand]
-    private void GoHome() => CurrentPage = new HomeViewModel();
+    private void GoHome() => CurrentPage = _homeViewModel;
 
-    public MainWindowViewModel()
+    public MainWindowViewModel(HomeViewModel homeViewModel)
     {
-        Task.Run(() =>
+        _homeViewModel = homeViewModel;
+
+        Task.Run(async () =>
         {
-            Task.Delay(3000).Wait();
+            await Task.Delay(3000);
             GoHomeCommand.Execute(null);
         });
     }
