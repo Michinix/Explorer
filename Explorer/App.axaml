@@ -20,5 +20,6 @@
   
     <Application.Styles>
         <semi:SemiTheme Locale="fr-FR" />
+        <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Simple.xaml"/>
     </Application.Styles>
 </Application>
