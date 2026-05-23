@@ -9,9 +9,6 @@
         x:DataType="vm:MainWindowViewModel"
         Width="1900" Height="1024" Background="{StaticResource PrimaryBrush}"
         WindowStartupLocation="CenterScreen"
-        ExtendClientAreaToDecorationsHint="True"
-        ExtendClientAreaTitleBarHeightHint="-1"
-        WindowDecorations="BorderOnly"
         Icon="/Assets/Logo.ico" 
         Title="Explorer">
     
