@@ -22,9 +22,7 @@ public partial class App : Application
     public override void OnFrameworkInitializationCompleted()
     {
         var services = new ServiceCollection();
-
-        services.AddSingleton<Browser>();
-        services.AddSingleton<BrowserService>();
+        
         services.AddSingleton<HomeViewModel>();
         services.AddSingleton<MainWindowViewModel>();
 
