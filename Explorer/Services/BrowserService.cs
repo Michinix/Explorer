@@ -6,42 +6,33 @@ using Explorer.Models;
 
 namespace Explorer.Services;
 
-public class BrowserService
+public class BrowserService(Browser browser)
 {
-    private readonly Browser _browser;
-
-    public BrowserService(Browser browser)
-    {
-        _browser = browser;
-    }
-    
-    public string GetUser() => _browser.CurrentUser;
-    
-    public async Task<DirectoryInfo[]> ListDirectories()
+    public async Task<DirectoryInfo[]?> ListDirectories()
     {
         try {
             return await Task.Run(() =>
-                new DirectoryInfo(_browser.InitialDirectory)
+                new DirectoryInfo(browser.InitialDirectory)
                     .GetDirectories()
                     .Where(d => !d.Name.StartsWith('.') && !d.Attributes.HasFlag(FileAttributes.Hidden))
                     .ToArray()
             );
-        } catch (UnauthorizedAccessException) {
-            return [];
+        } catch {
+            return null;
         }
     }
 
-    public async Task<FileInfo[]> ListFiles()
+    public async Task<FileInfo[]?> ListFiles()
     {
         try {
             return await Task.Run(() =>
-                new DirectoryInfo(_browser.InitialDirectory)
+                new DirectoryInfo(browser.InitialDirectory)
                     .GetFiles()
                     .Where(f => !f.Name.StartsWith('.') && !f.Attributes.HasFlag(FileAttributes.Hidden))
                     .ToArray()
             );
-        } catch (UnauthorizedAccessException) {
-            return [];
+        } catch {
+            return null;
         }
     }
 }
