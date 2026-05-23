@@ -2,6 +2,7 @@
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Explorer.Models;
 using Explorer.Services;
 
 namespace Explorer.ViewModels;
@@ -16,14 +17,14 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private void GoHome() => CurrentPage = _homeViewModel;
 
-    public MainWindowViewModel(HomeViewModel homeViewModel, BrowserService browserService)
+    public MainWindowViewModel(HomeViewModel homeViewModel, Browser browser)
     {
         _homeViewModel = homeViewModel;
 
         Task.Run(async () =>
         {
-            var directoriesTask = browserService.ListDirectories();
-            var filesTask = browserService.ListFiles();
+            var directoriesTask = BrowserService.ListDirectories(browser.HomeDirectory);
+            var filesTask = BrowserService.ListFiles(browser.HomeDirectory);
     
             await Task.WhenAll(directoriesTask, filesTask, Task.Delay(2000));
     
