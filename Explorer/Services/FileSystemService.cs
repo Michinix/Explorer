@@ -1,13 +1,21 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Explorer.Services;
 
-public class BrowserService
+public static class FileSystemService
 {
-    public static bool IsValidPath(string path) => Directory.Exists(path);
+    public static bool IsValidPath(string path)
+    {
+        try {
+            return Directory.Exists(path);
+        } catch {
+            return false;
+        }
+    }
 
     public static async Task<DirectoryInfo[]?> ListDirectories(string path)
     {
@@ -18,7 +26,8 @@ public class BrowserService
                     .Where(d => !d.Name.StartsWith('.') && !d.Attributes.HasFlag(FileAttributes.Hidden))
                     .ToArray()
             );
-        } catch (UnauthorizedAccessException) {
+        } catch (Exception ex) {
+            Debug.WriteLine(ex.Message);
             return null;
         }
     }
@@ -32,7 +41,8 @@ public class BrowserService
                     .Where(f => !f.Name.StartsWith('.') && !f.Attributes.HasFlag(FileAttributes.Hidden))
                     .ToArray()
             );
-        } catch (UnauthorizedAccessException) {
+        } catch (Exception ex) {
+            Debug.WriteLine(ex.Message);
             return null;
         }
     }
