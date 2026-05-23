@@ -1,3 +1,17 @@
-﻿namespace Explorer.ViewModels;
+﻿using System.IO;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Explorer.Models;
 
-public class HomeViewModel : ViewModelBase { }
+namespace Explorer.ViewModels;
+
+public partial class HomeViewModel(Browser browser) : ViewModelBase
+{
+    public string User { get; } = browser.CurrentUser;
+    public string InitialDirectory { get; } = browser.InitialDirectory;
+    
+    [ObservableProperty]
+    private DirectoryInfo[]? _directories;
+    
+    [ObservableProperty]
+    private FileInfo[]? _files;
+}
