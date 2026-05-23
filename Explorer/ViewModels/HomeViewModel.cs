@@ -2,8 +2,8 @@
 
 namespace Explorer.ViewModels;
 
-public partial class HomeViewModel(Browser browser) : ViewModelBase
+public partial class HomeViewModel : ViewModelBase
 {
-    public string User { get; } = browser.CurrentUser;
-    public string InitialDirectory { get; } = browser.HomeDirectory;
+    public string User => FileSystem.CurrentUser;
+    public string InitialDirectory => FileSystem.HomeDirectory;
 }
