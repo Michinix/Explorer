@@ -7,6 +7,8 @@ namespace Explorer.Services;
 
 public class BrowserService
 {
+    public static bool IsValidPath(string path) => Directory.Exists(path);
+
     public static async Task<DirectoryInfo[]?> ListDirectories(string path)
     {
         try {
@@ -14,10 +16,9 @@ public class BrowserService
                 new DirectoryInfo(path)
                     .GetDirectories()
                     .Where(d => !d.Name.StartsWith('.') && !d.Attributes.HasFlag(FileAttributes.Hidden))
-                    .OrderBy(d => d.Name)
                     .ToArray()
             );
-        } catch {
+        } catch (UnauthorizedAccessException) {
             return null;
         }
     }
@@ -29,20 +30,10 @@ public class BrowserService
                 new DirectoryInfo(path)
                     .GetFiles()
                     .Where(f => !f.Name.StartsWith('.') && !f.Attributes.HasFlag(FileAttributes.Hidden))
-                    .OrderBy(f => f.Name)
                     .ToArray()
             );
-        } catch {
+        } catch (UnauthorizedAccessException) {
             return null;
-        }
-    }
-
-    public static bool IsValidPath(string path)
-    {
-        try {
-            return Directory.Exists(path);
-        } catch {
-            return false;
         }
     }
 }

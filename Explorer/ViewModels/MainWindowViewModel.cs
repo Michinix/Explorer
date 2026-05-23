@@ -17,20 +17,13 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private void GoHome() => CurrentPage = _homeViewModel;
 
-    public MainWindowViewModel(HomeViewModel homeViewModel, Browser browser)
+    public MainWindowViewModel(HomeViewModel homeViewModel)
     {
         _homeViewModel = homeViewModel;
 
         Task.Run(async () =>
         {
-            var directoriesTask = BrowserService.ListDirectories(browser.HomeDirectory);
-            var filesTask = BrowserService.ListFiles(browser.HomeDirectory);
-    
-            await Task.WhenAll(directoriesTask, filesTask, Task.Delay(2000));
-    
-            _homeViewModel.Directories = directoriesTask.Result;
-            _homeViewModel.Files = filesTask.Result;
-    
+            await Task.Delay(2000);
             Dispatcher.UIThread.Post(() => GoHomeCommand.Execute(null));
         });
     }
