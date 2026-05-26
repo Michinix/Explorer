@@ -9,7 +9,7 @@
         x:DataType="vm:MainWindowViewModel"
         Width="1900" Height="1024" Background="{StaticResource PrimaryBrush}"
         WindowStartupLocation="CenterScreen"
-        Icon="/Assets/Logo.ico" 
+        Icon="/Assets/Icons/Logo.ico" 
         Title="Explorer">
     
     <Window.DataTemplates>
