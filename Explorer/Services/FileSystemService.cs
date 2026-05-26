@@ -10,11 +10,7 @@ public static class FileSystemService
 {
     public static bool IsValidPath(string path)
     {
-        try {
-            return Directory.Exists(path);
-        } catch {
-            return false;
-        }
+        return Directory.Exists(path);
     }
 
     public static async Task<DirectoryInfo[]?> ListDirectories(string path)
