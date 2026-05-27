@@ -6,4 +6,86 @@
              mc:Ignorable="d" d:DesignWidth="1900" d:DesignHeight="1024"
              x:Class="Explorer.Views.HomeView"
              x:DataType="vm:HomeViewModel">
+
+    <Grid RowDefinitions="Auto,*">
+        <!-- Toolbar -->
+        <Border Grid.Row="0"
+                Background="#1F1F1F"
+                BorderBrush="#333333"
+                BorderThickness="0,0,0,1"
+                Padding="12,8">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <Button Command="{Binding LoadEntriesCommand}"
+                        Background="#2D2D2D"
+                        Foreground="#CCCCCC"
+                        BorderBrush="#444444"
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        Padding="10,5">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <TextBlock Text="↻" FontSize="14"/>
+                        <TextBlock Text="Actualiser" FontSize="12"/>
+                    </StackPanel>
+                </Button>
+                <Border Background="#2D2D2D"
+                        BorderBrush="#444444"
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        Padding="10,5">
+                    <TextBox Text="{Binding CurrentPath}"
+                             Background="#2D2D2D"
+                             Foreground="#CCCCCC"
+                             BorderThickness="0"
+                             FontSize="12"
+                             VerticalAlignment="Center"
+                             MinWidth="400"/>
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <!-- DataGrid -->
+        <DataGrid Grid.Row="1"
+                  ItemsSource="{Binding Entries}"
+                  AutoGenerateColumns="False"
+                  Background="#1A1A1A"
+                  Foreground="#E0E0E0"
+                  BorderThickness="0"
+                  GridLinesVisibility="Horizontal"
+                  HorizontalGridLinesBrush="#2A2A2A"
+                  RowBackground="#1A1A1A"
+                  CanUserReorderColumns="False"
+                  IsReadOnly="True">
+
+            <DataGrid.Styles>
+                <Style Selector="DataGridColumnHeader">
+                    <Setter Property="Background" Value="#242424"/>
+                    <Setter Property="Foreground" Value="#888888"/>
+                    <Setter Property="FontSize" Value="11"/>
+                    <Setter Property="Padding" Value="12,8"/>
+                    <Setter Property="BorderBrush" Value="#333333"/>
+                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                </Style>
+                <Style Selector="DataGridCell">
+                    <Setter Property="Padding" Value="12,6"/>
+                    <Setter Property="FontSize" Value="13"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Style>
+                <Style Selector="DataGridRow:pointerover">
+                    <Setter Property="Background" Value="#2A2A2A"/>
+                </Style>
+                <Style Selector="DataGridRow:selected">
+                    <Setter Property="Background" Value="#2A2A2A"/>
+                </Style>
+            </DataGrid.Styles>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nom"        Binding="{Binding Name}"         Width="*"/>
+                <DataGridTextColumn Header="Type"       Binding="{Binding Type}"         Width="100"/>
+                <DataGridTextColumn Header="Taille"     Binding="{Binding DisplaySize}"  Width="90"/>
+                <DataGridTextColumn Header="Modifié le" Binding="{Binding LastModified}" Width="160"/>
+                <DataGridTextColumn Header="Éléments"   Binding="{Binding ItemCount}"    Width="90"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
 </UserControl>

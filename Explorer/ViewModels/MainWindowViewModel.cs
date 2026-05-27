@@ -23,10 +23,11 @@ public partial class MainWindowViewModel : ViewModelBase
 
         Task.Run(async () =>
         {
-            var list = FileSystemService.ListEntries(FileSystem.HomeDirectory);
-            
-            await Task.WhenAll(list, Task.Delay(2000));
-            
+            await Task.WhenAll(
+                _homeViewModel.LoadEntries(),
+                Task.Delay(2000)
+            );
+
             Dispatcher.UIThread.Post(() => GoHomeCommand.Execute(null));
         });
     }
