@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -12,34 +13,33 @@ public static class FileSystemService
     {
         return Directory.Exists(path);
     }
-
-    public static async Task<DirectoryInfo[]?> ListDirectories(string path)
+    
+    public static async Task<List<FileSystemInfo>> ListEntries(string path)
     {
-        try {
-            return await Task.Run(() =>
-                new DirectoryInfo(path)
-                    .GetDirectories()
-                    .Where(d => !d.Name.StartsWith('.') && !d.Attributes.HasFlag(FileAttributes.Hidden))
-                    .ToArray()
-            );
-        } catch (Exception ex) {
-            Debug.WriteLine(ex.Message);
-            return null;
-        }
-    }
-
-    public static async Task<FileInfo[]?> ListFiles(string path)
-    {
-        try {
-            return await Task.Run(() =>
-                new DirectoryInfo(path)
-                    .GetFiles()
-                    .Where(f => !f.Name.StartsWith('.') && !f.Attributes.HasFlag(FileAttributes.Hidden))
-                    .ToArray()
-            );
-        } catch (Exception ex) {
-            Debug.WriteLine(ex.Message);
-            return null;
-        }
+        return await Task.Run(() =>
+        {
+            try
+            {
+                return new DirectoryInfo(path)
+                    .EnumerateFileSystemInfos()
+                    .Where(e =>
+                    {
+                        try
+                        {
+                            return !e.Name.StartsWith('.')
+                                   && !e.Attributes.HasFlag(FileAttributes.Hidden);
+                        }
+                        catch (UnauthorizedAccessException) { return false; }
+                    })
+                    .OrderBy(e => e is FileInfo)
+                    .ThenBy(e => e.Name)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return [];
+            }
+        });
     }
 }

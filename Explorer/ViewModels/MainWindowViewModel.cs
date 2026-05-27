@@ -23,10 +23,9 @@ public partial class MainWindowViewModel : ViewModelBase
 
         Task.Run(async () =>
         {
-            var listDirectories = FileSystemService.ListDirectories(FileSystem.HomeDirectory);
-            var listFiles = FileSystemService.ListFiles(FileSystem.HomeDirectory);
+            var list = FileSystemService.ListEntries(FileSystem.HomeDirectory);
             
-            await Task.WhenAll(listDirectories, listFiles, Task.Delay(2000));
+            await Task.WhenAll(list, Task.Delay(2000));
             
             Dispatcher.UIThread.Post(() => GoHomeCommand.Execute(null));
         });
