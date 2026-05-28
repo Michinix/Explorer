@@ -7,8 +7,10 @@
         mc:Ignorable="d" d:DesignWidth="1900" d:DesignHeight="1024"
         x:Class="Explorer.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Width="1900" Height="1024" Background="{StaticResource PrimaryBrush}"
-        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource Darkest}"
+        WindowStartupLocation="CenterScreen" CanResize="False"
+        MinWidth="200" MinHeight="200"
+        MaxWidth="1900" MaxHeight="1024"
         Icon="/Assets/Icons/Logo.ico" 
         Title="Explorer">
     
