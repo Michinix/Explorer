@@ -23,14 +23,22 @@ public static class FileSystemService
             {
                 return new DirectoryInfo(path)
                     .EnumerateFileSystemInfos()
-                    .Where(e => {
-                        try { return !e.Name.StartsWith('.') && !e.Attributes.HasFlag(FileAttributes.Hidden); }
-                        catch (UnauthorizedAccessException) { return false; }
+                    .Where(e =>
+                    {
+                        try
+                        {
+                            return !e.Name.StartsWith('.') && !e.Attributes.HasFlag(FileAttributes.Hidden);
+                        }
+                        catch (UnauthorizedAccessException)
+                        {
+                            return false;
+                        }
                     })
                     .OrderBy(e => e is FileInfo)
                     .ThenBy(e => e.Name)
                     .Select(e => new FileSystemEntry(
-                        Name:         e.Name,
+                        Name: e.Name,
+                        FullName: e.FullName,
                         Type:         e is DirectoryInfo ? "Dossier" : (e as FileInfo)!.Extension.TrimStart('.').ToUpper(),
                         DisplaySize:  e is FileInfo f ? FormatSize(f.Length) : "—",
                         LastModified: e.LastWriteTime,
