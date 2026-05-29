@@ -44,13 +44,12 @@
             </DataGrid.Styles>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="NOM"        Binding="{Binding Name}"         Width="*"/>
-                <DataGridTextColumn Header="TYPE"       Binding="{Binding Type}"         Width="100"/>
-                <DataGridTextColumn Header="TAILLE"     Binding="{Binding DisplaySize}"  Width="90"/>
+                <DataGridTextColumn Header="NOM" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="TYPE" Binding="{Binding Type}" Width="100"/>
+                <DataGridTextColumn Header="TAILLE" Binding="{Binding DisplaySize}" Width="90"/>
                 <DataGridTextColumn Header="MODIFIE LE" Binding="{Binding LastModified}" Width="160"/>
-                <DataGridTextColumn Header="ELEMENTS"   Binding="{Binding ItemCount}"    Width="90"/>
+                <DataGridTextColumn Header="ELEMENTS" Binding="{Binding ItemCount}" Width="90"/>
             </DataGrid.Columns>
         </DataGrid>
-
     </Grid>
 </UserControl>
