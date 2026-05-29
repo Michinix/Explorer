@@ -1,3 +1,3 @@
 <div align="center">
-  <img src="Explorer/Assets/Images/Banner.png" alt="Explorer Banner" width="500" />
+  <img src="Explorer/Assets/Images/Banner/Banner.png" alt="Explorer Banner" width="500" />
 </div>

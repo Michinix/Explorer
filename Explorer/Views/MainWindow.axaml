@@ -11,9 +11,9 @@
         WindowStartupLocation="CenterScreen" CanResize="False"
         MinWidth="200" MinHeight="200"
         MaxWidth="1900" MaxHeight="1024"
-        Icon="/Assets/Icons/Logo.ico" 
+        Icon="/Assets/Images/Icons/Logo.ico"
         Title="Explorer">
-    
+
     <Window.DataTemplates>
         <DataTemplate DataType="vm:SplashViewModel">
             <views:SplashView />
