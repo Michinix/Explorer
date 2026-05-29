@@ -10,11 +10,6 @@ namespace Explorer.Services;
 
 public static class FileSystemService
 {
-    public static bool IsValidPath(string path)
-    {
-        return Directory.Exists(path);
-    }
-    
     public static async Task<List<FileSystemEntry>> ListEntries(string path)
     {
         return await Task.Run(() =>
@@ -38,7 +33,7 @@ public static class FileSystemService
                     .ThenBy(e => e.Name)
                     .Select(e => new FileSystemEntry(
                         Name: e.Name,
-                        FullName: e.FullName,
+                        FullPath: e.FullName,
                         Type:         e is DirectoryInfo ? "Dossier" : (e as FileInfo)!.Extension.TrimStart('.').ToUpper(),
                         DisplaySize:  e is FileInfo f ? FormatSize(f.Length) : "—",
                         LastModified: e.LastWriteTime,
