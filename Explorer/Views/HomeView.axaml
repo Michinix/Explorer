@@ -8,7 +8,9 @@
              x:DataType="vm:HomeViewModel">
 
     <Grid RowDefinitions="Auto,*">
-        <DataGrid Grid.Row="1"
+        <DataGrid Grid.Row="1" 
+                  SelectedItem="{Binding SelectedEntry}"
+                  DoubleTapped="OnRowDoubleTapped"
                   ItemsSource="{Binding Entries}"
                   AutoGenerateColumns="False"
                   Foreground="{StaticResource Light}"
@@ -48,7 +50,6 @@
                 <DataGridTextColumn Header="TYPE" Binding="{Binding Type}" Width="100"/>
                 <DataGridTextColumn Header="TAILLE" Binding="{Binding DisplaySize}" Width="90"/>
                 <DataGridTextColumn Header="MODIFIE LE" Binding="{Binding LastModified}" Width="160"/>
-                <DataGridTextColumn Header="ELEMENTS" Binding="{Binding ItemCount}" Width="90"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

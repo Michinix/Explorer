@@ -11,6 +11,9 @@ public partial class HomeViewModel : ViewModelBase
 {
     [ObservableProperty]
     private string _currentPath = FileSystem.HomeDirectory;
+    
+    [ObservableProperty]
+    private FileSystemEntry? _selectedEntry;
 
     [ObservableProperty]
     private ObservableCollection<FileSystemEntry> _entries = [];
@@ -20,5 +23,15 @@ public partial class HomeViewModel : ViewModelBase
     {
         var result = await FileSystemService.ListEntries(CurrentPath);
         Entries = new ObservableCollection<FileSystemEntry>(result);
+    }
+    
+    [RelayCommand]
+    private async Task EntryDoubleClicked()
+    {
+        if (SelectedEntry is null) return;
+        if (!SelectedEntry.IsDirectory) return;
+
+        CurrentPath = SelectedEntry.FullPath;
+        await LoadEntries();
     }
 }
