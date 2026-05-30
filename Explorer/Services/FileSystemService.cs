@@ -18,30 +18,16 @@ public static class FileSystemService
             {
                 return new DirectoryInfo(path)
                     .EnumerateFileSystemInfos()
-                    .Where(e =>
-                    {
-                        try
-                        {
-                            return !e.Name.StartsWith('.') && !e.Attributes.HasFlag(FileAttributes.Hidden);
-                        }
-                        catch (UnauthorizedAccessException)
-                        {
-                            return false;
-                        }
-                    })
+                    .Where(e => !e.Name.StartsWith('.') && !e.Attributes.HasFlag(FileAttributes.Hidden))
                     .OrderBy(e => e is FileInfo)
                     .ThenBy(e => e.Name)
                     .Select(e => new FileSystemEntry(
                         Name: e.Name,
                         FullPath: e.FullName,
-                        Type:         e is DirectoryInfo ? "Dossier" : (e as FileInfo)!.Extension.TrimStart('.').ToUpper(),
+                        Type: e is DirectoryInfo ? "DOSSIER" : e.Extension.TrimStart('.').ToUpper(),
+                        IsDirectory: e is DirectoryInfo,
                         DisplaySize:  e is FileInfo f ? FormatSize(f.Length) : "—",
-                        LastModified: e.LastWriteTime,
-                        ItemCount: e is DirectoryInfo d 
-                            ? d.EnumerateFileSystemInfos()
-                                .Count(x => !x.Name.StartsWith('.') && !x.Attributes.HasFlag(FileAttributes.Hidden))
-                                .ToString() 
-                            : "—"
+                        LastModified: e.LastWriteTime
                     ))
                     .ToList();
             }

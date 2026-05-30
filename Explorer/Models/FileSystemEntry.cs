@@ -6,7 +6,7 @@ public record FileSystemEntry(
     string Name,
     string FullPath,
     string Type,
+    bool IsDirectory,
     string DisplaySize,
-    DateTime LastModified,
-    string ItemCount
+    DateTime LastModified
 );
