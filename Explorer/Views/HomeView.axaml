@@ -8,7 +8,35 @@
              x:DataType="vm:HomeViewModel">
 
     <Grid RowDefinitions="Auto,*">
-        <DataGrid Grid.Row="1" 
+        <!-- Toolbar -->
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal"
+                    Spacing="4"
+                    Background="{StaticResource DeepDark}"
+                    Margin="8,6">
+            <Button Content="←"
+                    Command="{Binding GoBackCommand}"
+                    FontSize="14"
+                    Foreground="{StaticResource White}"
+                    Padding="10,4"/>
+            <Button Content="→"
+                    Command="{Binding GoForwardCommand}"
+                    FontSize="14"
+                    Foreground="{StaticResource White}"
+                    Padding="10,4"/>
+            <Button Content="↑"
+                    Command="{Binding GoUpCommand}"
+                    FontSize="14"
+                    Foreground="{StaticResource White}"
+                    Padding="10,4"/>
+            <TextBlock Text="{Binding CurrentPath}"
+                       VerticalAlignment="Center"
+                       Foreground="#888888"
+                       FontSize="12"
+                       Margin="8,0"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="1"
                   SelectedItem="{Binding SelectedEntry}"
                   DoubleTapped="OnRowDoubleTapped"
                   ItemsSource="{Binding Entries}"
@@ -18,7 +46,6 @@
                   GridLinesVisibility="All"
                   HorizontalGridLinesBrush="{StaticResource Dark}"
                   VerticalGridLinesBrush="{StaticResource Dark}"
-                  RowBackground="#1A1A1A"
                   CanUserReorderColumns="False"
                   IsReadOnly="True">
 
@@ -43,13 +70,23 @@
                     <Setter Property="Background" Value="#2A2A2A"/>
                     <Setter Property="Foreground" Value="{StaticResource Light}"/>
                 </Style>
+
+                <!-- Colonne NOM -->
+                <Style Selector="DataGridCell.colName TextBlock">
+                    <Setter Property="Foreground" Value="{StaticResource White}"/>
+                </Style>
+
+                <!-- Colonnes méta -->
+                <Style Selector="DataGridCell.colMeta TextBlock">
+                    <Setter Property="Foreground" Value="{StaticResource Medium}"/>
+                </Style>
             </DataGrid.Styles>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="NOM" Binding="{Binding Name}" Width="*"/>
-                <DataGridTextColumn Header="TYPE" Binding="{Binding Type}" Width="100"/>
-                <DataGridTextColumn Header="TAILLE" Binding="{Binding DisplaySize}" Width="90"/>
-                <DataGridTextColumn Header="MODIFIE LE" Binding="{Binding LastModified}" Width="160"/>
+                <DataGridTextColumn Header="NOM"        Binding="{Binding Name}"         Width="*"   CellStyleClasses="colName"/>
+                <DataGridTextColumn Header="TAILLE"     Binding="{Binding DisplaySize}"  Width="90"  CellStyleClasses="colMeta"/>
+                <DataGridTextColumn Header="TYPE"       Binding="{Binding Type}"         Width="100" CellStyleClasses="colMeta"/>
+                <DataGridTextColumn Header="MODIFIE LE" Binding="{Binding LastModified}" Width="Auto" CellStyleClasses="colMeta"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
