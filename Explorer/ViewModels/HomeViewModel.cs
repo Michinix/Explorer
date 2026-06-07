@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ public partial class HomeViewModel : ViewModelBase
     [NotifyCanExecuteChangedFor(nameof(GoBackCommand))]
     [NotifyCanExecuteChangedFor(nameof(GoForwardCommand))]
     [NotifyCanExecuteChangedFor(nameof(GoUpCommand))]
-    private string _currentPath = FileSystem.HomeDirectory;
+    private string _currentPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
     [ObservableProperty]
     private FileSystemEntry? _selectedEntry;
