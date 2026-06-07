@@ -2,8 +2,6 @@
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Explorer.Models;
-using Explorer.Services;
 
 namespace Explorer.ViewModels;
 
@@ -27,8 +25,11 @@ public partial class MainWindowViewModel : ViewModelBase
                 _homeViewModel.LoadEntries(),
                 Task.Delay(2000)
             );
-
-            Dispatcher.UIThread.Post(() => GoHomeCommand.Execute(null));
+            
+            await Dispatcher.UIThread.InvokeAsync(
+                () => GoHomeCommand.Execute(null),
+                DispatcherPriority.Background
+            );
         });
     }
 }
