@@ -1,10 +1,17 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
-    <SolidColorBrush x:Key="Darkest">#111111</SolidColorBrush>
-    <SolidColorBrush x:Key="Dark">#333333</SolidColorBrush>
-    <SolidColorBrush x:Key="Medium">#848484</SolidColorBrush>
-    <SolidColorBrush x:Key="White">#FFFFFF</SolidColorBrush>
-    <SolidColorBrush x:Key="Light">#C2C2C2</SolidColorBrush>
-    <SolidColorBrush x:Key="DeepDark">#171717</SolidColorBrush>
+
+    <SolidColorBrush x:Key="ColorWhite">#FFFFFF</SolidColorBrush>
+    <SolidColorBrush x:Key="BorderDefault">#333333</SolidColorBrush>
+    <SolidColorBrush x:Key="ForegroundMuted">#848484</SolidColorBrush>
+    <SolidColorBrush x:Key="AccentPrimary">#00AAFF</SolidColorBrush>
+    <SolidColorBrush x:Key="SurfaceElevated">#171717</SolidColorBrush>
+    <SolidColorBrush x:Key="SurfaceBase">#000000</SolidColorBrush>
+    <SolidColorBrush x:Key="ForegroundDisabled">#B3B3B3</SolidColorBrush>
+    <SolidColorBrush x:Key="BackgroundDefault">#111111</SolidColorBrush>
+    <SolidColorBrush x:Key="SurfaceDeep">#080808</SolidColorBrush>
+    <SolidColorBrush x:Key="ForegroundPrimary">#C2C2C2</SolidColorBrush>
+    <SolidColorBrush x:Key="OverlayDim">#BF000000</SolidColorBrush> <!-- 75% -->
+    <SolidColorBrush x:Key="AccentSelection">#2400AAFF</SolidColorBrush> <!-- 14% -->
+    <SolidColorBrush x:Key="SurfaceOverlay">#252525</SolidColorBrush>
 </ResourceDictionary>
