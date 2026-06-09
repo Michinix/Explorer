@@ -5,89 +5,86 @@
              xmlns:vm="using:Explorer.ViewModels"
              mc:Ignorable="d" d:DesignWidth="1900" d:DesignHeight="1024"
              x:Class="Explorer.Views.HomeView"
-             x:DataType="vm:HomeViewModel">
-
-    <Grid RowDefinitions="Auto,*">
-        <!-- Toolbar -->
-        <StackPanel Grid.Row="0"
-                    Orientation="Horizontal"
-                    Spacing="4"
-                    Background="{StaticResource DeepDark}"
-                    Margin="8,6">
-            <Button Content="←"
-                    Command="{Binding GoBackCommand}"
-                    FontSize="14"
-                    Foreground="{StaticResource White}"
-                    Padding="10,4"/>
-            <Button Content="→"
-                    Command="{Binding GoForwardCommand}"
-                    FontSize="14"
-                    Foreground="{StaticResource White}"
-                    Padding="10,4"/>
-            <Button Content="↑"
-                    Command="{Binding GoUpCommand}"
-                    FontSize="14"
-                    Foreground="{StaticResource White}"
-                    Padding="10,4"/>
-            <TextBlock Text="{Binding CurrentPath}"
-                       VerticalAlignment="Center"
-                       Foreground="#888888"
-                       FontSize="12"
-                       Margin="8,0"/>
-        </StackPanel>
-
-        <DataGrid Grid.Row="1"
+             x:DataType="vm:HomeViewModel" Background="{StaticResource BackgroundDefault}">
+    <Panel>
+        <DataGrid Margin="12"
                   SelectedItem="{Binding SelectedEntry}"
                   DoubleTapped="OnRowDoubleTapped"
                   ItemsSource="{Binding Entries}"
                   AutoGenerateColumns="False"
-                  Foreground="{StaticResource Light}"
-                  BorderThickness="0"
+                  Foreground="{StaticResource ColorWhite}"
+                  BorderThickness="1"
+                  BorderBrush="{StaticResource BorderDefault}"
                   GridLinesVisibility="All"
-                  HorizontalGridLinesBrush="{StaticResource Dark}"
-                  VerticalGridLinesBrush="{StaticResource Dark}"
+                  HorizontalGridLinesBrush="{StaticResource BorderDefault}"
+                  VerticalGridLinesBrush="{StaticResource BorderDefault}"
                   CanUserReorderColumns="False"
                   IsReadOnly="True">
 
             <DataGrid.Styles>
                 <Style Selector="DataGridColumnHeader">
-                    <Setter Property="Background" Value="{StaticResource DeepDark}"/>
-                    <Setter Property="Foreground" Value="{StaticResource White}"/>
-                    <Setter Property="FontSize" Value="11"/>
-                    <Setter Property="Padding" Value="12,8"/>
-                    <Setter Property="BorderBrush" Value="{StaticResource Dark}"/>
-                    <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                    <Setter Property="Background" Value="{StaticResource SurfaceElevated}" />
+                    <Setter Property="Foreground" Value="{StaticResource ColorWhite}" />
+                    <Setter Property="FontSize" Value="11" />
+                    <Setter Property="Padding" Value="10,10" />
+                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
+                    <Setter Property="BorderThickness" Value="0,0,0,1" />
                 </Style>
+
+                <Style Selector="DataGridColumnHeader:nth-child(-n+3)">
+                    <Setter Property="BorderThickness" Value="0,0,1,1" />
+                </Style>
+
                 <Style Selector="DataGridCell">
-                    <Setter Property="Padding" Value="12,6"/>
-                    <Setter Property="FontSize" Value="13"/>
-                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Padding" Value="10,10" />
+                    <Setter Property="FontSize" Value="12" />
+                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="BorderThickness" Value="0" />
                 </Style>
+
+                <Style Selector="DataGridCell TextBlock">
+                    <Setter Property="Margin" Value="0" />
+                </Style>
+
+                <Style Selector="DataGridColumnHeader ContentPresenter">
+                    <Setter Property="Margin" Value="0" />
+                </Style>
+
+                <Style Selector="DataGridCell ContentPresenter">
+                    <Setter Property="Margin" Value="0" />
+                </Style>
+
                 <Style Selector="DataGridRow:pointerover">
-                    <Setter Property="Background" Value="#2A2A2A"/>
+                    <Setter Property="Background" Value="#2A2A2A" />
+                    <Setter Property="Cursor" Value="Hand" />
                 </Style>
+
                 <Style Selector="DataGridRow:selected">
-                    <Setter Property="Background" Value="#2A2A2A"/>
-                    <Setter Property="Foreground" Value="{StaticResource Light}"/>
+                    <Setter Property="Background" Value="#2A2A2A" />
+                    <Setter Property="Foreground" Value="{StaticResource AccentPrimary}" />
                 </Style>
 
-                <!-- Colonne NOM -->
                 <Style Selector="DataGridCell.colName TextBlock">
-                    <Setter Property="Foreground" Value="{StaticResource White}"/>
+                    <Setter Property="Foreground" Value="{StaticResource ColorWhite}" />
                 </Style>
 
-                <!-- Colonnes méta -->
                 <Style Selector="DataGridCell.colMeta TextBlock">
-                    <Setter Property="Foreground" Value="{StaticResource Medium}"/>
+                    <Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
                 </Style>
+
             </DataGrid.Styles>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="NOM"        Binding="{Binding Name}"         Width="*"   CellStyleClasses="colName"/>
-                <DataGridTextColumn Header="TAILLE"     Binding="{Binding DisplaySize}"  Width="90"  CellStyleClasses="colMeta"/>
-                <DataGridTextColumn Header="TYPE"       Binding="{Binding Type}"         Width="100" CellStyleClasses="colMeta"/>
-                <DataGridTextColumn Header="MODIFIÉ LE" Binding="{Binding LastModified}" Width="Auto" CellStyleClasses="colMeta"/>
+                <DataGridTextColumn Header="NOM" Binding="{Binding Name}" Width="*" CellStyleClasses="colName" />
+                <DataGridTextColumn Header="TAILLE" Binding="{Binding DisplaySize}" Width="90"
+                                    CellStyleClasses="colMeta" />
+                <DataGridTextColumn Header="TYPE" Binding="{Binding Type}" Width="100" CellStyleClasses="colMeta" />
+                <DataGridTextColumn Header="MODIFIÉ LE" Binding="{Binding LastModified}" Width="Auto"
+                                    CellStyleClasses="colMeta" />
             </DataGrid.Columns>
         </DataGrid>
-    </Grid>
+    </Panel>
 </UserControl>
