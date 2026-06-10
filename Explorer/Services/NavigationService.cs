@@ -11,23 +11,19 @@ public partial class NavigationService : ObservableObject
     private readonly Stack<string> _forwardStack = new();
 
     [ObservableProperty] private string _currentPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+    
+    public event Action<string>? PathChanged;
 
     public bool CanGoBack => _backStack.Count > 0;
     public bool CanGoForward => _forwardStack.Count > 0;
     public bool CanGoUp => Directory.GetParent(CurrentPath) is not null;
-    
-    public event Action<string>? PathChanged;
-    
-    partial void OnCurrentPathChanged(string value)
-    {
-        PathChanged?.Invoke(value);
-    }
 
     public void NavigateTo(string path)
     {
         _backStack.Push(CurrentPath);
         _forwardStack.Clear();
         CurrentPath = path;
+        PathChanged?.Invoke(path);
     }
 
     public void GoBack()
@@ -35,6 +31,7 @@ public partial class NavigationService : ObservableObject
         if (!CanGoBack) return;
         _forwardStack.Push(CurrentPath);
         CurrentPath = _backStack.Pop();
+        PathChanged?.Invoke(CurrentPath);
     }
 
     public void GoForward()
@@ -42,6 +39,7 @@ public partial class NavigationService : ObservableObject
         if (!CanGoForward) return;
         _backStack.Push(CurrentPath);
         CurrentPath = _forwardStack.Pop();
+        PathChanged?.Invoke(CurrentPath);
     }
 
     public void GoUp()

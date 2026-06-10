@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -13,17 +12,7 @@ public partial class DataGridViewModel : ViewModelBase
     private readonly NavigationService _navigation;
 
     [ObservableProperty] private FileSystemEntry? _selectedEntry;
-
     [ObservableProperty] private ObservableCollection<FileSystemEntry> _entries = [];
-
-    public int FolderCount => Entries.Count(e => e.IsDirectory);
-    public int FileCount => Entries.Count(e => !e.IsDirectory);
-
-    partial void OnEntriesChanged(ObservableCollection<FileSystemEntry> value)
-    {
-        OnPropertyChanged(nameof(FolderCount));
-        OnPropertyChanged(nameof(FileCount));
-    }
 
     public DataGridViewModel(NavigationService navigation)
     {
@@ -33,10 +22,9 @@ public partial class DataGridViewModel : ViewModelBase
 
     private void OnPathChanged(string path)
     {
-        _ = LoadEntriesAsync();
+        FireAndForget(LoadEntriesAsync());
     }
 
-    [RelayCommand]
     public async Task LoadEntriesAsync()
     {
         var result = await FileSystemService.ListEntries(_navigation.CurrentPath);
