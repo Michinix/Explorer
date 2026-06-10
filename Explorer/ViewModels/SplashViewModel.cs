@@ -1,3 +1,5 @@
 namespace Explorer.ViewModels;
 
-public partial class SplashViewModel : ViewModelBase { }
+public partial class SplashViewModel : ViewModelBase
+{
+}
