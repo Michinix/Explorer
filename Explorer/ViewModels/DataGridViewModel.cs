@@ -28,11 +28,7 @@ public partial class DataGridViewModel : ViewModelBase
     public DataGridViewModel(NavigationService navigation)
     {
         _navigation = navigation;
-        _navigation.PropertyChanged += async (_, e) =>
-        {
-            if (e.PropertyName == nameof(NavigationService.CurrentPath))
-                await LoadEntries();
-        };
+        _navigation.PathChanged += async _ => await LoadEntries();
     }
 
     [RelayCommand]

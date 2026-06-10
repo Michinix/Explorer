@@ -15,6 +15,13 @@ public partial class NavigationService : ObservableObject
     public bool CanGoBack => _backStack.Count > 0;
     public bool CanGoForward => _forwardStack.Count > 0;
     public bool CanGoUp => Directory.GetParent(CurrentPath) is not null;
+    
+    public event Action<string>? PathChanged;
+    
+    partial void OnCurrentPathChanged(string value)
+    {
+        PathChanged?.Invoke(value);
+    }
 
     public void NavigateTo(string path)
     {
