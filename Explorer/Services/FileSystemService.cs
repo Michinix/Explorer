@@ -38,12 +38,21 @@ public static class FileSystemService
             }
         });
     }
-
-    private static string FormatSize(long bytes) => bytes switch
+    
+    private static string FormatSize(long bytes)
     {
-        < 1_024L * 1_024 => $"{bytes / 1_024.0:F1} Ko",
-        < 1_024L * 1_024 * 1_024 => $"{bytes / (1_024.0 * 1_024):F1} Mo",
-        < 1_024L * 1_024 * 1_024 * 1_024 => $"{bytes / (1_024.0 * 1_024 * 1_024):F1} Go",
-        _ => $"{bytes / (1_024.0 * 1_024 * 1_024 * 1_024):F1} To"
-    };
+        const long KB = 1024;
+        const long MB = KB * 1024;
+        const long GB = MB * 1024;
+        const long TB = GB * 1024;
+
+        return bytes switch
+        {
+            < KB => $"{bytes} o",
+            < MB => $"{bytes / (double)KB:0.#} Ko",
+            < GB => $"{bytes / (double)MB:0.#} Mo",
+            < TB => $"{bytes / (double)GB:0.#} Go",
+            _    => $"{bytes / (double)TB:0.#} To"
+        };
+    }
 }
