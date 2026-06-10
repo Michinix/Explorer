@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Explorer.Models;
 using Explorer.Services;
+using System.Linq;
 
 namespace Explorer.ViewModels;
 
@@ -12,8 +13,14 @@ public partial class DataGridViewModel : ViewModelBase
     private readonly NavigationService _navigation;
 
     [ObservableProperty] private FileSystemEntry? _selectedEntry;
-    [ObservableProperty] private ObservableCollection<FileSystemEntry> _entries = [];
-
+    
+    [ObservableProperty] 
+    [NotifyPropertyChangedFor(nameof(FolderCount), nameof(FileCount))]
+    private ObservableCollection<FileSystemEntry> _entries = [];
+    
+    public int FolderCount => Entries.Count(e => e.IsDirectory);
+    public int FileCount => Entries.Count(e => !e.IsDirectory);
+    
     public DataGridViewModel(NavigationService navigation)
     {
         _navigation = navigation;
