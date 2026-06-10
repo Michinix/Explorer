@@ -30,11 +30,14 @@ public partial class DataGridViewModel : ViewModelBase
         _navigation = navigation;
         _navigation.PathChanged += OnPathChanged;
     }
-    
-    private async void OnPathChanged(string path) => await LoadEntries();
+
+    private void OnPathChanged(string path)
+    {
+        _ = LoadEntriesAsync();
+    }
 
     [RelayCommand]
-    public async Task LoadEntries()
+    public async Task LoadEntriesAsync()
     {
         var result = await FileSystemService.ListEntries(_navigation.CurrentPath);
         Entries = new ObservableCollection<FileSystemEntry>(result);

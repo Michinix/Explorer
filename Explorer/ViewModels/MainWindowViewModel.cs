@@ -21,7 +21,7 @@ public partial class MainWindowViewModel : ViewModelBase
         Task.Run(async () =>
         {
             await Task.WhenAll(
-                _homeViewModel.DataGrid.LoadEntries(),
+                _homeViewModel.DataGrid.LoadEntriesAsync(),
                 Task.Delay(2000)
             );
 
