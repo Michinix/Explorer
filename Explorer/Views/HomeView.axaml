@@ -3,88 +3,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Explorer.ViewModels"
+             xmlns:controls="using:Explorer.Controls"
              mc:Ignorable="d" d:DesignWidth="1900" d:DesignHeight="1024"
              x:Class="Explorer.Views.HomeView"
-             x:DataType="vm:HomeViewModel" Background="{StaticResource BackgroundDefault}">
+             x:DataType="vm:HomeViewModel"
+             Background="{StaticResource BackgroundDefault}">
     <Panel>
-        <DataGrid Margin="12"
-                  SelectedItem="{Binding SelectedEntry}"
-                  DoubleTapped="OnRowDoubleTapped"
-                  ItemsSource="{Binding Entries}"
-                  AutoGenerateColumns="False"
-                  Foreground="{StaticResource ColorWhite}"
-                  BorderThickness="1"
-                  BorderBrush="{StaticResource BorderDefault}"
-                  GridLinesVisibility="All"
-                  HorizontalGridLinesBrush="{StaticResource BorderDefault}"
-                  VerticalGridLinesBrush="{StaticResource BorderDefault}"
-                  CanUserReorderColumns="False"
-                  IsReadOnly="True">
-
-            <DataGrid.Styles>
-                <Style Selector="DataGridColumnHeader">
-                    <Setter Property="Background" Value="{StaticResource SurfaceElevated}" />
-                    <Setter Property="Foreground" Value="{StaticResource ColorWhite}" />
-                    <Setter Property="FontSize" Value="11" />
-                    <Setter Property="Padding" Value="10,10" />
-                    <Setter Property="HorizontalContentAlignment" Value="Left" />
-                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                    <Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
-                    <Setter Property="BorderThickness" Value="0,0,0,1" />
-                </Style>
-
-                <Style Selector="DataGridColumnHeader:nth-child(-n+3)">
-                    <Setter Property="BorderThickness" Value="0,0,1,1" />
-                </Style>
-
-                <Style Selector="DataGridCell">
-                    <Setter Property="Padding" Value="10,10" />
-                    <Setter Property="FontSize" Value="12" />
-                    <Setter Property="HorizontalContentAlignment" Value="Left" />
-                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                    <Setter Property="BorderThickness" Value="0" />
-                </Style>
-
-                <Style Selector="DataGridCell TextBlock">
-                    <Setter Property="Margin" Value="0" />
-                </Style>
-
-                <Style Selector="DataGridColumnHeader ContentPresenter">
-                    <Setter Property="Margin" Value="0" />
-                </Style>
-
-                <Style Selector="DataGridCell ContentPresenter">
-                    <Setter Property="Margin" Value="0" />
-                </Style>
-
-                <Style Selector="DataGridRow:pointerover">
-                    <Setter Property="Background" Value="#2A2A2A" />
-                    <Setter Property="Cursor" Value="Hand" />
-                </Style>
-
-                <Style Selector="DataGridRow:selected">
-                    <Setter Property="Background" Value="#2A2A2A" />
-                    <Setter Property="Foreground" Value="{StaticResource AccentPrimary}" />
-                </Style>
-
-                <Style Selector="DataGridCell.colName TextBlock">
-                    <Setter Property="Foreground" Value="{StaticResource ColorWhite}" />
-                </Style>
-
-                <Style Selector="DataGridCell.colMeta TextBlock">
-                    <Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
-                </Style>
-
-            </DataGrid.Styles>
-
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="NOM" Binding="{Binding Name}" Width="*" CellStyleClasses="colName" />
-                <DataGridTextColumn Header="TAILLE" Binding="{Binding DisplaySize}" Width="90"
-                                    CellStyleClasses="colMeta" />
-                <DataGridTextColumn Header="TYPE" Binding="{Binding Type}" Width="100" CellStyleClasses="colMeta" />
-                <DataGridTextColumn Header="MODIFIÉ LE" Binding="{Binding LastModified}" Width="Auto"
-                                    CellStyleClasses="colMeta" />
-            </DataGrid.Columns>
-        </DataGrid>
+        <controls:DataGrid DataContext="{Binding DataGrid}" />
     </Panel>
 </UserControl>

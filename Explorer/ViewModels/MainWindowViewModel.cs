@@ -9,9 +9,8 @@ public partial class MainWindowViewModel : ViewModelBase
 {
     private readonly HomeViewModel _homeViewModel;
 
-    [ObservableProperty] 
-    private ObservableObject _currentPage = new SplashViewModel();
-    
+    [ObservableProperty] private ObservableObject _currentPage = new SplashViewModel();
+
     [RelayCommand]
     private void GoHome() => CurrentPage = _homeViewModel;
 
@@ -22,10 +21,10 @@ public partial class MainWindowViewModel : ViewModelBase
         Task.Run(async () =>
         {
             await Task.WhenAll(
-                _homeViewModel.LoadEntries(),
+                _homeViewModel.DataGrid.LoadEntriesCommand.ExecuteAsync(null),
                 Task.Delay(2000)
             );
-            
+
             await Dispatcher.UIThread.InvokeAsync(
                 () => GoHomeCommand.Execute(null),
                 DispatcherPriority.Background

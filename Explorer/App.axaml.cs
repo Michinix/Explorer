@@ -21,6 +21,7 @@ public class App : Application
 
         services.AddSingleton<NavigationService>();
         services.AddSingleton<MainWindowViewModel>();
+        services.AddTransient<DataGridViewModel>();
         services.AddTransient<HomeViewModel>();
         services.AddTransient<SplashViewModel>();
 

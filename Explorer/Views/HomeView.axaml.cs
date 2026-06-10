@@ -10,10 +10,4 @@ public partial class HomeView : UserControl
     {
         InitializeComponent();
     }
-    
-    private void OnRowDoubleTapped(object? sender, TappedEventArgs e)
-    {
-        if (DataContext is HomeViewModel vm)
-            vm.EntryDoubleClickedCommand.Execute(null);
-    }
 }
