@@ -36,7 +36,7 @@ public partial class DataGridViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task LoadEntries()
+    public async Task LoadEntries()
     {
         var result = await FileSystemService.ListEntries(_navigation.CurrentPath);
         Entries = new ObservableCollection<FileSystemEntry>(result);
