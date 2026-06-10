@@ -1,19 +1,18 @@
-using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using Explorer.Models;
 using Explorer.Services;
 using Explorer.ViewModels;
 using Explorer.Views;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Explorer;
 
-public partial class App : Application
+public class App : Application
 {
-    public static IServiceProvider Services { get; private set; } = null!;
-    
+    public IServiceProvider? Services { get; private set; }
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -22,9 +21,11 @@ public partial class App : Application
     public override void OnFrameworkInitializationCompleted()
     {
         var services = new ServiceCollection();
-        
-        services.AddSingleton<HomeViewModel>();
+    
+        services.AddSingleton<NavigationService>();
         services.AddSingleton<MainWindowViewModel>();
+        services.AddTransient<HomeViewModel>();
+        services.AddTransient<SplashViewModel>();
 
         Services = services.BuildServiceProvider();
 
