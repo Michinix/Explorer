@@ -28,8 +28,10 @@ public partial class DataGridViewModel : ViewModelBase
     public DataGridViewModel(NavigationService navigation)
     {
         _navigation = navigation;
-        _navigation.PathChanged += async _ => await LoadEntries();
+        _navigation.PathChanged += OnPathChanged;
     }
+    
+    private async void OnPathChanged(string path) => await LoadEntries();
 
     [RelayCommand]
     public async Task LoadEntries()
