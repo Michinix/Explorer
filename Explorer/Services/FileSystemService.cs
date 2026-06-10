@@ -26,7 +26,7 @@ public static class FileSystemService
                         FullPath: e.FullName,
                         Type: e is DirectoryInfo ? "DOSSIER" : e.Extension.TrimStart('.').ToUpper(),
                         IsDirectory: e is DirectoryInfo,
-                        DisplaySize:  e is FileInfo f ? FormatSize(f.Length) : "—",
+                        DisplaySize: e is FileInfo f ? FormatSize(f.Length) : "—",
                         LastModified: e.LastWriteTime
                     ))
                     .ToList();
@@ -41,9 +41,9 @@ public static class FileSystemService
 
     private static string FormatSize(long bytes) => bytes switch
     {
-        < 1_024L * 1_024            => $"{bytes / 1_024.0:F1} Ko",
-        < 1_024L * 1_024 * 1_024    => $"{bytes / (1_024.0 * 1_024):F1} Mo",
+        < 1_024L * 1_024 => $"{bytes / 1_024.0:F1} Ko",
+        < 1_024L * 1_024 * 1_024 => $"{bytes / (1_024.0 * 1_024):F1} Mo",
         < 1_024L * 1_024 * 1_024 * 1_024 => $"{bytes / (1_024.0 * 1_024 * 1_024):F1} Go",
-        _                           => $"{bytes / (1_024.0 * 1_024 * 1_024 * 1_024):F1} To"
+        _ => $"{bytes / (1_024.0 * 1_024 * 1_024 * 1_024):F1} To"
     };
 }
