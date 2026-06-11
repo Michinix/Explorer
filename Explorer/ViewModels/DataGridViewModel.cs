@@ -27,9 +27,9 @@ public partial class DataGridViewModel : ViewModelBase
         _navigation.PathChanged += OnPathChanged;
     }
 
-    private void OnPathChanged(string path)
+    private async void OnPathChanged(string path)
     {
-        FireAndForget(LoadEntriesAsync());
+        await LoadEntriesAsync();
     }
 
     public async Task LoadEntriesAsync()
