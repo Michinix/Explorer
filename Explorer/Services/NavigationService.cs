@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using Explorer.Models;
 
 namespace Explorer.Services;
 
@@ -10,36 +12,41 @@ public partial class NavigationService : ObservableObject
     private readonly Stack<string> _backStack = new();
     private readonly Stack<string> _forwardStack = new();
 
-    [ObservableProperty] private string _currentPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-    
-    public event Action<string>? PathChanged;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CanGoBack), nameof(CanGoForward), nameof(CanGoUp))]
+    private string _currentPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
     public bool CanGoBack => _backStack.Count > 0;
     public bool CanGoForward => _forwardStack.Count > 0;
     public bool CanGoUp => Directory.GetParent(CurrentPath) is not null;
+    
+    partial void OnCurrentPathChanged(string value)
+    {
+        WeakReferenceMessenger.Default.Send(new CurrentPathChangedMessage(value));
+    }
 
     public void NavigateTo(string path)
     {
         _backStack.Push(CurrentPath);
         _forwardStack.Clear();
         CurrentPath = path;
-        PathChanged?.Invoke(path);
     }
 
     public void GoBack()
     {
         if (!CanGoBack) return;
-        _forwardStack.Push(CurrentPath);
-        CurrentPath = _backStack.Pop();
-        PathChanged?.Invoke(CurrentPath);
+        var targetPath = _backStack.Pop(); 
+        _forwardStack.Push(CurrentPath); 
+        CurrentPath = targetPath; 
     }
 
     public void GoForward()
     {
         if (!CanGoForward) return;
+    
+        var targetPath = _forwardStack.Pop();
         _backStack.Push(CurrentPath);
-        CurrentPath = _forwardStack.Pop();
-        PathChanged?.Invoke(CurrentPath);
+        CurrentPath = targetPath;
     }
 
     public void GoUp()

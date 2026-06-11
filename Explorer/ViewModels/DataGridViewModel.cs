@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 using Explorer.Models;
 using Explorer.Services;
 using System.Linq;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Explorer.ViewModels;
 
@@ -24,12 +25,11 @@ public partial class DataGridViewModel : ViewModelBase
     public DataGridViewModel(NavigationService navigation)
     {
         _navigation = navigation;
-        _navigation.PathChanged += OnPathChanged;
-    }
-
-    private async void OnPathChanged(string path)
-    {
-        await LoadEntriesAsync();
+    
+        WeakReferenceMessenger.Default.Register<CurrentPathChangedMessage>(this, async (r, m) =>
+        {
+            await LoadEntriesAsync();
+        });
     }
 
     public async Task LoadEntriesAsync()
