@@ -22,13 +22,13 @@
                         Spacing="8"
                         IsHitTestVisible="True">
                 
-                <Button Width="12" Height="12" MinWidth="12" MinHeight="12" Padding="0" Click="CloseButton_Click">
+                <Button Width="11" Height="11" MinWidth="11" MinHeight="11" Padding="0" Click="CloseButton_Click">
                     <Button.Template><ControlTemplate><Border Background="#FF5F57" CornerRadius="7" /></ControlTemplate></Button.Template>
                 </Button>
-                <Button Width="12" Height="12" MinWidth="12" MinHeight="12" Padding="0" Click="MinimizeButton_Click">
+                <Button Width="11" Height="11" MinWidth="11" MinHeight="11" Padding="0" Click="MinimizeButton_Click">
                     <Button.Template><ControlTemplate><Border Background="#FFBD2E" CornerRadius="7" /></ControlTemplate></Button.Template>
                 </Button>
-                <Button Width="12" Height="12" MinWidth="12" MinHeight="12" Padding="0" Click="MaximizeRestoreButton_Click">
+                <Button Width="11" Height="11" MinWidth="11" MinHeight="11" Padding="0" Click="MaximizeRestoreButton_Click">
                     <Button.Template><ControlTemplate><Border Background="#28C840" CornerRadius="7" /></ControlTemplate></Button.Template>
                 </Button>
                 
