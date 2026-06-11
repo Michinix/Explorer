@@ -1,6 +1,4 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Input;
-using Explorer.ViewModels;
 
 namespace Explorer.Views;
 
