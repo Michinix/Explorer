@@ -8,7 +8,15 @@
              x:Class="Explorer.Views.HomeView"
              x:DataType="vm:HomeViewModel"
              Background="{StaticResource BackgroundDefault}">
-    <Panel>
-        <controls:DataGrid DataContext="{Binding DataGrid}" />
-    </Panel>
+    
+    <Grid RowDefinitions="*, Auto">
+    
+        <controls:DataGrid Grid.Row="0" 
+                           Margin="0"
+                           DataContext="{Binding DataGrid}" />
+    
+        <controls:Footer Grid.Row="1" 
+                         DataContext="{Binding DataGrid}" />
+
+    </Grid>
 </UserControl>

@@ -1,0 +1,57 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Explorer.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="50"
+             x:Class="Explorer.Controls.Footer"
+             x:DataType="vm:DataGridViewModel">
+    
+    <Border Background="Transparent" 
+            BorderThickness="0,1,0,0"
+            BorderBrush="{StaticResource BorderDefault}">
+        
+        <Grid ColumnDefinitions="*, Auto">
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
+    
+                <TextBlock FontSize="11" Tag="{Binding Entries.Count}">
+                    <TextBlock.Styles>
+                        <Style Selector="TextBlock">
+                            <Setter Property="Text" Value="{Binding Entries.Count, StringFormat='{}{0} éléments'}" />
+                        </Style>
+                        <Style Selector="TextBlock[Tag=0], TextBlock[Tag=1]">
+                            <Setter Property="Text" Value="{Binding Entries.Count, StringFormat='{}{0} élément'}" />
+                        </Style>
+                    </TextBlock.Styles>
+                </TextBlock>
+    
+                <TextBlock FontSize="11" Text=" - " />
+
+                <TextBlock FontSize="11" Tag="{Binding FolderCount}">
+                    <TextBlock.Styles>
+                        <Style Selector="TextBlock">
+                            <Setter Property="Text" Value="{Binding FolderCount, StringFormat='{}{0} dossiers'}" />
+                        </Style>
+                        <Style Selector="TextBlock[Tag=0], TextBlock[Tag=1]">
+                            <Setter Property="Text" Value="{Binding FolderCount, StringFormat='{}{0} dossier'}" />
+                        </Style>
+                    </TextBlock.Styles>
+                </TextBlock>
+    
+                <TextBlock FontSize="11" Text=" - " />
+
+                <TextBlock FontSize="11" Tag="{Binding FileCount}">
+                    <TextBlock.Styles>
+                        <Style Selector="TextBlock">
+                            <Setter Property="Text" Value="{Binding FileCount, StringFormat='{}{0} fichiers'}" />
+                        </Style>
+                        <Style Selector="TextBlock[Tag=0], TextBlock[Tag=1]">
+                            <Setter Property="Text" Value="{Binding FileCount, StringFormat='{}{0} fichier'}" />
+                        </Style>
+                    </TextBlock.Styles>
+                </TextBlock>
+    
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>
