@@ -24,7 +24,7 @@ public static class FileSystemService
                     .Select(e => new FileSystemEntry(
                         Name: e.Name,
                         FullPath: e.FullName,
-                        Type: e is DirectoryInfo ? "DOSSIER" : e.Extension.TrimStart('.').ToUpper(),
+                        Type: e.Extension.TrimStart('.').ToUpper(),
                         IsDirectory: e is DirectoryInfo,
                         DisplaySize: e is FileInfo f ? FormatSize(f.Length) : "—",
                         LastModified: e.LastWriteTime

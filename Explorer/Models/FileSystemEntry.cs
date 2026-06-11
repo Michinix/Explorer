@@ -9,4 +9,7 @@ public record FileSystemEntry(
     bool IsDirectory,
     string DisplaySize,
     DateTime LastModified
-);
+)
+{
+    public string DisplayType => IsDirectory ? "Dossier" : $"Fichier {Type}"; // Propriété calculée 
+}
