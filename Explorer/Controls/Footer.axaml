@@ -12,7 +12,11 @@
             BorderBrush="{StaticResource BorderDefault}">
         
         <Grid ColumnDefinitions="*, Auto">
-            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
+            <StackPanel Grid.Column="0" 
+                        Orientation="Horizontal" 
+                        VerticalAlignment="Center" 
+                        Margin="10"
+                        Spacing="6">
     
                 <TextBlock FontSize="11" Tag="{Binding Entries.Count}">
                     <TextBlock.Styles>
@@ -25,7 +29,7 @@
                     </TextBlock.Styles>
                 </TextBlock>
     
-                <TextBlock FontSize="11" Text=" - " />
+                <TextBlock FontSize="11" Text="•" VerticalAlignment="Center" Opacity="0.5" />
 
                 <TextBlock FontSize="11" Tag="{Binding FolderCount}">
                     <TextBlock.Styles>
@@ -38,7 +42,7 @@
                     </TextBlock.Styles>
                 </TextBlock>
     
-                <TextBlock FontSize="11" Text=" - " />
+                <TextBlock FontSize="11" Text="•" VerticalAlignment="Center" Opacity="0.5" />
 
                 <TextBlock FontSize="11" Tag="{Binding FileCount}">
                     <TextBlock.Styles>
@@ -51,6 +55,16 @@
                     </TextBlock.Styles>
                 </TextBlock>
     
+            </StackPanel>
+            
+            <StackPanel Grid.Column="1" 
+                        Orientation="Horizontal" 
+                        VerticalAlignment="Center" 
+                        Margin="10">
+    
+                <TextBlock FontSize="11">
+                    Explorer v1.0
+                </TextBlock>
             </StackPanel>
         </Grid>
     </Border>

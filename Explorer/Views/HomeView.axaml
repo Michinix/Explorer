@@ -6,17 +6,23 @@
              xmlns:controls="using:Explorer.Controls"
              mc:Ignorable="d" d:DesignWidth="1900" d:DesignHeight="1024"
              x:Class="Explorer.Views.HomeView"
-             x:DataType="vm:HomeViewModel"
-             Background="{StaticResource BackgroundDefault}">
+             x:DataType="vm:HomeViewModel">
     
-    <Grid RowDefinitions="*, Auto">
-    
-        <controls:DataGrid Grid.Row="0" 
+    <Grid RowDefinitions="Auto, Auto, *, Auto">
+        
+        <controls:TopBar Grid.Row="0" 
+                         Height="40"
+                         Margin="0"/>
+        
+        <controls:NavBar Grid.Row="1" 
+                         Height="40"
+                         Margin="0"/>
+        
+        <controls:DataGrid Grid.Row="2" 
                            Margin="0"
                            DataContext="{Binding DataGrid}" />
-    
-        <controls:Footer Grid.Row="1" 
+        
+        <controls:Footer Grid.Row="3" 
                          DataContext="{Binding DataGrid}" />
-
     </Grid>
 </UserControl>

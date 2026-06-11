@@ -4,29 +4,43 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="using:Explorer.Views"
-        mc:Ignorable="d" d:DesignWidth="1900" d:DesignHeight="1024"
+        mc:Ignorable="d"
+        d:DesignWidth="1900"
+        d:DesignHeight="1024"
         x:Class="Explorer.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        WindowStartupLocation="CenterScreen" CanResize="False" 
-        Background="{StaticResource BackgroundDefault}"
-        MinWidth="200" MinHeight="200"
-        MaxWidth="1900" MaxHeight="1024"
+        Title="Explorer"
         Icon="/Assets/Images/Icons/Logo.ico"
-        UseLayoutRounding="True" WindowDecorations="None"
-        Title="Explorer">
+        WindowStartupLocation="CenterScreen"
+        WindowDecorations="None"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaTitleBarHeightHint="0"
+        Background="Transparent"
+        CanResize="False"
+        MinWidth="200"
+        MinHeight="200"
+        MaxWidth="1900"
+        MaxHeight="1024"
+        UseLayoutRounding="True"
+        TransparencyLevelHint="Transparent">
 
     <Window.DataTemplates>
         <DataTemplate DataType="vm:SplashViewModel">
             <views:SplashView />
         </DataTemplate>
+
         <DataTemplate DataType="vm:HomeViewModel">
             <views:HomeView />
         </DataTemplate>
     </Window.DataTemplates>
 
-    <Border BorderThickness="1"
+    <Border Margin="1"
+            Background="{StaticResource BackgroundDefault}"
             BorderBrush="{StaticResource BorderDefault}"
-            Background="{StaticResource BackgroundDefault}">
+            BorderThickness="1"
+            CornerRadius="10"
+            ClipToBounds="True">
+
         <TransitioningContentControl Content="{Binding CurrentPage}">
             <TransitioningContentControl.PageTransition>
                 <CompositePageTransition>
@@ -38,4 +52,5 @@
         </TransitioningContentControl>
 
     </Border>
+
 </Window>
