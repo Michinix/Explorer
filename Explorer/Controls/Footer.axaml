@@ -29,7 +29,7 @@
                     </TextBlock.Styles>
                 </TextBlock>
     
-                <TextBlock FontSize="11" Text="•" VerticalAlignment="Center" Opacity="0.5" />
+                <TextBlock FontSize="11" Text="-" VerticalAlignment="Center" Opacity="0.5" />
 
                 <TextBlock FontSize="11" Tag="{Binding FolderCount}">
                     <TextBlock.Styles>
@@ -42,7 +42,7 @@
                     </TextBlock.Styles>
                 </TextBlock>
     
-                <TextBlock FontSize="11" Text="•" VerticalAlignment="Center" Opacity="0.5" />
+                <TextBlock FontSize="11" Text="-" VerticalAlignment="Center" Opacity="0.5" />
 
                 <TextBlock FontSize="11" Tag="{Binding FileCount}">
                     <TextBlock.Styles>
