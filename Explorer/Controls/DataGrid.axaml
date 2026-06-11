@@ -7,18 +7,15 @@
              x:Class="Explorer.Controls.DataGrid"
              x:DataType="vm:DataGridViewModel">
 
-    <DataGrid Margin="12"
-              SelectedItem="{Binding SelectedEntry}"
+    <DataGrid SelectedItem="{Binding SelectedEntry}"
               DoubleTapped="OnRowDoubleTapped"
               ItemsSource="{Binding Entries}"
               AutoGenerateColumns="False"
               Foreground="{StaticResource ColorWhite}"
-              BorderThickness="1"
-              BorderBrush="{StaticResource BorderDefault}"
               GridLinesVisibility="All"
               HorizontalGridLinesBrush="{StaticResource BorderDefault}"
               VerticalGridLinesBrush="{StaticResource BorderDefault}"
-              CanUserReorderColumns="False"
+              CanUserReorderColumns="False" VerticalAlignment="Top"
               IsReadOnly="True">
 
         <DataGrid.Styles>
