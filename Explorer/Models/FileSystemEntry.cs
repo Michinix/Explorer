@@ -11,5 +11,5 @@ public record FileSystemEntry(
     DateTime LastModified
 )
 {
-    public string DisplayType => IsDirectory ? "Dossier" : $"Fichier {Type}"; // Propriété calculée 
+    public string DisplayType => IsDirectory ? "Dossier" : $"Fichier {Type}";
 }
