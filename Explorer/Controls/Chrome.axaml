@@ -2,36 +2,48 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="50"
+             mc:Ignorable="d"
              x:Class="Explorer.Controls.Chrome">
-    
+
     <Border Background="{StaticResource SurfaceElevated}"
             BorderBrush="{StaticResource BorderDefault}"
             BorderThickness="0,0,0,1"
             CornerRadius="10,10,0,0"
             ClipToBounds="True">
-        
+
         <Grid>
             <Border Background="Transparent"
-                    PointerPressed="TitleBar_PointerPressed"/>
+                    PointerPressed="TitleBar_PointerPressed" />
 
-            <StackPanel Orientation="Horizontal" 
-                        VerticalAlignment="Center" 
-                        HorizontalAlignment="Left" 
-                        Margin="15,0" 
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        Margin="15,0"
                         Spacing="8"
                         IsHitTestVisible="True">
-                
+
                 <Button Width="11" Height="11" MinWidth="11" MinHeight="11" Padding="0" Click="CloseButton_Click">
-                    <Button.Template><ControlTemplate><Border Background="#FF5F57" CornerRadius="7" /></ControlTemplate></Button.Template>
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Border Background="#FF5F57" CornerRadius="7" />
+                        </ControlTemplate>
+                    </Button.Template>
                 </Button>
                 <Button Width="11" Height="11" MinWidth="11" MinHeight="11" Padding="0" Click="MinimizeButton_Click">
-                    <Button.Template><ControlTemplate><Border Background="#FFBD2E" CornerRadius="7" /></ControlTemplate></Button.Template>
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Border Background="#FFBD2E" CornerRadius="7" />
+                        </ControlTemplate>
+                    </Button.Template>
                 </Button>
-                <Button Width="11" Height="11" MinWidth="11" MinHeight="11" Padding="0" Click="MaximizeRestoreButton_Click">
-                    <Button.Template><ControlTemplate><Border Background="#28C840" CornerRadius="7" /></ControlTemplate></Button.Template>
+                <Button Width="11" Height="11" MinWidth="11" MinHeight="11" Padding="0"
+                        Click="MaximizeRestoreButton_Click">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Border Background="#28C840" CornerRadius="7" />
+                        </ControlTemplate>
+                    </Button.Template>
                 </Button>
-                
             </StackPanel>
         </Grid>
     </Border>
