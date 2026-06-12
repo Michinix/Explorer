@@ -24,5 +24,6 @@
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.8" />
         <PackageReference Include="Semi.Avalonia" Version="12.0.1" />
+        <PackageReference Include="Svg.Controls.Skia.Avalonia" Version="12.0.0.11" />
     </ItemGroup>
 </Project>
