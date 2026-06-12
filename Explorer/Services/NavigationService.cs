@@ -15,6 +15,7 @@ public partial class NavigationService : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanGoBack), nameof(CanGoForward), nameof(CanGoUp))]
+    [NotifyCanExecuteChangedFor(nameof(GoBackCommand), nameof(GoForwardCommand), nameof(GoUpCommand))]
     private string _currentPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
     public bool CanGoBack => _backStack.Count > 0;
@@ -58,5 +59,11 @@ public partial class NavigationService : ObservableObject
         var parent = Directory.GetParent(CurrentPath);
         if (parent is null) return;
         NavigateTo(parent.FullName);
+    }
+    
+    [RelayCommand]
+    private void Reload()
+    {
+        WeakReferenceMessenger.Default.Send(new CurrentPathChangedMessage(CurrentPath));
     }
 }
