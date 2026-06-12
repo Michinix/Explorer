@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Explorer.Models;
 
@@ -31,8 +32,9 @@ public partial class NavigationService : ObservableObject
         _forwardStack.Clear();
         CurrentPath = path;
     }
-
-    public void GoBack()
+    
+    [RelayCommand(CanExecute = nameof(CanGoBack))]
+    private void GoBack()
     {
         if (!CanGoBack) return;
         var targetPath = _backStack.Pop(); 
@@ -40,7 +42,8 @@ public partial class NavigationService : ObservableObject
         CurrentPath = targetPath; 
     }
 
-    public void GoForward()
+    [RelayCommand(CanExecute = nameof(CanGoForward))]
+    private void GoForward()
     {
         if (!CanGoForward) return;
     
@@ -48,8 +51,9 @@ public partial class NavigationService : ObservableObject
         _backStack.Push(CurrentPath);
         CurrentPath = targetPath;
     }
-
-    public void GoUp()
+    
+    [RelayCommand(CanExecute = nameof(CanGoUp))]
+    private void GoUp()
     {
         var parent = Directory.GetParent(CurrentPath);
         if (parent is null) return;
