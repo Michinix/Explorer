@@ -4,9 +4,9 @@ using Avalonia.Interactivity;
 
 namespace Explorer.Controls;
 
-public partial class TopBar : UserControl
+public partial class Chrome : UserControl
 {
-    public TopBar()
+    public Chrome()
     {
         InitializeComponent();
     }
