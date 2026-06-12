@@ -2,13 +2,66 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="50"
-             x:Class="Explorer.Controls.NavBar">
-    
+             xmlns:vm="using:Explorer.ViewModels"
+             mc:Ignorable="d"
+             x:Class="Explorer.Controls.NavBar"
+             x:DataType="vm:NavBarViewModel">
+
     <Border Background="{StaticResource BackgroundDefault}"
             BorderBrush="{StaticResource BorderDefault}"
             BorderThickness="0,0,0,1"
             CornerRadius="10,10,0,0"
             ClipToBounds="True">
+
+        <StackPanel Orientation="Horizontal" Spacing="40" Margin="20,0" VerticalAlignment="Center"
+                    HorizontalAlignment="Left">
+            
+            <StackPanel Orientation="Horizontal" Spacing="40" VerticalAlignment="Center">
+                <Button Command="{Binding Navigation.GoBackCommand}" VerticalAlignment="Center" Padding="0" Background="Transparent" BorderBrush="Transparent">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background" Value="Transparent" />
+                        </Style>
+                    </Button.Styles>
+                    <Svg Path="/Assets/Images/Icons/Left.svg" Width="17" Height="17" VerticalAlignment="Center"
+                         Css="path { stroke: white }" />
+                </Button>
+
+                <Button Command="{Binding Navigation.GoForwardCommand}" VerticalAlignment="Center" Padding="0" Background="Transparent" BorderBrush="Transparent">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background" Value="Transparent" />
+                        </Style>
+                    </Button.Styles>
+                    <Svg Path="/Assets/Images/Icons/Right.svg" Width="17" Height="17" VerticalAlignment="Center"
+                         Css="path { stroke: white }" />
+                </Button>
+
+                <Button Command="{Binding Navigation.GoUpCommand}" VerticalAlignment="Center" Padding="0" Background="Transparent" BorderBrush="Transparent">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background" Value="Transparent" />
+                        </Style>
+                    </Button.Styles>
+                    <Svg Path="/Assets/Images/Icons/Top.svg" Width="15" Height="15" VerticalAlignment="Center"
+                         Css="path { stroke: white }" />
+                </Button>
+
+                <Button Command="{Binding Navigation.ReloadCommand}" VerticalAlignment="Center" Padding="0" Background="Transparent" BorderBrush="Transparent">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background" Value="Transparent" />
+                        </Style>
+                    </Button.Styles>
+                    <Svg Path="/Assets/Images/Icons/Reload.svg" Width="15" Height="15" VerticalAlignment="Center"
+                         Css="path { stroke: white }" />
+                </Button>
+            </StackPanel>
+
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="{Binding Navigation.CurrentPath}" VerticalAlignment="Center" />
+            </StackPanel>
+
+        </StackPanel>
     </Border>
 </UserControl>
