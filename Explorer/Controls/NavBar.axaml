@@ -59,9 +59,8 @@
             </StackPanel>
 
             <StackPanel VerticalAlignment="Center">
-                <TextBlock Text="{Binding Navigation.CurrentPath}" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding Navigation.CurrentPath}" VerticalAlignment="Center" FontSize="13" />
             </StackPanel>
-
         </StackPanel>
     </Border>
 </UserControl>
