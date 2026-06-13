@@ -37,29 +37,19 @@ public partial class NavigationService : ObservableObject
     [RelayCommand(CanExecute = nameof(CanGoBack))]
     private void GoBack()
     {
-        if (!CanGoBack) return;
-        var targetPath = _backStack.Pop(); 
-        _forwardStack.Push(CurrentPath); 
-        CurrentPath = targetPath; 
+        _forwardStack.Push(CurrentPath);
+        CurrentPath = _backStack.Pop();
     }
 
     [RelayCommand(CanExecute = nameof(CanGoForward))]
     private void GoForward()
     {
-        if (!CanGoForward) return;
-    
-        var targetPath = _forwardStack.Pop();
         _backStack.Push(CurrentPath);
-        CurrentPath = targetPath;
+        CurrentPath = _forwardStack.Pop();
     }
-    
+
     [RelayCommand(CanExecute = nameof(CanGoUp))]
-    private void GoUp()
-    {
-        var parent = Directory.GetParent(CurrentPath);
-        if (parent is null) return;
-        NavigateTo(parent.FullName);
-    }
+    private void GoUp() => NavigateTo(Directory.GetParent(CurrentPath)!.FullName);
     
     [RelayCommand]
     private void Reload()
