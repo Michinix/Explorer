@@ -10,7 +10,7 @@
         x:Class="Explorer.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Title="Explorer"
-        Icon="/Assets/Images/Logo.ico"
+        Icon="/Assets/Logo.ico"
         WindowStartupLocation="CenterScreen"
         WindowDecorations="None"
         ExtendClientAreaToDecorationsHint="True"

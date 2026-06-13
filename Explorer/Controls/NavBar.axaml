@@ -23,7 +23,7 @@
                             <Setter Property="Background" Value="Transparent" />
                         </Style>
                     </Button.Styles>
-                    <Svg Path="/Assets/Images/Left.svg" Width="17" Height="17" VerticalAlignment="Center"
+                    <Svg Path="/Assets/Left.svg" Width="17" Height="17" VerticalAlignment="Center"
                          Css="path { stroke: white }" />
                 </Button>
 
@@ -33,7 +33,7 @@
                             <Setter Property="Background" Value="Transparent" />
                         </Style>
                     </Button.Styles>
-                    <Svg Path="/Assets/Images/Right.svg" Width="17" Height="17" VerticalAlignment="Center"
+                    <Svg Path="/Assets/Right.svg" Width="17" Height="17" VerticalAlignment="Center"
                          Css="path { stroke: white }" />
                 </Button>
 
@@ -43,7 +43,7 @@
                             <Setter Property="Background" Value="Transparent" />
                         </Style>
                     </Button.Styles>
-                    <Svg Path="/Assets/Images/Top.svg" Width="15" Height="15" VerticalAlignment="Center"
+                    <Svg Path="/Assets/Top.svg" Width="15" Height="15" VerticalAlignment="Center"
                          Css="path { stroke: white }" />
                 </Button>
 
@@ -53,7 +53,7 @@
                             <Setter Property="Background" Value="Transparent" />
                         </Style>
                     </Button.Styles>
-                    <Svg Path="/Assets/Images/Reload.svg" Width="15" Height="15" VerticalAlignment="Center"
+                    <Svg Path="/Assets/Reload.svg" Width="15" Height="15" VerticalAlignment="Center"
                          Css="path { stroke: white }" />
                 </Button>
             </StackPanel>

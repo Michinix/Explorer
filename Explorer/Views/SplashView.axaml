@@ -11,7 +11,7 @@
         Orientation="Vertical"
         Spacing="64">
         <Image Width="700"
-               Source="avares://Explorer/Assets/Images/Banner.png"
+               Source="avares://Explorer/Assets/Banner.png"
                Stretch="Uniform" />
         <ProgressBar
             Width="50"
