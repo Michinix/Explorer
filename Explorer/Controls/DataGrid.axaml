@@ -6,6 +6,7 @@
              xmlns:models="using:Explorer.Models"
              mc:Ignorable="d"
              x:Class="Explorer.Controls.DataGrid"
+             x:Name="DataGridControl"
              x:DataType="vm:DataGridViewModel">
 
     <DataGrid SelectedItem="{Binding SelectedEntry}"
@@ -33,7 +34,7 @@
                 <Setter Property="BorderThickness" Value="0,0,0,1" />
             </Style>
 
-            <Style Selector="DataGridColumnHeader:nth-child(-n+3)">
+            <Style Selector="DataGridColumnHeader:nth-child(-n+4)">
                 <Setter Property="BorderThickness" Value="0,0,1,1" />
             </Style>
 
@@ -74,15 +75,23 @@
             <Style Selector="DataGridCell.colMeta TextBlock">
                 <Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
             </Style>
+            
+            <Style Selector="DataGridCell:nth-child(1)">
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+            </Style>
         </DataGrid.Styles>
 
         <DataGrid.Columns>
             <DataGridTemplateColumn Width="45" CanUserResize="False" CanUserSort="False">
+                <DataGridTemplateColumn.Header>
+                    <CheckBox IsChecked="{Binding #DataGridControl.((vm:DataGridViewModel)DataContext)?.AllSelected, Mode=TwoWay}"
+                              HorizontalAlignment="Center" />
+                </DataGridTemplateColumn.Header>
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate x:DataType="models:FileSystemEntry">
-                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center" />
+                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" />
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>

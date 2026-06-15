@@ -14,21 +14,37 @@ public partial class DataGridViewModel : ViewModelBase
     private readonly NavigationService _navigation;
 
     [ObservableProperty] private FileSystemEntry? _selectedEntry;
-    
-    [ObservableProperty] private ObservableCollection<FileSystemEntry> _selectedEntries = [];
-    
-    [ObservableProperty] 
-    [NotifyPropertyChangedFor(nameof(FolderCount), nameof(FileCount))]
+
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(FolderCount), nameof(FileCount))]
     private ObservableCollection<FileSystemEntry> _entries = [];
-    
+
+    public bool AllSelected
+    {
+        get => Entries.Count > 0 && Entries.All(e => e.IsSelected);
+        set
+        {
+            foreach (var entry in Entries)
+                entry.IsSelected = value;
+            OnPropertyChanged();
+        }
+    }
+
     public int FolderCount => Entries.Count(e => e.IsDirectory);
     public int FileCount => Entries.Count(e => !e.IsDirectory);
-    
+
     public DataGridViewModel(NavigationService navigation)
     {
         _navigation = navigation;
+
+        WeakReferenceMessenger.Default.Register<CurrentPathChangedMessage>(this,
+            async (r, m) => await LoadEntriesAsync());
+    }
     
-        WeakReferenceMessenger.Default.Register<CurrentPathChangedMessage>(this, async (r, m) => await LoadEntriesAsync());
+    partial void OnEntriesChanged(ObservableCollection<FileSystemEntry> value)
+    {
+        foreach (var entry in value)
+            entry.IsSelected = false;
+        OnPropertyChanged(nameof(AllSelected));
     }
 
     public async Task LoadEntriesAsync()
