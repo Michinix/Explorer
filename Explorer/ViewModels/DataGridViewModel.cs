@@ -28,10 +28,7 @@ public partial class DataGridViewModel : ViewModelBase
     {
         _navigation = navigation;
     
-        WeakReferenceMessenger.Default.Register<CurrentPathChangedMessage>(this, async (r, m) =>
-        {
-            await LoadEntriesAsync();
-        });
+        WeakReferenceMessenger.Default.Register<CurrentPathChangedMessage>(this, async (r, m) => await LoadEntriesAsync());
     }
 
     public async Task LoadEntriesAsync()
