@@ -10,7 +10,7 @@ namespace Explorer.Services;
 
 public static class FileSystemService
 {
-    public static async Task<List<FileSystemEntry>> ListEntries(string path)
+    public static async Task<ICollection<FileSystemEntry>> ListEntries(string path)
     {
         return await Task.Run(() =>
         {
@@ -29,7 +29,7 @@ public static class FileSystemService
                         e is FileInfo f ? FormatSize(f.Length) : "—",
                         e.LastWriteTime
                     ))
-                    .ToList();
+                    .ToArray();
             }
             catch (Exception ex)
             {
