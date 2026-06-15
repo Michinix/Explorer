@@ -33,6 +33,10 @@
                 <Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
                 <Setter Property="BorderThickness" Value="0,0,0,1" />
             </Style>
+            
+            <Style Selector="DataGridColumnHeader:nth-child(1)">
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+            </Style>
 
             <Style Selector="DataGridColumnHeader:nth-child(-n+4)">
                 <Setter Property="BorderThickness" Value="0,0,1,1" />
