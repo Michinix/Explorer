@@ -22,12 +22,12 @@ public static class FileSystemService
                     .OrderBy(e => e is FileInfo)
                     .ThenBy(e => e.Name)
                     .Select(e => new FileSystemEntry(
-                        Name: e.Name,
-                        FullPath: e.FullName,
-                        Type: e.Extension.TrimStart('.').ToUpper(),
-                        IsDirectory: e is DirectoryInfo,
-                        DisplaySize: e is FileInfo f ? FormatSize(f.Length) : "—",
-                        LastModified: e.LastWriteTime
+                        e.Name,
+                        e.FullName,
+                        e.Extension.TrimStart('.').ToUpper(),
+                        e is DirectoryInfo,
+                        e is FileInfo f ? FormatSize(f.Length) : "—",
+                        e.LastWriteTime
                     ))
                     .ToList();
             }
