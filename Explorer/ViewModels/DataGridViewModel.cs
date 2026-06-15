@@ -15,6 +15,8 @@ public partial class DataGridViewModel : ViewModelBase
 
     [ObservableProperty] private FileSystemEntry? _selectedEntry;
     
+    [ObservableProperty] private ObservableCollection<FileSystemEntry> _selectedEntries = [];
+    
     [ObservableProperty] 
     [NotifyPropertyChangedFor(nameof(FolderCount), nameof(FileCount))]
     private ObservableCollection<FileSystemEntry> _entries = [];

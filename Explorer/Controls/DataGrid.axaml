@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Explorer.ViewModels"
+             xmlns:models="using:Explorer.Models"
              mc:Ignorable="d"
              x:Class="Explorer.Controls.DataGrid"
              x:DataType="vm:DataGridViewModel">
@@ -10,12 +11,14 @@
     <DataGrid SelectedItem="{Binding SelectedEntry}"
               DoubleTapped="OnRowDoubleTapped"
               ItemsSource="{Binding Entries}"
+              SelectionMode="Extended"
               AutoGenerateColumns="False"
               Foreground="{StaticResource ColorWhite}"
               GridLinesVisibility="All"
               HorizontalGridLinesBrush="{StaticResource BorderDefault}"
               VerticalGridLinesBrush="{StaticResource BorderDefault}"
-              CanUserReorderColumns="False" VerticalAlignment="Top"
+              CanUserReorderColumns="False" 
+              VerticalAlignment="Top"
               IsReadOnly="True">
 
         <DataGrid.Styles>
@@ -71,28 +74,37 @@
             <Style Selector="DataGridCell.colMeta TextBlock">
                 <Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
             </Style>
-
         </DataGrid.Styles>
 
         <DataGrid.Columns>
+            <DataGridTemplateColumn Width="45" CanUserResize="False" CanUserSort="False">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate x:DataType="models:FileSystemEntry">
+                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center" />
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+
             <DataGridTextColumn Header="NOM" 
                                 Binding="{Binding Name, Mode=OneWay}" 
-                                Width="*" 
+                                Width="2*" 
                                 CellStyleClasses="colName" />
-    
+            
             <DataGridTextColumn Header="TAILLE" 
                                 Binding="{Binding DisplaySize, Mode=OneWay}" 
-                                Width="90"
+                                Width="100" 
                                 CellStyleClasses="colMeta" />
-    
+
             <DataGridTextColumn Header="TYPE" 
                                 Binding="{Binding DisplayType, Mode=OneWay}" 
                                 Width="100" 
                                 CellStyleClasses="colMeta" />
-    
+
             <DataGridTextColumn Header="MODIFIÉ LE" 
                                 Binding="{Binding LastModified, Mode=OneWay}" 
-                                Width="Auto"
+                                Width="150" 
                                 CellStyleClasses="colMeta" />
         </DataGrid.Columns>
     </DataGrid>
