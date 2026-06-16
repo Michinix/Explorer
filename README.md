@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://michelmarcotte.fr">
-      <img src="Explorer/Assets/Images/Banner/Banner.png" alt="Explorer Banner" width="600" />
+      <img src="Explorer/Assets/Banner.png" alt="Explorer Banner" width="600" />
   </a>
 </p>
 
