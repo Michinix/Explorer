@@ -18,58 +18,17 @@
               GridLinesVisibility="All"
               HorizontalGridLinesBrush="{StaticResource BorderDefault}"
               VerticalGridLinesBrush="{StaticResource BorderDefault}"
-              CanUserReorderColumns="False" 
+              CanUserReorderColumns="False"
               VerticalAlignment="Top"
               IsReadOnly="True">
 
         <DataGrid.Styles>
-            <Style Selector="DataGridColumnHeader">
-                <Setter Property="Background" Value="{StaticResource SurfaceElevated}" />
-                <Setter Property="Foreground" Value="{StaticResource ColorWhite}" />
-                <Setter Property="FontSize" Value="11" />
-                <Setter Property="Padding" Value="10,10" />
-                <Setter Property="HorizontalContentAlignment" Value="Left" />
-                <Setter Property="VerticalContentAlignment" Value="Center" />
-                <Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
-                <Setter Property="BorderThickness" Value="0,0,0,1" />
-            </Style>
-            
             <Style Selector="DataGridColumnHeader:nth-child(1)">
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
             </Style>
 
             <Style Selector="DataGridColumnHeader:nth-child(-n+4)">
                 <Setter Property="BorderThickness" Value="0,0,1,1" />
-            </Style>
-
-            <Style Selector="DataGridCell">
-                <Setter Property="Padding" Value="10,10" />
-                <Setter Property="FontSize" Value="12" />
-                <Setter Property="HorizontalContentAlignment" Value="Left" />
-                <Setter Property="VerticalContentAlignment" Value="Center" />
-                <Setter Property="BorderThickness" Value="0" />
-            </Style>
-
-            <Style Selector="DataGridCell TextBlock">
-                <Setter Property="Margin" Value="0" />
-            </Style>
-
-            <Style Selector="DataGridColumnHeader ContentPresenter">
-                <Setter Property="Margin" Value="0" />
-            </Style>
-
-            <Style Selector="DataGridCell ContentPresenter">
-                <Setter Property="Margin" Value="0" />
-            </Style>
-
-            <Style Selector="DataGridRow:pointerover">
-                <Setter Property="Background" Value="#2A2A2A" />
-                <Setter Property="Cursor" Value="Hand" />
-            </Style>
-
-            <Style Selector="DataGridRow:selected">
-                <Setter Property="Background" Value="#2A2A2A" />
-                <Setter Property="Foreground" Value="{StaticResource AccentPrimary}" />
             </Style>
 
             <Style Selector="DataGridCell.colName TextBlock">
@@ -79,7 +38,7 @@
             <Style Selector="DataGridCell.colMeta TextBlock">
                 <Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
             </Style>
-            
+
             <Style Selector="DataGridCell:nth-child(1)">
                 <Setter Property="Padding" Value="0" />
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -100,24 +59,24 @@
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
 
-            <DataGridTextColumn Header="NOM" 
-                                Binding="{Binding Name, Mode=OneWay}" 
-                                Width="2*" 
+            <DataGridTextColumn Header="NOM"
+                                Binding="{Binding Name, Mode=OneWay}"
+                                Width="2*"
                                 CellStyleClasses="colName" />
-            
-            <DataGridTextColumn Header="TAILLE" 
-                                Binding="{Binding DisplaySize, Mode=OneWay}" 
-                                Width="100" 
+
+            <DataGridTextColumn Header="TAILLE"
+                                Binding="{Binding DisplaySize, Mode=OneWay}"
+                                Width="100"
                                 CellStyleClasses="colMeta" />
 
-            <DataGridTextColumn Header="TYPE" 
-                                Binding="{Binding DisplayType, Mode=OneWay}" 
-                                Width="100" 
+            <DataGridTextColumn Header="TYPE"
+                                Binding="{Binding DisplayType, Mode=OneWay}"
+                                Width="100"
                                 CellStyleClasses="colMeta" />
 
-            <DataGridTextColumn Header="MODIFIÉ LE" 
-                                Binding="{Binding LastModified, Mode=OneWay}" 
-                                Width="150" 
+            <DataGridTextColumn Header="MODIFIÉ LE"
+                                Binding="{Binding LastModified, Mode=OneWay}"
+                                Width="150"
                                 CellStyleClasses="colMeta" />
         </DataGrid.Columns>
     </DataGrid>
