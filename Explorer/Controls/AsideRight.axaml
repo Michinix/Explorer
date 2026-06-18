@@ -28,7 +28,7 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center">
 
-                    <Svg Path="/Assets/Element.svg"
+                    <Svg Path="/Assets/Icons/Element.svg"
                          Width="19"
                          Height="19"
                          HorizontalAlignment="Center"
