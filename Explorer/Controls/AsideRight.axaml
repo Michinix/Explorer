@@ -1,0 +1,59 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Explorer.ViewModels"
+             mc:Ignorable="d"
+             x:Class="Explorer.Controls.AsideRight"
+             x:DataType="vm:DataGridViewModel">
+
+    <Border BorderThickness="1,0,0,0"
+            BorderBrush="{StaticResource BorderDefault}">
+
+        <Grid RowDefinitions="50,*">
+            <Border Grid.Row="0"
+                    BorderThickness="0,0,0,1"
+                    BorderBrush="{StaticResource BorderDefault}">
+
+                <Grid VerticalAlignment="Center" Margin="10,0">
+                    <TextBlock Text="APERÇU"
+                               FontSize="15"
+                               Foreground="{StaticResource ColorWhite}" />
+                </Grid>
+            </Border>
+            <Grid Grid.Row="1">
+                <StackPanel IsVisible="{Binding SelectedEntry, Converter={x:Static ObjectConverters.IsNull}}"
+                            Orientation="Vertical"
+                            Spacing="10"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+
+                    <Svg Path="/Assets/Element.svg"
+                         Width="19"
+                         Height="19"
+                         HorizontalAlignment="Center"
+                         Css="path { stroke: #848484 }" />
+
+                    <TextBlock Text="Sélectionner un élément"
+                               HorizontalAlignment="Center"
+                               Foreground="{StaticResource ForegroundMuted}"
+                               FontWeight="Regular" />
+
+                </StackPanel>
+
+                <StackPanel IsVisible="{Binding SelectedEntry, Converter={x:Static ObjectConverters.IsNotNull}}"
+                            Orientation="Vertical"
+                            Spacing="10"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+
+                    <TextBlock Text="Aperçu de l'élément"
+                               HorizontalAlignment="Center"
+                               Foreground="{StaticResource ForegroundMuted}"
+                               FontWeight="Regular" />
+
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>
