@@ -9,9 +9,13 @@
     <Application.DataTemplates>
         <local:ViewLocator />
     </Application.DataTemplates>
-
+    
     <Application.Resources>
         <ResourceDictionary>
+            <FontFamily x:Key="DmSansFont">avares://Explorer/Assets/Fonts/#DM Sans</FontFamily>
+
+            <StaticResource x:Key="DefaultFontFamily" ResourceKey="DmSansFont" />
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="avares://Explorer/Theme/Styles/Colors.axaml" />
             </ResourceDictionary.MergedDictionaries>
