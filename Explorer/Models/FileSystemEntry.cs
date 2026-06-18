@@ -12,12 +12,12 @@ public partial class FileSystemEntry(
     DateTime lastModified
 ) : ObservableObject
 {
-    public string Name { get; init; } = name;
-    public string FullPath { get; init; } = fullPath;
-    public string Type { get; init; } = type;
-    public bool IsDirectory { get; init; } = isDirectory;
-    public string DisplaySize { get; init; } = displaySize;
-    public DateTime LastModified { get; init; } = lastModified;
+    public string Name { get; } = name;
+    public string FullPath { get; } = fullPath;
+    public string Type { get; } = type;
+    public bool IsDirectory { get; } = isDirectory;
+    public string DisplaySize { get; } = displaySize;
+    public DateTime LastModified { get; } = lastModified;
 
     public string DisplayType => IsDirectory ? "DOSSIER" : $"Fichier {Type}";
 
