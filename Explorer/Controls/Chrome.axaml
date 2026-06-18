@@ -45,6 +45,13 @@
                     </Button.Template>
                 </Button>
             </StackPanel>
+            
+        <TextBlock Text="Explorer"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   FontSize="13"
+                   FontWeight="Regular"
+                   Foreground="{StaticResource ForegroundMuted}" />
         </Grid>
     </Border>
 </UserControl>
