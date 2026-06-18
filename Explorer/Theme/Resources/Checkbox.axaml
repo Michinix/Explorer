@@ -1,0 +1,29 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Default CheckBox appearance -->
+    <Style Selector="CheckBox">
+        <Setter Property="Foreground" Value="{StaticResource AccentPrimary}" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="Padding" Value="8,0,0,0" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="CornerRadius" Value="3" />
+    </Style>
+
+    <!-- Checked state: container (border/background) -->
+    <Style Selector="CheckBox:checked /template/ Border#NormalRectangle">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+
+    <!-- Checked state: tick (glyph) color -->
+    <Style Selector="CheckBox:checked Path">
+        <Setter Property="Fill" Value="{StaticResource AccentPrimary}" />
+        <Setter Property="Stroke" Value="{StaticResource AccentPrimary}" />
+    </Style>
+
+    <!-- Hover state -->
+    <Style Selector="CheckBox:pointerover /template/ Border#NormalRectangle">
+        <Setter Property="BorderBrush" Value="{StaticResource AccentPrimary}" />
+    </Style>
+
+</Styles>
