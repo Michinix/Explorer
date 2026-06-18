@@ -1,6 +1,7 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!-- DataGrid column headers -->
     <Style Selector="DataGridColumnHeader">
         <Setter Property="Background" Value="{StaticResource SurfaceElevated}" />
         <Setter Property="Foreground" Value="{StaticResource ColorWhite}" />
@@ -12,6 +13,7 @@
         <Setter Property="BorderThickness" Value="0,0,0,1" />
     </Style>
 
+    <!-- DataGrid cells -->
     <Style Selector="DataGridCell">
         <Setter Property="Padding" Value="10,10" />
         <Setter Property="FontSize" Value="12" />
@@ -20,25 +22,30 @@
         <Setter Property="BorderThickness" Value="0" />
     </Style>
 
+    <!-- DataGrid cell content (TextBlock reset margin) -->
     <Style Selector="DataGridCell TextBlock">
         <Setter Property="Margin" Value="0" />
     </Style>
 
+    <!-- DataGrid column header content spacing reset -->
     <Style Selector="DataGridColumnHeader ContentPresenter">
         <Setter Property="Margin" Value="0" />
     </Style>
 
+    <!-- DataGrid cell content presenter spacing reset -->
     <Style Selector="DataGridCell ContentPresenter">
         <Setter Property="Margin" Value="0" />
     </Style>
 
+    <!-- DataGrid row hover state -->
     <Style Selector="DataGridRow:pointerover">
-        <Setter Property="Background" Value="#2A2A2A" />
+        <Setter Property="Background" Value="{StaticResource AccentSelection}" />
         <Setter Property="Cursor" Value="Hand" />
     </Style>
 
+    <!-- DataGrid row selected state -->
     <Style Selector="DataGridRow:selected">
-        <Setter Property="Background" Value="#2A2A2A" />
+        <Setter Property="Background" Value="{StaticResource AccentSelection}" />
         <Setter Property="Foreground" Value="{StaticResource AccentPrimary}" />
     </Style>
 
