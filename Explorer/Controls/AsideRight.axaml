@@ -46,12 +46,8 @@
                             Spacing="10"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center">
-
-                    <TextBlock Text="Aperçu de l'élément"
-                               HorizontalAlignment="Center"
-                               Foreground="{StaticResource ForegroundMuted}"
-                               FontWeight="Regular" />
-
+                    
+                    <!-- TODO: Add preview of selected entry -->
                 </StackPanel>
             </Grid>
         </Grid>
