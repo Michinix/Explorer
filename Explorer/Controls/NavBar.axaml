@@ -13,11 +13,12 @@
             CornerRadius="10,10,0,0"
             ClipToBounds="True">
 
-        <StackPanel Orientation="Horizontal" Spacing="40" Margin="20,0" VerticalAlignment="Center"
+        <StackPanel Orientation="Horizontal" Spacing="35" Margin="15,0" VerticalAlignment="Center"
                     HorizontalAlignment="Left">
-            
-            <StackPanel Orientation="Horizontal" Spacing="40" VerticalAlignment="Center">
-                <Button Command="{Binding Navigation.GoBackCommand}" VerticalAlignment="Center" Padding="0" Background="Transparent" BorderBrush="Transparent">
+
+            <StackPanel Orientation="Horizontal" Spacing="35" VerticalAlignment="Center">
+                <Button Command="{Binding Navigation.GoBackCommand}" VerticalAlignment="Center" Padding="0"
+                        Background="Transparent" BorderBrush="Transparent">
                     <Button.Styles>
                         <Style Selector="Button:pointerover /template/ ContentPresenter">
                             <Setter Property="Background" Value="Transparent" />
@@ -27,7 +28,8 @@
                          Css="path { stroke: white }" />
                 </Button>
 
-                <Button Command="{Binding Navigation.GoForwardCommand}" VerticalAlignment="Center" Padding="0" Background="Transparent" BorderBrush="Transparent">
+                <Button Command="{Binding Navigation.GoForwardCommand}" VerticalAlignment="Center" Padding="0"
+                        Background="Transparent" BorderBrush="Transparent">
                     <Button.Styles>
                         <Style Selector="Button:pointerover /template/ ContentPresenter">
                             <Setter Property="Background" Value="Transparent" />
@@ -37,7 +39,8 @@
                          Css="path { stroke: white }" />
                 </Button>
 
-                <Button Command="{Binding Navigation.GoUpCommand}" VerticalAlignment="Center" Padding="0" Background="Transparent" BorderBrush="Transparent">
+                <Button Command="{Binding Navigation.GoUpCommand}" VerticalAlignment="Center" Padding="0"
+                        Background="Transparent" BorderBrush="Transparent">
                     <Button.Styles>
                         <Style Selector="Button:pointerover /template/ ContentPresenter">
                             <Setter Property="Background" Value="Transparent" />
@@ -47,7 +50,8 @@
                          Css="path { stroke: white }" />
                 </Button>
 
-                <Button Command="{Binding Navigation.ReloadCommand}" VerticalAlignment="Center" Padding="0" Background="Transparent" BorderBrush="Transparent">
+                <Button Command="{Binding Navigation.ReloadCommand}" VerticalAlignment="Center" Padding="0"
+                        Background="Transparent" BorderBrush="Transparent">
                     <Button.Styles>
                         <Style Selector="Button:pointerover /template/ ContentPresenter">
                             <Setter Property="Background" Value="Transparent" />

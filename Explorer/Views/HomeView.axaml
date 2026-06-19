@@ -17,14 +17,14 @@
         </StackPanel>
 
         <Grid Grid.Row="2"
-              ColumnDefinitions="235,*,235">
+              ColumnDefinitions="0.235*,*,0.235*">
 
-            <controls:AsideLeft Grid.Column="0"/>
+            <controls:AsideLeft Grid.Column="0" />
 
             <controls:DataGrid Grid.Column="1"
                                DataContext="{Binding DataGrid}" />
 
-            <controls:AsideRight Grid.Column="2" DataContext="{Binding DataGrid}"/>
+            <controls:AsideRight Grid.Column="2" DataContext="{Binding DataGrid}" />
 
         </Grid>
 

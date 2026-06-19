@@ -16,11 +16,9 @@
         ExtendClientAreaToDecorationsHint="True"
         ExtendClientAreaTitleBarHeightHint="0"
         Background="Transparent"
-        CanResize="False"
-        MinWidth="200"
-        MinHeight="200"
-        MaxWidth="1900"
-        MaxHeight="1024"
+        CanResize="True"
+        MinWidth="1100"
+        MinHeight="700"
         UseLayoutRounding="True"
         TransparencyLevelHint="Transparent">
 

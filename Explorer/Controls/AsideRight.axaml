@@ -15,7 +15,7 @@
                     BorderThickness="0,0,0,1"
                     BorderBrush="{StaticResource BorderDefault}">
 
-                <Grid VerticalAlignment="Center" Margin="10,0">
+                <Grid VerticalAlignment="Center" Margin="13,0">
                     <TextBlock Text="APERÇU"
                                FontSize="15"
                                Foreground="{StaticResource ColorWhite}" />
