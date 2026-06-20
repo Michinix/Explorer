@@ -24,7 +24,7 @@
                                 MaxWidth="250" />
 
             <controls:DataGrid Grid.Column="1" 
-                               MinWidth="600"
+                               MinWidth="400"
                                MinHeight="300"
                                DataContext="{Binding DataGrid}" />
 
