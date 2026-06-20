@@ -55,10 +55,32 @@
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
 
-            <DataGridTextColumn Header="NOM"
-                                Binding="{Binding Name, Mode=OneWay}"
-                                Width="2*"
-                                CellStyleClasses="colName has-border" />
+            <DataGridTemplateColumn Header="NOM" Width="2*" CellStyleClasses="colName has-border">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate x:DataType="models:FileSystemEntry">
+                        <StackPanel Orientation="Horizontal" Spacing="9" VerticalAlignment="Center">
+                            
+                            <Svg Path="/Assets/Icons/Directory.svg"
+                                     Width="18" Height="18"
+                                     IsVisible="{Binding IsDirectory}" />
+                            
+                            <Border Width="18" Height="18"
+                                    CornerRadius="3"
+                                    Background="{Binding IconBrush}"
+                                    IsVisible="{Binding !IsDirectory}">
+                                <TextBlock Text="{Binding IconLabel}"
+                                           FontSize="7"
+                                           FontWeight="Bold"
+                                           Foreground="White"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" />
+                            </Border>
+
+                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
 
             <DataGridTextColumn Header="TAILLE"
                                 Binding="{Binding DisplaySize, Mode=OneWay}"
