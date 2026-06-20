@@ -24,7 +24,8 @@
                                 MaxWidth="250" />
 
             <controls:DataGrid Grid.Column="1" 
-                               MinWidth="400"
+                               MinWidth="600"
+                               MinHeight="300"
                                DataContext="{Binding DataGrid}" />
 
             <controls:AsideRight Grid.Column="2" 
@@ -36,6 +37,5 @@
 
         <controls:Footer Grid.Row="3"
                          DataContext="{Binding DataGrid}" />
-
     </Grid>
 </UserControl>
