@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -43,8 +44,17 @@ public partial class DataGridViewModel : ViewModelBase
     partial void OnEntriesChanged(ObservableCollection<FileSystemEntry> value)
     {
         foreach (var entry in value)
+        {
             entry.IsSelected = false;
+            entry.PropertyChanged += OnEntryPropertyChanged;
+        }
         OnPropertyChanged(nameof(AllSelected));
+    }
+    
+    private void OnEntryPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(FileSystemEntry.IsSelected))
+            OnPropertyChanged(nameof(AllSelected));
     }
 
     public async Task LoadEntriesAsync()

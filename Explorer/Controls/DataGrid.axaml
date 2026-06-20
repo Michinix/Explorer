@@ -45,7 +45,7 @@
             <DataGridTemplateColumn Width="45" CanUserResize="False" CanUserSort="False"
                                     CellStyleClasses="has-border">
                 <DataGridTemplateColumn.Header>
-                    <CheckBox IsChecked="{Binding #DataGridControl.((vm:DataGridViewModel)DataContext)?.AllSelected, Mode=TwoWay}"
+                    <CheckBox IsChecked="{Binding AllSelected, Mode=TwoWay}"
                               HorizontalAlignment="Center" />
                 </DataGridTemplateColumn.Header>
                 <DataGridTemplateColumn.CellTemplate>
