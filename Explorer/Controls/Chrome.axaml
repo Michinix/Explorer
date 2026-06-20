@@ -92,9 +92,9 @@
             <TextBlock Text="Explorer"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
-                       FontSize="12"
+                       FontSize="13"
                        FontWeight="Regular"
-                       Foreground="{StaticResource ForegroundMuted}" />
+                       Foreground="{StaticResource ColorWhiteBrush}" />
         </Grid>
     </Border>
 </UserControl>
