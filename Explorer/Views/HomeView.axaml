@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Explorer.ViewModels"
              xmlns:controls="using:Explorer.Controls"
-             mc:Ignorable="d" d:DesignWidth="1900" d:DesignHeight="1024"
+             mc:Ignorable="d"
              x:Class="Explorer.Views.HomeView"
              x:DataType="vm:HomeViewModel">
 
