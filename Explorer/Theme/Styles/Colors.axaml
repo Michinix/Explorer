@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
-    <!-- Colors -->
+    
     <Color x:Key="ColorWhite">#FFFFFF</Color>
     <Color x:Key="BorderDefaultColor">#333333</Color>
     <Color x:Key="ForegroundMutedColor">#848484</Color>
@@ -15,8 +14,7 @@
     <Color x:Key="OverlayDimColor">#BF000000</Color>
     <Color x:Key="AccentSelectionColor">#2400AAFF</Color>
     <Color x:Key="SurfaceOverlayColor">#252525</Color>
-
-    <!-- Brushes -->
+    
     <SolidColorBrush x:Key="ColorWhiteBrush" Color="{StaticResource ColorWhite}" />
     <SolidColorBrush x:Key="BorderDefault" Color="{StaticResource BorderDefaultColor}" />
     <SolidColorBrush x:Key="ForegroundMuted" Color="{StaticResource ForegroundMutedColor}" />
