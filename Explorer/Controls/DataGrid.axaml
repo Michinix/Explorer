@@ -59,13 +59,14 @@
             <DataGridTemplateColumn Header="NOM" Width="2*" CellStyleClasses="colName has-border">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate x:DataType="models:FileSystemEntry">
-                        <StackPanel Orientation="Horizontal" Spacing="9" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Spacing="9" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center">
                             <controls:FileIcon Width="18" Height="20"
-                                                IconBrush="{Binding IconBrush}"
-                                                IconLabel="{Binding IconLabel}"
-                                                IsDirectory="{Binding IsDirectory}" />
+                                               IconBrush="{Binding IconBrush}"
+                                               IconLabel="{Binding IconLabel}"
+                                               IsDirectory="{Binding IsDirectory}" />
 
-                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </StackPanel>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
