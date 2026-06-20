@@ -15,20 +15,15 @@
               SelectionMode="Extended"
               AutoGenerateColumns="False"
               Foreground="{StaticResource ColorWhite}"
-              GridLinesVisibility="All"
-              HorizontalGridLinesBrush="{StaticResource BorderDefault}"
-              VerticalGridLinesBrush="{StaticResource BorderDefault}"
+              GridLinesVisibility="None"
               CanUserReorderColumns="False"
               VerticalAlignment="Top"
+              BorderThickness="0"
               IsReadOnly="True">
 
         <DataGrid.Styles>
             <Style Selector="DataGridColumnHeader:nth-child(1)">
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
-            </Style>
-
-            <Style Selector="DataGridColumnHeader:nth-child(-n+4)">
-                <Setter Property="BorderThickness" Value="0,0,1,1" />
             </Style>
 
             <Style Selector="DataGridCell.colName TextBlock">
@@ -47,7 +42,8 @@
         </DataGrid.Styles>
 
         <DataGrid.Columns>
-            <DataGridTemplateColumn Width="45" CanUserResize="False" CanUserSort="False">
+            <DataGridTemplateColumn Width="45" CanUserResize="False" CanUserSort="False"
+                                    CellStyleClasses="has-border">
                 <DataGridTemplateColumn.Header>
                     <CheckBox IsChecked="{Binding #DataGridControl.((vm:DataGridViewModel)DataContext)?.AllSelected, Mode=TwoWay}"
                               HorizontalAlignment="Center" />
@@ -62,17 +58,17 @@
             <DataGridTextColumn Header="NOM"
                                 Binding="{Binding Name, Mode=OneWay}"
                                 Width="2*"
-                                CellStyleClasses="colName" />
+                                CellStyleClasses="colName has-border" />
 
             <DataGridTextColumn Header="TAILLE"
                                 Binding="{Binding DisplaySize, Mode=OneWay}"
                                 Width="100"
-                                CellStyleClasses="colMeta" />
+                                CellStyleClasses="colMeta has-border" />
 
             <DataGridTextColumn Header="TYPE"
                                 Binding="{Binding DisplayType, Mode=OneWay}"
                                 Width="100"
-                                CellStyleClasses="colMeta" />
+                                CellStyleClasses="colMeta has-border" />
 
             <DataGridTextColumn Header="MODIFIÉ LE"
                                 Binding="{Binding LastModified, Mode=OneWay}"

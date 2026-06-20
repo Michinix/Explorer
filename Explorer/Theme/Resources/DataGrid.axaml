@@ -9,8 +9,18 @@
         <Setter Property="Padding" Value="10,10" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
         <Setter Property="BorderThickness" Value="0,0,0,1" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
+    </Style>
+
+    <!-- First column header: add a right border to separate it from the next column -->
+    <Style Selector="DataGridColumnHeader:nth-child(1)">
+        <Setter Property="BorderThickness" Value="0,0,1,1" />
+    </Style>
+
+    <!-- Columns from the 3rd onward: add a left border instead of a right one -->
+    <Style Selector="DataGridColumnHeader:nth-child(n+3)">
+        <Setter Property="BorderThickness" Value="1,0,0,1" />
     </Style>
 
     <!-- DataGrid cells -->
@@ -19,10 +29,16 @@
         <Setter Property="FontSize" Value="12" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
+        <Setter Property="BorderThickness" Value="0,0,0,1" />
     </Style>
 
-    <!-- DataGrid cell content (TextBlock reset margin) -->
+    <!-- Cells flagged with this class get an extra right border (column separator) -->
+    <Style Selector="DataGridCell.has-border">
+        <Setter Property="BorderThickness" Value="0,0,1,1" />
+    </Style>
+
+    <!-- DataGrid cell content (TextBlock margin reset) -->
     <Style Selector="DataGridCell TextBlock">
         <Setter Property="Margin" Value="0" />
     </Style>
