@@ -24,7 +24,7 @@
                             <Setter Property="Background" Value="Transparent" />
                         </Style>
                     </Button.Styles>
-                    <Svg Path="/Assets/Icons/Left.svg" Width="17" Height="17" VerticalAlignment="Center"
+                    <Svg Path="/Assets/Icons/Left.svg" Width="15" Height="15" VerticalAlignment="Center"
                          Css="path { stroke: white }" />
                 </Button>
 
@@ -35,7 +35,7 @@
                             <Setter Property="Background" Value="Transparent" />
                         </Style>
                     </Button.Styles>
-                    <Svg Path="/Assets/Icons/Right.svg" Width="17" Height="17" VerticalAlignment="Center"
+                    <Svg Path="/Assets/Icons/Right.svg" Width="15" Height="15" VerticalAlignment="Center"
                          Css="path { stroke: white }" />
                 </Button>
 
