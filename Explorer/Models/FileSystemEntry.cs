@@ -22,6 +22,7 @@ public partial class FileSystemEntry(
     public DateTime LastModified { get; } = lastModified;
 
     public string DisplayType => IsDirectory ? "DOSSIER" : $"Fichier {Type}";
+    public string TypeLabel => IsDirectory ? "DOSSIER" : Type;
     
     public IBrush IconBrush => FileTypeColorsService.GetBrush(Type);
     public string IconLabel => string.IsNullOrEmpty(Type) ? "?" : Type.Length > 3 ? Type[..3] : Type;
