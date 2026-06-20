@@ -98,6 +98,11 @@
                                    Foreground="{StaticResource ForegroundMuted}"
                                    FontWeight="Regular" FontSize="12" />
                     </StackPanel>
+                    
+                    <Border BorderBrush="{StaticResource BorderDefault}"
+                            BorderThickness="0,1,0,0"
+                            HorizontalAlignment="Stretch"
+                            Margin="10,0" />
                 </StackPanel>
             </Grid>
         </Grid>
