@@ -15,8 +15,8 @@
         ExtendClientAreaTitleBarHeightHint="0"
         Background="Transparent"
         CanResize="True"
-        Width="1300"
-        Height="750"
+        MinWidth="900"
+        MinHeight="600"
         UseLayoutRounding="True"
         TransparencyLevelHint="Transparent">
 
