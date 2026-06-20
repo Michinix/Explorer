@@ -5,8 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="using:Explorer.Views"
         mc:Ignorable="d"
-        d:DesignWidth="1900"
-        d:DesignHeight="1024"
         x:Class="Explorer.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Title="Explorer"
@@ -17,8 +15,8 @@
         ExtendClientAreaTitleBarHeightHint="0"
         Background="Transparent"
         CanResize="True"
-        MinWidth="1100"
-        MinHeight="700"
+        Width="1300"
+        Height="750"
         UseLayoutRounding="True"
         TransparencyLevelHint="Transparent">
 
