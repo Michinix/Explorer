@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Explorer.ViewModels"
              xmlns:models="using:Explorer.Models"
+             xmlns:controls="using:Explorer.Controls"
              mc:Ignorable="d"
              x:Class="Explorer.Controls.DataGrid"
              x:Name="DataGridControl"
@@ -59,22 +60,10 @@
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate x:DataType="models:FileSystemEntry">
                         <StackPanel Orientation="Horizontal" Spacing="9" VerticalAlignment="Center">
-                            
-                            <Svg Path="/Assets/Icons/Directory.svg"
-                                     Width="18" Height="18"
-                                     IsVisible="{Binding IsDirectory}" />
-                            
-                            <Border Width="18" Height="18"
-                                    CornerRadius="3"
-                                    Background="{Binding IconBrush}"
-                                    IsVisible="{Binding !IsDirectory}">
-                                <TextBlock Text="{Binding IconLabel}"
-                                           FontSize="7"
-                                           FontWeight="Bold"
-                                           Foreground="White"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                            </Border>
+                            <controls:FileIcon Width="18" Height="20"
+                                                IconBrush="{Binding IconBrush}"
+                                                IconLabel="{Binding IconLabel}"
+                                                IsDirectory="{Binding IsDirectory}" />
 
                             <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
                         </StackPanel>

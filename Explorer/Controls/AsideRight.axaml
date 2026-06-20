@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Explorer.ViewModels"
+             xmlns:controls="using:Explorer.Controls"
              mc:Ignorable="d"
              x:Class="Explorer.Controls.AsideRight"
              x:DataType="vm:DataGridViewModel">
@@ -44,10 +45,30 @@
                 <StackPanel IsVisible="{Binding SelectedEntry, Converter={x:Static ObjectConverters.IsNotNull}}"
                             Orientation="Vertical"
                             Spacing="10"
-                            VerticalAlignment="Center"
+                            Margin="0, 10"
                             HorizontalAlignment="Center">
-                    
-                    <!-- TODO: Add preview of selected entry -->
+
+                    <controls:FileIcon Width="58" Height="60"
+                                       IconBrush="{Binding SelectedEntry?.IconBrush}"
+                                       IconLabel="{Binding SelectedEntry?.IconLabel}"
+                                       IsDirectory="{Binding SelectedEntry?.IsDirectory}" />
+
+                    <TextBlock Text="{Binding SelectedEntry?.Name}"
+                               HorizontalAlignment="Center"
+                               Foreground="{StaticResource ForegroundMuted}"
+                               FontWeight="Regular" FontSize="12" />
+                    <TextBlock Text="{Binding SelectedEntry?.Type}"
+                               HorizontalAlignment="Center"
+                               Foreground="{StaticResource ForegroundMuted}"
+                               FontWeight="Regular" FontSize="12" />
+                    <TextBlock Text="{Binding SelectedEntry?.DisplaySize}"
+                               HorizontalAlignment="Center"
+                               Foreground="{StaticResource ForegroundMuted}"
+                               FontWeight="Regular" FontSize="12" />
+                    <TextBlock Text="{Binding SelectedEntry?.LastModified}"
+                               HorizontalAlignment="Center"
+                               Foreground="{StaticResource ForegroundMuted}"
+                               FontWeight="Regular" FontSize="12" />
                 </StackPanel>
             </Grid>
         </Grid>
