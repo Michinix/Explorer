@@ -48,7 +48,6 @@ public static class FileSystemService
 
         return bytes switch
         {
-            < kb => $"{bytes} o",
             < mb => $"{bytes / (double)kb:0.#} Ko",
             < gb => $"{bytes / (double)mb:0.#} Mo",
             < tb => $"{bytes / (double)gb:0.#} Go",
