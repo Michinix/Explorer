@@ -44,31 +44,60 @@
 
                 <StackPanel IsVisible="{Binding SelectedEntry, Converter={x:Static ObjectConverters.IsNotNull}}"
                             Orientation="Vertical"
-                            Spacing="10"
-                            Margin="0, 10"
-                            HorizontalAlignment="Center">
+                            Spacing="15"
+                            Margin="10,10,10,0"
+                            HorizontalAlignment="Stretch">
 
-                    <controls:FileIcon Width="58" Height="60"
-                                       IconBrush="{Binding SelectedEntry?.IconBrush}"
-                                       IconLabel="{Binding SelectedEntry?.IconLabel}"
-                                       IsDirectory="{Binding SelectedEntry?.IsDirectory}" />
+                    <StackPanel Spacing="15">
+                        <controls:FileIcon Width="58" Height="60"
+                                           HorizontalAlignment="Center"
+                                           IconBrush="{Binding SelectedEntry?.IconBrush}"
+                                           IconLabel="{Binding SelectedEntry?.IconLabel}"
+                                           IsDirectory="{Binding SelectedEntry?.IsDirectory}" />
 
-                    <TextBlock Text="{Binding SelectedEntry?.Name}"
-                               HorizontalAlignment="Center"
-                               Foreground="{StaticResource ForegroundMuted}"
-                               FontWeight="Regular" FontSize="12" />
-                    <TextBlock Text="{Binding SelectedEntry?.Type}"
-                               HorizontalAlignment="Center"
-                               Foreground="{StaticResource ForegroundMuted}"
-                               FontWeight="Regular" FontSize="12" />
-                    <TextBlock Text="{Binding SelectedEntry?.DisplaySize}"
-                               HorizontalAlignment="Center"
-                               Foreground="{StaticResource ForegroundMuted}"
-                               FontWeight="Regular" FontSize="12" />
-                    <TextBlock Text="{Binding SelectedEntry?.LastModified}"
-                               HorizontalAlignment="Center"
-                               Foreground="{StaticResource ForegroundMuted}"
-                               FontWeight="Regular" FontSize="12" />
+                        <TextBlock Text="{Binding SelectedEntry?.Name}"
+                                   HorizontalAlignment="Stretch"
+                                   TextAlignment="Center"
+                                   TextTrimming="CharacterEllipsis"
+                                   TextWrapping="NoWrap"
+                                   Foreground="{StaticResource ColorWhiteBrush}"
+                                   FontWeight="Regular" FontSize="14" />
+
+                        <Border BorderBrush="{StaticResource BorderDefault}"
+                                BorderThickness="0,1,0,0"
+                                HorizontalAlignment="Stretch"
+                                Margin="10,0" />
+                    </StackPanel>
+
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="TYPE"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource ColorWhiteBrush}"
+                                   FontSize="12" />
+                        <TextBlock Text="{Binding SelectedEntry?.TypeLabel}"
+                                   Foreground="{StaticResource ForegroundMuted}"
+                                   FontWeight="Regular" FontSize="12" />
+                    </StackPanel>
+
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="TAILLE"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource ColorWhiteBrush}"
+                                   FontSize="12" />
+                        <TextBlock Text="{Binding SelectedEntry?.DisplaySize}"
+                                   Foreground="{StaticResource ForegroundMuted}"
+                                   FontWeight="Regular" FontSize="12" />
+                    </StackPanel>
+
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="MODIFIÉ LE"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource ColorWhiteBrush}"
+                                   FontSize="12" />
+                        <TextBlock Text="{Binding SelectedEntry?.LastModified}"
+                                   Foreground="{StaticResource ForegroundMuted}"
+                                   FontWeight="Regular" FontSize="12" />
+                    </StackPanel>
                 </StackPanel>
             </Grid>
         </Grid>
