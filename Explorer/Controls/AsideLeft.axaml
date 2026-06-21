@@ -4,8 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="Explorer.Controls.AsideLeft">
-    
-    <Border BorderThickness="0,0,1,0" BorderBrush="{StaticResource BorderDefault}">
-        <!-- TODO: Add content -->
+
+    <Border BorderThickness="0,0,1,0"
+            BorderBrush="{StaticResource BorderDefault}">
+
+        <Grid RowDefinitions="45,*">
+            <Grid VerticalAlignment="Center" Margin="13,0">
+                <TextBlock Text="ACCÈS RAPIDE"
+                           FontWeight="Medium"
+                           FontSize="14"
+                           Foreground="{StaticResource ForegroundMuted}" />
+            </Grid>
+        </Grid>
     </Border>
 </UserControl>
