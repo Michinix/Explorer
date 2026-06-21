@@ -20,7 +20,7 @@
               ColumnDefinitions="Auto, *, Auto">
 
             <controls:AsideLeft Grid.Column="0" 
-                                MinWidth="200" 
+                                MinWidth="215" 
                                 MaxWidth="250" />
 
             <controls:DataGrid Grid.Column="1" 
@@ -29,7 +29,7 @@
                                DataContext="{Binding DataGrid}" />
 
             <controls:AsideRight Grid.Column="2" 
-                                 MinWidth="200" 
+                                 MinWidth="215"
                                  MaxWidth="250" 
                                  DataContext="{Binding DataGrid}" />
 
