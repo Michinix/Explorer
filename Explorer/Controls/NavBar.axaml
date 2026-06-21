@@ -28,40 +28,62 @@
             CornerRadius="10,10,0,0"
             ClipToBounds="True">
 
-        <StackPanel Orientation="Horizontal" Spacing="35" Margin="15,0" VerticalAlignment="Center"
+        <StackPanel Orientation="Horizontal"
+                    Spacing="40" Margin="15,0"
+                    VerticalAlignment="Center"
                     HorizontalAlignment="Left">
 
-            <StackPanel Orientation="Horizontal" Spacing="35" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal"
+                        Spacing="40"
+                        VerticalAlignment="Center">
                 <Button Command="{Binding Navigation.GoBackCommand}"
                         IsEnabled="{Binding Navigation.CanGoBack}"
-                        VerticalAlignment="Center" Padding="0"
-                        Background="Transparent" BorderBrush="Transparent">
+                        VerticalAlignment="Center"
+                        Padding="0"
+                        Background="Transparent"
+                        BorderBrush="Transparent">
                     <Path Data="M0.5 3.5H13.5M3.75 6.5L0.5 3.5L3.75 0.5"
-                          Width="14" Height="7" Stretch="Uniform"
+                          Width="14"
+                          Height="7"
+                          Stretch="Uniform"
                           VerticalAlignment="Center" />
                 </Button>
 
                 <Button Command="{Binding Navigation.GoForwardCommand}"
                         IsEnabled="{Binding Navigation.CanGoForward}"
-                        VerticalAlignment="Center" Padding="0"
-                        Background="Transparent" BorderBrush="Transparent">
+                        VerticalAlignment="Center"
+                        Padding="0"
+                        Background="Transparent"
+                        BorderBrush="Transparent">
                     <Path Data="M13.5 3.5L0.5 3.5M10.25 0.5L13.5 3.5L10.25 6.5"
-                          Width="14" Height="7" Stretch="Uniform"
+                          Width="14"
+                          Height="7"
+                          Stretch="Uniform"
                           VerticalAlignment="Center" />
                 </Button>
 
                 <Button Command="{Binding Navigation.GoUpCommand}"
                         IsEnabled="{Binding Navigation.CanGoUp}"
-                        VerticalAlignment="Center" Padding="0"
-                        Background="Transparent" BorderBrush="Transparent">
+                        VerticalAlignment="Center"
+                        Padding="0"
+                        Background="Transparent"
+                        BorderBrush="Transparent">
                     <Path Data="M3.5 0.5L3.5 13.5M0.5 3.75L3.5 0.5L6.5 3.75"
-                          Width="7" Height="14" Stretch="Uniform"
+                          Width="7"
+                          Height="14"
+                          Stretch="Uniform"
                           VerticalAlignment="Center" />
                 </Button>
 
-                <Button Command="{Binding Navigation.ReloadCommand}" VerticalAlignment="Center" Padding="0"
-                        Background="Transparent" BorderBrush="Transparent">
-                    <Svg Path="/Assets/Icons/Reload.svg" Width="15" Height="15" VerticalAlignment="Center"
+                <Button Command="{Binding Navigation.ReloadCommand}" 
+                        VerticalAlignment="Center" 
+                        Padding="0"
+                        Background="Transparent" 
+                        BorderBrush="Transparent">
+                    <Svg Path="/Assets/Icons/Reload.svg" 
+                         Width="15" 
+                         Height="15" 
+                         VerticalAlignment="Center"
                          Css="path { stroke: white }" />
                 </Button>
             </StackPanel>
