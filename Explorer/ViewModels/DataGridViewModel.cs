@@ -1,5 +1,7 @@
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -66,7 +68,22 @@ public partial class DataGridViewModel : ViewModelBase
     [RelayCommand]
     private void EntryDoubleClicked()
     {
-        if (SelectedEntry is null || !SelectedEntry.IsDirectory) return;
+        if (SelectedEntry is null) return;
+
+        if (!SelectedEntry.IsDirectory)
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo(SelectedEntry.FullPath) { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                // TODO: Implements a user notification
+            }
+
+            return;
+        }
+
         _navigation.NavigateTo(SelectedEntry.FullPath);
     }
 }
