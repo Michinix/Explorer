@@ -10,7 +10,7 @@
         VerticalAlignment="Center"
         Orientation="Vertical"
         Spacing="64">
-        <Image MaxWidth="600"
+        <Image MaxWidth="600" MinWidth="300"
                Source="avares://Explorer/Assets/Banner.png"
                Stretch="Uniform" />
         <ProgressBar
