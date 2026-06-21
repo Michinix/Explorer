@@ -39,6 +39,21 @@ public static class FileSystemService
         });
     }
     
+    public static async Task OpenFile(string path)
+    {
+        await Task.Run(() =>
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                // TODO: Implements a user notification
+            }
+        });
+    }
+    
     private static string FormatSize(long bytes)
     {
         const long kb = 1024;

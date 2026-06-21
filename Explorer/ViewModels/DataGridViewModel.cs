@@ -1,7 +1,5 @@
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -66,24 +64,22 @@ public partial class DataGridViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void EntryDoubleClicked()
+    private async Task EntryDoubleClicked()
     {
         if (SelectedEntry is null) return;
 
         if (!SelectedEntry.IsDirectory)
         {
-            try
-            {
-                Process.Start(new ProcessStartInfo(SelectedEntry.FullPath) { UseShellExecute = true });
-            }
-            catch (Exception ex)
-            {
-                // TODO: Implements a user notification
-            }
-
+            await OpenFile(SelectedEntry.FullPath);
             return;
         }
 
         _navigation.NavigateTo(SelectedEntry.FullPath);
+    }
+    
+    [RelayCommand]
+    private static async Task OpenFile(string path)
+    {
+        await FileSystemService.OpenFile(path);
     }
 }
