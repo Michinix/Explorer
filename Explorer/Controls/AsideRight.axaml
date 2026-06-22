@@ -8,6 +8,21 @@
              x:Class="Explorer.Controls.AsideRight"
              x:DataType="vm:DataGridViewModel">
 
+    <UserControl.Styles>
+        <Style Selector="Button">
+            <Setter Property="Foreground" Value="{StaticResource ColorWhiteBrush}" />
+            <Setter Property="Background" Value="{StaticResource AccentPrimary}" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Padding" Value="8,4" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+
+        <Style Selector="Button:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource AccentPrimary}" />
+            <Setter Property="Opacity" Value="0.90" />
+        </Style>
+    </UserControl.Styles>
+
     <Border BorderThickness="1,0,0,0"
             BorderBrush="{StaticResource BorderDefault}">
 
