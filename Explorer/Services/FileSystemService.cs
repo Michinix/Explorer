@@ -39,7 +39,7 @@ public static class FileSystemService
         });
     }
     
-    public static async Task OpenFile(string path)
+    public static async Task LaunchFile(string path)
     {
         await Task.Run(() =>
         {

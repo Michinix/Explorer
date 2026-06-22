@@ -116,10 +116,19 @@
                                    FontWeight="Regular" FontSize="12" />
                     </StackPanel>
 
-                    <Border BorderBrush="{StaticResource BorderDefault}"
-                            BorderThickness="0,1,0,0"
-                            HorizontalAlignment="Stretch"
-                            Margin="10,0" />
+                    <StackPanel IsVisible="{Binding !SelectedEntry?.IsDirectory}"
+                                Spacing="15">
+                        <Border BorderBrush="{StaticResource BorderDefault}"
+                                BorderThickness="0,1,0,0"
+                                HorizontalAlignment="Stretch"
+                                Margin="10,0" />
+
+                        <Button Command="{Binding OpenSelectedFileCommand}"
+                                HorizontalAlignment="Stretch"
+                                FontWeight="Medium">
+                            Ouvrir
+                        </Button>
+                    </StackPanel>
                 </StackPanel>
             </Grid>
         </Grid>

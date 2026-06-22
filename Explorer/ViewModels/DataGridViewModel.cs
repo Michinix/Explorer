@@ -68,18 +68,20 @@ public partial class DataGridViewModel : ViewModelBase
     {
         if (SelectedEntry is null) return;
 
-        if (!SelectedEntry.IsDirectory)
+        if (SelectedEntry.IsDirectory)
         {
-            await OpenFile(SelectedEntry.FullPath);
+            _navigation.NavigateTo(SelectedEntry.FullPath);
             return;
         }
 
-        _navigation.NavigateTo(SelectedEntry.FullPath);
+        await OpenSelectedFile();
     }
     
     [RelayCommand]
-    private static async Task OpenFile(string path)
+    private async Task OpenSelectedFile()
     {
-        await FileSystemService.OpenFile(path);
+        if (SelectedEntry is null || SelectedEntry.IsDirectory) return;
+
+        await FileSystemService.LaunchFile(SelectedEntry.FullPath);
     }
 }
