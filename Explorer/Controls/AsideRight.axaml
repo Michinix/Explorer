@@ -5,6 +5,7 @@
              xmlns:vm="using:Explorer.ViewModels"
              xmlns:controls="using:Explorer.Controls"
              mc:Ignorable="d"
+             x:Name="AsideRightControl"
              x:Class="Explorer.Controls.AsideRight"
              x:DataType="vm:DataGridViewModel">
 
@@ -125,6 +126,7 @@
 
                         <Button Command="{Binding OpenSelectedFileCommand}"
                                 HorizontalAlignment="Stretch"
+                                FontSize="12" Padding="8,5"
                                 FontWeight="Medium">
                             Ouvrir
                         </Button>

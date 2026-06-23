@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Explorer.ViewModels"
              mc:Ignorable="d"
+             x:Name="NavBarControl"
              x:Class="Explorer.Controls.NavBar"
              x:DataType="vm:NavBarViewModel">
 

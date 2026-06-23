@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Explorer.ViewModels"
              mc:Ignorable="d"
+             x:Name="FooterControl"
              x:Class="Explorer.Controls.Footer"
              x:DataType="vm:DataGridViewModel">
 

@@ -6,8 +6,8 @@
              xmlns:models="using:Explorer.Models"
              xmlns:controls="using:Explorer.Controls"
              mc:Ignorable="d"
-             x:Class="Explorer.Controls.DataGrid"
              x:Name="DataGridControl"
+             x:Class="Explorer.Controls.DataGrid"
              x:DataType="vm:DataGridViewModel">
 
     <DataGrid SelectedItem="{Binding SelectedEntry}"

@@ -1,6 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:Explorer.Controls"
+             x:Name="FileIconControl"
              x:Class="Explorer.Controls.FileIcon">
 
     <Viewbox Stretch="Uniform">
