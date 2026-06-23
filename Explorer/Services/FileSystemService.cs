@@ -69,4 +69,15 @@ public static class FileSystemService
             _    => $"{bytes / (double)tb:0.#} To"
         };
     }
+
+    public static async Task<DriveInfo[]> GetDrivesAsync()
+    {
+        return await Task.Run(() =>
+        {
+            return DriveInfo.GetDrives()
+                .Where(d => d is { IsReady: true, DriveType: DriveType.Fixed or DriveType.Removable } 
+                            && !d.Name.StartsWith(@"\\.\"))
+                .ToArray();
+        });
+    }
 }
