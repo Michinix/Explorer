@@ -8,10 +8,36 @@
              x:Class="Explorer.Controls.AsideLeft"
              x:DataType="vm:AsideLeftViewModel">
 
+    <UserControl.Styles>
+        <Style Selector="Button.MenuLink">
+            <Setter Property="Foreground" Value="{StaticResource ColorWhiteBrush}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="MinHeight" Value="0" />
+            <Setter Property="MinWidth" Value="0" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+        </Style>
+
+        <Style Selector="Button.MenuLink:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+
+        <Style Selector="Button.MenuLink:pointerover TextBlock">
+            <Setter Property="Foreground" Value="Red" />
+        </Style>
+
+        <Style Selector="Button.MenuLink:pointerover Svg">
+            <Setter Property="Css" Value="path { stroke: red; }" />
+        </Style>
+    </UserControl.Styles>
+
     <Border BorderThickness="0,0,1,0"
             BorderBrush="{StaticResource BorderDefault}">
 
-        <Grid RowDefinitions="45,*">
+        <Grid RowDefinitions="45,*"
+              RowSpacing="5">
             <Grid Grid.Row="0"
                   VerticalAlignment="Center"
                   Margin="13,0">
@@ -22,29 +48,43 @@
             </Grid>
             <Grid Grid.Row="1" Margin="13,0">
                 <StackPanel Orientation="Vertical"
-                            Spacing="10">
+                            Spacing="20">
 
-                    <StackPanel Orientation="Horizontal"
-                                Spacing="4"
-                                VerticalAlignment="Center">
-                        <Button Command="{Binding NavigateToDesktopCommand }"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Padding="0">
-                            Bureau
-                        </Button>
-                    </StackPanel>
-                    
-                    <StackPanel Orientation="Horizontal"
-                                Spacing="4"
-                                VerticalAlignment="Center">
-                        <Button Command="{Binding NavigateToDownloadsCommand }"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Padding="0">
-                            Téléchargements
-                        </Button>
-                    </StackPanel>
+                    <Button Classes="MenuLink" Command="{Binding NavigateToDesktopCommand}">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
+                            <Svg Path="/Assets/Icons/Home.svg" Width="15" Height="15" VerticalAlignment="Center"
+                                 Css="path { stroke: white }" />
+                            <TextBlock Text="Bureau" FontSize="13" FontWeight="Normal" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Classes="MenuLink" Command="{Binding NavigateToDownloadsCommand}">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
+                            <Svg Path="/Assets/Icons/Download.svg" Width="15" Height="15" VerticalAlignment="Center"
+                                 Css="path { stroke: white }" />
+                            <TextBlock Text="Téléchargements" FontSize="13" FontWeight="Normal" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Classes="MenuLink" Command="{Binding NavigateToDocumentsCommand}">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
+                            <Svg Path="/Assets/Icons/Document.svg" Width="15" Height="15" VerticalAlignment="Center"
+                                 Css="path { stroke: white }" />
+                            <TextBlock Text="Documents" FontSize="13" FontWeight="Normal" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Classes="MenuLink" Command="{Binding NavigateToPicturesCommand}">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
+                            <Svg Path="/Assets/Icons/Picture.svg" Width="15" Height="15" VerticalAlignment="Center"
+                                 Css="path { stroke: white }" />
+                            <TextBlock Text="Images" FontSize="13" FontWeight="Normal" />
+                        </StackPanel>
+                    </Button>
+
+                    <Border BorderBrush="{StaticResource BorderDefault}"
+                            BorderThickness="0,1,0,0"
+                            HorizontalAlignment="Stretch" />
                 </StackPanel>
             </Grid>
         </Grid>
