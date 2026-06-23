@@ -38,7 +38,7 @@ public static class FileSystemService
             }
         });
     }
-    
+
     public static async Task LaunchFile(string path)
     {
         await Task.Run(() =>
@@ -47,13 +47,13 @@ public static class FileSystemService
             {
                 Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // TODO: Implements a user notification
             }
         });
     }
-    
+
     private static string FormatSize(long bytes)
     {
         const long kb = 1024;
@@ -66,7 +66,7 @@ public static class FileSystemService
             < mb => $"{bytes / (double)kb:0.#} Ko",
             < gb => $"{bytes / (double)mb:0.#} Mo",
             < tb => $"{bytes / (double)gb:0.#} Go",
-            _    => $"{bytes / (double)tb:0.#} To"
+            _ => $"{bytes / (double)tb:0.#} To"
         };
     }
 
