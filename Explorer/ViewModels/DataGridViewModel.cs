@@ -38,9 +38,9 @@ public partial class DataGridViewModel : ViewModelBase
         _navigation = navigation;
 
         WeakReferenceMessenger.Default.Register<CurrentPathChangedMessage>(this,
-            async (r, m) => await LoadEntriesAsync());
+            (r, m) => _ = LoadEntriesAsync());
     }
-    
+
     partial void OnEntriesChanged(ObservableCollection<FileSystemEntry> value)
     {
         foreach (var entry in value)
@@ -48,9 +48,10 @@ public partial class DataGridViewModel : ViewModelBase
             entry.IsSelected = false;
             entry.PropertyChanged += OnEntryPropertyChanged;
         }
+
         OnPropertyChanged(nameof(AllSelected));
     }
-    
+
     private void OnEntryPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(FileSystemEntry.IsSelected))
@@ -76,7 +77,7 @@ public partial class DataGridViewModel : ViewModelBase
 
         await OpenSelectedFile();
     }
-    
+
     [RelayCommand]
     private async Task OpenSelectedFile()
     {
