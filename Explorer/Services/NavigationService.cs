@@ -21,7 +21,7 @@ public partial class NavigationService : ObservableObject
     public bool CanGoBack => _backStack.Count > 0;
     public bool CanGoForward => _forwardStack.Count > 0;
     public bool CanGoUp => Directory.GetParent(CurrentPath) is not null;
-    
+
     partial void OnCurrentPathChanged(string value)
     {
         WeakReferenceMessenger.Default.Send(new CurrentPathChangedMessage(value));
@@ -33,7 +33,7 @@ public partial class NavigationService : ObservableObject
         _forwardStack.Clear();
         CurrentPath = path;
     }
-    
+
     [RelayCommand(CanExecute = nameof(CanGoBack))]
     private void GoBack()
     {
@@ -50,7 +50,7 @@ public partial class NavigationService : ObservableObject
 
     [RelayCommand(CanExecute = nameof(CanGoUp))]
     private void GoUp() => NavigateTo(Directory.GetParent(CurrentPath)!.FullName);
-    
+
     [RelayCommand]
     private void Reload()
     {
