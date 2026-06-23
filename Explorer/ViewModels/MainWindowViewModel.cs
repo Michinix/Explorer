@@ -27,7 +27,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
             await Dispatcher.UIThread.InvokeAsync(
                 () => GoHomeCommand.Execute(null),
-                DispatcherPriority.Background
+                DispatcherPriority.Normal
             );
         });
     }
