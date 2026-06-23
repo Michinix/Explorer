@@ -23,14 +23,6 @@
         <Style Selector="Button.MenuLink:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="Transparent" />
         </Style>
-
-        <Style Selector="Button.MenuLink:pointerover TextBlock">
-            <Setter Property="Foreground" Value="Red" />
-        </Style>
-
-        <Style Selector="Button.MenuLink:pointerover Svg">
-            <Setter Property="Css" Value="path { stroke: red; }" />
-        </Style>
     </UserControl.Styles>
 
     <Border BorderThickness="0,0,1,0"
