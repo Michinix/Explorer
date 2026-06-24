@@ -62,7 +62,7 @@
                         VerticalAlignment="Center">
 
                 <TextBlock FontSize="11">
-                    Explorer v1.0
+                    Explorer v1.0.0
                 </TextBlock>
             </StackPanel>
         </Grid>
