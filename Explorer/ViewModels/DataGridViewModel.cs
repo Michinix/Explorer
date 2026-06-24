@@ -1,12 +1,12 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Explorer.Models;
 using Explorer.Services;
-using System.Linq;
-using CommunityToolkit.Mvvm.Messaging;
 
 namespace Explorer.ViewModels;
 
@@ -14,10 +14,18 @@ public partial class DataGridViewModel : ViewModelBase
 {
     private readonly NavigationService _navigation;
 
-    [ObservableProperty] private FileSystemEntry? _selectedEntry;
-
     [ObservableProperty] [NotifyPropertyChangedFor(nameof(FolderCount), nameof(FileCount))]
     private ObservableCollection<FileSystemEntry> _entries = [];
+
+    [ObservableProperty] private FileSystemEntry? _selectedEntry;
+
+    public DataGridViewModel(NavigationService navigation)
+    {
+        _navigation = navigation;
+
+        WeakReferenceMessenger.Default.Register<CurrentPathChangedMessage>(this,
+            (r, m) => _ = LoadEntriesAsync());
+    }
 
     public bool AllSelected
     {
@@ -32,14 +40,6 @@ public partial class DataGridViewModel : ViewModelBase
 
     public int FolderCount => Entries.Count(e => e.IsDirectory);
     public int FileCount => Entries.Count(e => !e.IsDirectory);
-
-    public DataGridViewModel(NavigationService navigation)
-    {
-        _navigation = navigation;
-
-        WeakReferenceMessenger.Default.Register<CurrentPathChangedMessage>(this,
-            (r, m) => _ = LoadEntriesAsync());
-    }
 
     partial void OnEntriesChanged(ObservableCollection<FileSystemEntry> value)
     {
@@ -60,7 +60,7 @@ public partial class DataGridViewModel : ViewModelBase
 
     public async Task LoadEntriesAsync()
     {
-        var result = await FileSystemService.ListEntries(_navigation.CurrentPath);
+        var result = await FileSystemService.ListEntriesAsync(_navigation.CurrentPath);
         Entries = new ObservableCollection<FileSystemEntry>(result);
     }
 
@@ -83,6 +83,6 @@ public partial class DataGridViewModel : ViewModelBase
     {
         if (SelectedEntry is null || SelectedEntry.IsDirectory) return;
 
-        await FileSystemService.LaunchFile(SelectedEntry.FullPath);
+        await FileSystemService.LaunchFileAsync(SelectedEntry.FullPath);
     }
 }
