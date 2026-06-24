@@ -23,25 +23,23 @@
         <Style Selector="Button.MenuLink:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="Transparent" />
         </Style>
+
+        <Style Selector="TextBlock.SectionTitle">
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
+            <Setter Property="Margin" Value="13,20,13,20" />
+        </Style>
     </UserControl.Styles>
 
     <Border BorderThickness="0,0,1,0"
             BorderBrush="{StaticResource BorderDefault}">
 
-        <Grid RowDefinitions="45,*"
-              RowSpacing="5">
-            <Grid Grid.Row="0"
-                  VerticalAlignment="Center"
-                  Margin="13,0">
-                <TextBlock Text="ACCÈS RAPIDE"
-                           FontWeight="Medium"
-                           FontSize="14"
-                           Foreground="{StaticResource ForegroundMuted}" />
-            </Grid>
-            <Grid Grid.Row="1" Margin="13,0">
-                <StackPanel Orientation="Vertical"
-                            Spacing="20">
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Classes="SectionTitle" Text="ACCÈS RAPIDE" />
 
+                <StackPanel Orientation="Vertical" Spacing="20" Margin="13,0">
                     <Button Classes="MenuLink" Command="{Binding NavigateToDesktopCommand}">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
                             <Svg Path="/Assets/Icons/Home.svg" Width="15" Height="15" VerticalAlignment="Center"
@@ -73,12 +71,19 @@
                             <TextBlock Text="Images" FontSize="13" FontWeight="Normal" />
                         </StackPanel>
                     </Button>
-
-                    <Border BorderBrush="{StaticResource BorderDefault}"
-                            BorderThickness="0,1,0,0"
-                            HorizontalAlignment="Stretch" />
                 </StackPanel>
-            </Grid>
-        </Grid>
+            </StackPanel>
+
+            <Border BorderBrush="{StaticResource BorderDefault}"
+                    BorderThickness="0,1,0,0"
+                    HorizontalAlignment="Stretch"
+                    Margin="13,20,13,0" />
+
+            <StackPanel Orientation="Vertical">
+                <TextBlock Classes="SectionTitle" Text="EMPLACEMENTS" />
+            </StackPanel>
+
+        </StackPanel>
+
     </Border>
 </UserControl>
