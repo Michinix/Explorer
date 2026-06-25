@@ -29,6 +29,9 @@ public partial class NavigationService : ObservableObject
 
     public void NavigateTo(string path)
     {
+        if (string.Equals(path, CurrentPath, StringComparison.OrdinalIgnoreCase))
+            return;
+
         _backStack.Push(CurrentPath);
         _forwardStack.Clear();
         CurrentPath = path;
