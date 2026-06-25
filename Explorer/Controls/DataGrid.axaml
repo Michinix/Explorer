@@ -10,82 +10,97 @@
              x:Class="Explorer.Controls.DataGrid"
              x:DataType="vm:DataGridViewModel">
 
-    <DataGrid SelectedItem="{Binding SelectedEntry}"
-              DoubleTapped="OnRowDoubleTapped"
-              ItemsSource="{Binding Entries}"
-              SelectionMode="Extended"
-              AutoGenerateColumns="False"
-              Foreground="{StaticResource ColorWhite}"
-              GridLinesVisibility="None"
-              CanUserReorderColumns="False"
-              VerticalAlignment="Top"
-              BorderThickness="0"
-              IsReadOnly="True">
+    <Grid>
+        <DataGrid SelectedItem="{Binding SelectedEntry}"
+                  DoubleTapped="OnRowDoubleTapped"
+                  ItemsSource="{Binding Entries}"
+                  SelectionMode="Extended"
+                  AutoGenerateColumns="False"
+                  Foreground="{StaticResource ColorWhite}"
+                  GridLinesVisibility="None"
+                  CanUserReorderColumns="False"
+                  VerticalAlignment="Top"
+                  BorderThickness="0"
+                  IsReadOnly="True">
 
-        <DataGrid.Styles>
-            <Style Selector="DataGridColumnHeader:nth-child(1)">
-                <Setter Property="HorizontalContentAlignment" Value="Center" />
-            </Style>
+            <DataGrid.Styles>
+                <Style Selector="DataGridColumnHeader:nth-child(1)">
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                </Style>
 
-            <Style Selector="DataGridCell.colName TextBlock">
-                <Setter Property="Foreground" Value="{StaticResource ColorWhite}" />
-            </Style>
+                <Style Selector="DataGridCell.colName TextBlock">
+                    <Setter Property="Foreground" Value="{StaticResource ColorWhite}" />
+                </Style>
 
-            <Style Selector="DataGridCell.colMeta TextBlock">
-                <Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
-            </Style>
+                <Style Selector="DataGridCell.colMeta TextBlock">
+                    <Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
+                </Style>
 
-            <Style Selector="DataGridCell:nth-child(1)">
-                <Setter Property="Padding" Value="0" />
-                <Setter Property="HorizontalContentAlignment" Value="Center" />
-                <Setter Property="VerticalContentAlignment" Value="Center" />
-            </Style>
-        </DataGrid.Styles>
+                <Style Selector="DataGridCell:nth-child(1)">
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                </Style>
+            </DataGrid.Styles>
 
-        <DataGrid.Columns>
-            <DataGridTemplateColumn Width="45" CanUserResize="False" CanUserSort="False"
-                                    CellStyleClasses="has-border">
-                <DataGridTemplateColumn.Header>
-                    <CheckBox IsChecked="{Binding AllSelected, Mode=TwoWay}"
-                              HorizontalAlignment="Center" />
-                </DataGridTemplateColumn.Header>
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate x:DataType="models:FileSystemEntry">
-                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" />
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Width="45" CanUserResize="False" CanUserSort="False"
+                                        CellStyleClasses="has-border">
+                    <DataGridTemplateColumn.Header>
+                        <CheckBox IsChecked="{Binding AllSelected, Mode=TwoWay}"
+                                  HorizontalAlignment="Center" />
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate x:DataType="models:FileSystemEntry">
+                            <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
-            <DataGridTemplateColumn Header="NOM" Width="2*" CellStyleClasses="colName has-border">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate x:DataType="models:FileSystemEntry">
-                        <StackPanel Orientation="Horizontal" Spacing="9" VerticalAlignment="Center"
-                                    HorizontalAlignment="Center">
-                            <controls:FileIcon Width="18" Height="20"
-                                               IconBrush="{Binding IconBrush}"
-                                               IconLabel="{Binding IconLabel}"
-                                               IsDirectory="{Binding IsDirectory}" />
+                <DataGridTemplateColumn Header="NOM" Width="2*" CellStyleClasses="colName has-border">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate x:DataType="models:FileSystemEntry">
+                            <StackPanel Orientation="Horizontal" Spacing="9" VerticalAlignment="Center"
+                                        HorizontalAlignment="Center">
+                                <controls:FileIcon Width="18" Height="20"
+                                                   IconBrush="{Binding IconBrush}"
+                                                   IconLabel="{Binding IconLabel}"
+                                                   IsDirectory="{Binding IsDirectory}" />
 
-                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                        </StackPanel>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
+                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center"
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
-            <DataGridTextColumn Header="TAILLE"
-                                Binding="{Binding DisplaySize, Mode=OneWay}"
-                                Width="100"
-                                CellStyleClasses="colMeta has-border" />
+                <DataGridTextColumn Header="TAILLE"
+                                    Binding="{Binding DisplaySize, Mode=OneWay}"
+                                    Width="100"
+                                    CellStyleClasses="colMeta has-border" />
 
-            <DataGridTextColumn Header="TYPE"
-                                Binding="{Binding DisplayType, Mode=OneWay}"
-                                Width="100"
-                                CellStyleClasses="colMeta has-border" />
+                <DataGridTextColumn Header="TYPE"
+                                    Binding="{Binding DisplayType, Mode=OneWay}"
+                                    Width="100"
+                                    CellStyleClasses="colMeta has-border" />
 
-            <DataGridTextColumn Header="MODIFIÉ LE"
-                                Binding="{Binding LastModified, Mode=OneWay}"
-                                Width="150"
-                                CellStyleClasses="colMeta" />
-        </DataGrid.Columns>
-    </DataGrid>
+                <DataGridTextColumn Header="MODIFIÉ LE"
+                                    Binding="{Binding LastModified, Mode=OneWay}"
+                                    Width="150"
+                                    CellStyleClasses="colMeta" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Border IsVisible="{Binding IsLoading}"
+                Background="#80000000"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
+                <ProgressBar IsIndeterminate="True" Width="120" />
+                <TextBlock Text="Chargement..."
+                           Foreground="{StaticResource ColorWhite}"
+                           HorizontalAlignment="Center" />
+            </StackPanel>
+        </Border>
+    </Grid>
 </UserControl>

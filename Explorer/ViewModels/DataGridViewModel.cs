@@ -17,6 +17,8 @@ public partial class DataGridViewModel : ViewModelBase
     [ObservableProperty] [NotifyPropertyChangedFor(nameof(FolderCount), nameof(FileCount))]
     private ObservableCollection<FileSystemEntry> _entries = [];
 
+    [ObservableProperty] private bool _isLoading;
+
     [ObservableProperty] private FileSystemEntry? _selectedEntry;
 
     public DataGridViewModel(NavigationService navigation)
@@ -60,8 +62,13 @@ public partial class DataGridViewModel : ViewModelBase
 
     public async Task LoadEntriesAsync()
     {
+        IsLoading = true;
+
         var result = await FileSystemService.ListEntriesAsync(_navigation.CurrentPath);
         Entries = new ObservableCollection<FileSystemEntry>(result);
+
+        await Task.Delay(300);
+        IsLoading = false;
     }
 
     [RelayCommand]
