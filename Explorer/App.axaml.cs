@@ -26,12 +26,10 @@ public class App : Application
         var provider = services.BuildServiceProvider();
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-        {
             desktop.MainWindow = new MainWindow
             {
                 DataContext = provider.GetRequiredService<MainWindowViewModel>()
             };
-        }
 
         base.OnFrameworkInitializationCompleted();
     }

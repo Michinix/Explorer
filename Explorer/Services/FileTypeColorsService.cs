@@ -10,7 +10,6 @@ public static class FileTypeColorsService
 
     public static IBrush GetBrush(string type)
     {
-        
         var key = string.IsNullOrEmpty(type) ? "—" : type;
 
         if (!Brushes.TryGetValue(key, out var brush))

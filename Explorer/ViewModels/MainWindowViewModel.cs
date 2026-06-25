@@ -11,9 +11,6 @@ public partial class MainWindowViewModel : ViewModelBase
 
     [ObservableProperty] private ObservableObject _currentPage = new SplashViewModel();
 
-    [RelayCommand]
-    private void GoHome() => CurrentPage = _homeViewModel;
-
     public MainWindowViewModel(HomeViewModel homeViewModel)
     {
         _homeViewModel = homeViewModel;
@@ -30,5 +27,11 @@ public partial class MainWindowViewModel : ViewModelBase
                 DispatcherPriority.Normal
             );
         });
+    }
+
+    [RelayCommand]
+    private void GoHome()
+    {
+        CurrentPage = _homeViewModel;
     }
 }

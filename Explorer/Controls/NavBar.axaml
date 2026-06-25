@@ -76,14 +76,14 @@
                           VerticalAlignment="Center" />
                 </Button>
 
-                <Button Command="{Binding Navigation.ReloadCommand}" 
-                        VerticalAlignment="Center" 
+                <Button Command="{Binding Navigation.ReloadCommand}"
+                        VerticalAlignment="Center"
                         Padding="0"
-                        Background="Transparent" 
+                        Background="Transparent"
                         BorderBrush="Transparent">
-                    <Svg Path="/Assets/Icons/Reload.svg" 
-                         Width="15" 
-                         Height="15" 
+                    <Svg Path="/Assets/Icons/Reload.svg"
+                         Width="15"
+                         Height="15"
                          VerticalAlignment="Center"
                          Css="path { stroke: white }" />
                 </Button>

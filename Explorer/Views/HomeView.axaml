@@ -16,8 +16,7 @@
                              DataContext="{Binding NavBar}" />
         </StackPanel>
 
-        <Grid Grid.Row="2"
-              ColumnDefinitions="Auto, *, Auto">
+        <Grid Grid.Row="2" ColumnDefinitions="Auto, *, Auto">
 
             <controls:AsideLeft Grid.Column="0"
                                 MinWidth="215"
@@ -36,7 +35,6 @@
 
         </Grid>
 
-        <controls:Footer Grid.Row="3"
-                         DataContext="{Binding DataGrid}" />
+        <controls:Footer Grid.Row="3" DataContext="{Binding DataGrid}" />
     </Grid>
 </UserControl>

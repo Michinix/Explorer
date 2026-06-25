@@ -9,7 +9,7 @@
     <Application.DataTemplates>
         <local:ViewLocator />
     </Application.DataTemplates>
-    
+
     <Application.Resources>
         <ResourceDictionary>
             <FontFamily x:Key="DmSansFont">avares://Explorer/Assets/Fonts/#DM Sans</FontFamily>

@@ -15,6 +15,11 @@ public partial class FileIcon : UserControl
     public static readonly StyledProperty<bool> IsDirectoryProperty =
         AvaloniaProperty.Register<FileIcon, bool>(nameof(IsDirectory));
 
+    public FileIcon()
+    {
+        InitializeComponent();
+    }
+
     public IBrush? IconBrush
     {
         get => GetValue(IconBrushProperty);
@@ -31,10 +36,5 @@ public partial class FileIcon : UserControl
     {
         get => GetValue(IsDirectoryProperty);
         set => SetValue(IsDirectoryProperty, value);
-    }
-
-    public FileIcon()
-    {
-        InitializeComponent();
     }
 }

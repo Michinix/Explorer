@@ -49,7 +49,10 @@ public partial class NavigationService : ObservableObject
     }
 
     [RelayCommand(CanExecute = nameof(CanGoUp))]
-    private void GoUp() => NavigateTo(Directory.GetParent(CurrentPath)!.FullName);
+    private void GoUp()
+    {
+        NavigateTo(Directory.GetParent(CurrentPath)!.FullName);
+    }
 
     [RelayCommand]
     private void Reload()

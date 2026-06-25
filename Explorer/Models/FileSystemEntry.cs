@@ -14,6 +14,7 @@ public partial class FileSystemEntry(
     DateTime lastModified
 ) : ObservableObject
 {
+    [ObservableProperty] private bool _isSelected;
     public string Name { get; } = name;
     public string FullPath { get; } = fullPath;
     public string Type { get; } = type;
@@ -23,9 +24,7 @@ public partial class FileSystemEntry(
 
     public string DisplayType => IsDirectory ? "DOSSIER" : $"Fichier {Type}";
     public string TypeLabel => IsDirectory ? "DOSSIER" : Type;
-    
+
     public IBrush IconBrush => FileTypeColorsService.GetBrush(Type);
     public string IconLabel => string.IsNullOrEmpty(Type) ? "?" : Type.Length > 3 ? Type[..3] : Type;
-
-    [ObservableProperty] private bool _isSelected;
 }

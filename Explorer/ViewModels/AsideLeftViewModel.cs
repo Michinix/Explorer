@@ -8,8 +8,10 @@ namespace Explorer.ViewModels;
 public partial class AsideLeftViewModel(NavigationService navigation) : ViewModelBase
 {
     [RelayCommand]
-    private void NavigateToDesktop() =>
+    private void NavigateToDesktop()
+    {
         navigation.NavigateTo(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
+    }
 
     [RelayCommand]
     private void NavigateToDownloads()
@@ -21,10 +23,14 @@ public partial class AsideLeftViewModel(NavigationService navigation) : ViewMode
     }
 
     [RelayCommand]
-    private void NavigateToDocuments() =>
+    private void NavigateToDocuments()
+    {
         navigation.NavigateTo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
+    }
 
     [RelayCommand]
-    private void NavigateToPictures() =>
+    private void NavigateToPictures()
+    {
         navigation.NavigateTo(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures));
+    }
 }
