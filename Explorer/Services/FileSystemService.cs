@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -13,45 +12,26 @@ public class FileSystemService
     public async Task<ICollection<FileSystemEntry>> ListEntriesAsync(string path)
     {
         return await Task.Run(() =>
-        {
-            try
-            {
-                return new DirectoryInfo(path)
-                    .EnumerateFileSystemInfos()
-                    .Where(e => !e.Name.StartsWith('.') && !e.Attributes.HasFlag(FileAttributes.Hidden))
-                    .OrderBy(e => e is FileInfo)
-                    .ThenBy(e => e.Name)
-                    .Select(e => new FileSystemEntry(
-                        e.Name,
-                        e.FullName,
-                        e.Extension.TrimStart('.').ToUpper(),
-                        e is DirectoryInfo,
-                        e is FileInfo f ? FormatSize(f.Length) : "—",
-                        e.LastWriteTime
-                    ))
-                    .ToArray();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                return [];
-            }
-        });
+            new DirectoryInfo(path)
+                .EnumerateFileSystemInfos()
+                .Where(e => !e.Name.StartsWith('.') && !e.Attributes.HasFlag(FileAttributes.Hidden))
+                .OrderBy(e => e is FileInfo)
+                .ThenBy(e => e.Name)
+                .Select(e => new FileSystemEntry(
+                    e.Name,
+                    e.FullName,
+                    e.Extension.TrimStart('.').ToUpper(),
+                    e is DirectoryInfo,
+                    e is FileInfo f ? FormatSize(f.Length) : "—",
+                    e.LastWriteTime
+                ))
+                .ToArray());
     }
 
     public async Task LaunchFileAsync(string path)
     {
         await Task.Run(() =>
-        {
-            try
-            {
-                Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
-            }
-            catch (Exception)
-            {
-                // TODO: Implements a user notification
-            }
-        });
+            Process.Start(new ProcessStartInfo(path) { UseShellExecute = true }));
     }
 
     private static string FormatSize(long bytes)
