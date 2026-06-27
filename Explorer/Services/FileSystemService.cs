@@ -8,9 +8,9 @@ using Explorer.Models;
 
 namespace Explorer.Services;
 
-public static class FileSystemService
+public class FileSystemService
 {
-    public static async Task<ICollection<FileSystemEntry>> ListEntriesAsync(string path)
+    public async Task<ICollection<FileSystemEntry>> ListEntriesAsync(string path)
     {
         return await Task.Run(() =>
         {
@@ -39,7 +39,7 @@ public static class FileSystemService
         });
     }
 
-    public static async Task LaunchFileAsync(string path)
+    public async Task LaunchFileAsync(string path)
     {
         await Task.Run(() =>
         {

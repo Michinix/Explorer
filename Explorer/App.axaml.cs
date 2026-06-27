@@ -20,6 +20,7 @@ public class App : Application
         var services = new ServiceCollection();
 
         services.AddSingleton<NavigationService>();
+        services.AddSingleton<FileSystemService>();
         services.AddSingleton<MainWindowViewModel>();
         services.AddTransient<HomeViewModel>();
 
