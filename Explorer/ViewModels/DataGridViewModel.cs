@@ -1,5 +1,7 @@
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -21,6 +23,8 @@ public partial class DataGridViewModel : ViewModelBase
     [ObservableProperty] private bool _isLoading;
 
     [ObservableProperty] private FileSystemEntry? _selectedEntry;
+
+    [ObservableProperty] private string? _statusMessage;
 
     public DataGridViewModel(NavigationService navigation, FileSystemService fileSystemService)
     {
@@ -66,11 +70,28 @@ public partial class DataGridViewModel : ViewModelBase
     {
         IsLoading = true;
 
-        var result = await _fileSystemService.ListEntriesAsync(_navigation.CurrentPath);
-        Entries = new ObservableCollection<FileSystemEntry>(result);
-
-        await Task.Delay(300);
-        IsLoading = false;
+        try
+        {
+            Entries = new ObservableCollection<FileSystemEntry>(
+                await _fileSystemService.ListEntriesAsync(_navigation.CurrentPath));
+        }
+        catch (UnauthorizedAccessException)
+        {
+            StatusMessage = "Accès refusé à ce dossier.";
+        }
+        catch (DirectoryNotFoundException)
+        {
+            StatusMessage = "Ce dossier n'existe plus.";
+        }
+        catch (Exception)
+        {
+            StatusMessage = "Une erreur est survenue lors du chargement.";
+        }
+        finally
+        {
+            await Task.Delay(300);
+            IsLoading = false;
+        }
     }
 
     [RelayCommand]
@@ -92,6 +113,13 @@ public partial class DataGridViewModel : ViewModelBase
     {
         if (SelectedEntry is null || SelectedEntry.IsDirectory) return;
 
-        await _fileSystemService.LaunchFileAsync(SelectedEntry.FullPath);
+        try
+        {
+            await _fileSystemService.LaunchFileAsync(SelectedEntry.FullPath);
+        }
+        catch (Exception)
+        {
+            StatusMessage = $"Impossible d'ouvrir '{SelectedEntry.Name}'.";
+        }
     }
 }
