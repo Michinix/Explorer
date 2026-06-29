@@ -13,6 +13,11 @@
         <Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
     </Style>
 
+    <!-- Always display sort icon -->
+    <Style Selector="DataGridColumnHeader /template/ Path#SortIcon">
+        <Setter Property="Opacity" Value="1" />
+    </Style>
+
     <!-- First column header: add a right border to separate it from the next column -->
     <Style Selector="DataGridColumnHeader:nth-child(1)">
         <Setter Property="BorderThickness" Value="0,0,1,1" />
