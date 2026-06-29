@@ -24,6 +24,7 @@
                   IsReadOnly="True">
 
             <DataGrid.Styles>
+
                 <Style Selector="DataGridColumnHeader:nth-child(1)">
                     <Setter Property="HorizontalContentAlignment" Value="Center" />
                 </Style>
@@ -41,6 +42,13 @@
                     <Setter Property="HorizontalContentAlignment" Value="Center" />
                     <Setter Property="VerticalContentAlignment" Value="Center" />
                 </Style>
+
+                <Style
+                    Selector="DataGridColumnHeader:sortascending /template/ Path#SortIcon,
+                     DataGridColumnHeader:sortdescending /template/ Path#SortIcon">
+                    <Setter Property="Opacity" Value="1" />
+                </Style>
+
             </DataGrid.Styles>
 
             <DataGrid.Columns>
@@ -57,7 +65,8 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Header="NOM" Width="2*" CellStyleClasses="colName has-border">
+                <DataGridTemplateColumn Header="NOM" Width="2*" CellStyleClasses="colName has-border"
+                                        CanUserSort="True" SortMemberPath="Name">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate x:DataType="models:FileSystemEntry">
                             <StackPanel Orientation="Horizontal" Spacing="9" VerticalAlignment="Center"
@@ -76,6 +85,7 @@
 
                 <DataGridTextColumn Header="TAILLE"
                                     Binding="{Binding DisplaySize, Mode=OneWay}"
+                                    SortMemberPath="Size"
                                     Width="100"
                                     CellStyleClasses="colMeta has-border" />
 
