@@ -48,6 +48,7 @@ public partial class DataGridViewModel : ViewModelBase
 
     public int FolderCount => Entries.Count(e => e.IsDirectory);
     public int FileCount => Entries.Count(e => !e.IsDirectory);
+    public int SelectedItemCount => Entries.Count(e => e.IsSelected);
 
     partial void OnEntriesChanged(ObservableCollection<FileSystemEntry> value)
     {
@@ -70,7 +71,7 @@ public partial class DataGridViewModel : ViewModelBase
     private void NotifySelectionChanged()
     {
         OnPropertyChanged(nameof(AllSelected));
-        OnPropertyChanged(nameof(SelectedCount));
+        OnPropertyChanged(nameof(SelectedItemCount));
     }
 
     public async Task LoadEntriesAsync()
