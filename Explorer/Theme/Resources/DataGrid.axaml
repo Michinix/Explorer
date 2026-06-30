@@ -18,14 +18,9 @@
         <Setter Property="Opacity" Value="1" />
     </Style>
 
-    <!-- First column header: add a right border to separate it from the next column -->
-    <Style Selector="DataGridColumnHeader:nth-child(1)">
+    <!-- First 4 column headers: right border to match cell separators (has-border class) -->
+    <Style Selector="DataGridColumnHeader:nth-child(-n+4)">
         <Setter Property="BorderThickness" Value="0,0,1,1" />
-    </Style>
-
-    <!-- Columns from the 3rd onward: add a left border instead of a right one -->
-    <Style Selector="DataGridColumnHeader:nth-child(n+3)">
-        <Setter Property="BorderThickness" Value="1,0,0,1" />
     </Style>
 
     <!-- DataGrid cells -->
