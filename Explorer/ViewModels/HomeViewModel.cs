@@ -2,9 +2,9 @@
 
 namespace Explorer.ViewModels;
 
-public class HomeViewModel(NavigationService navigation, FileSystemService fileSystemService) : ViewModelBase
+public class HomeViewModel(NavigationService navigation, DataGridViewModel dataGrid) : ViewModelBase
 {
-    public NavBarViewModel NavBar { get; } = new(navigation);
     public AsideLeftViewModel AsideLeft { get; } = new(navigation);
-    public DataGridViewModel DataGrid { get; } = new(navigation, fileSystemService);
+    public DataGridViewModel DataGrid { get; } = dataGrid;
+    public NavBarViewModel NavBar { get; } = new(navigation, dataGrid);
 }
