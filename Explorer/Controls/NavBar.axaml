@@ -99,7 +99,7 @@
                        HorizontalAlignment="Stretch"
                        FontSize="13"
                        TextTrimming="CharacterEllipsis"
-                       Margin="35,0" />
+                       Margin="40,0" />
 
             <StackPanel Grid.Column="0"
                         Grid.ColumnSpan="3"
@@ -123,7 +123,6 @@
                 <TextBlock Text="COPIER" VerticalAlignment="Center" FontSize="13" />
                 <TextBlock Text="COLLER" VerticalAlignment="Center" FontSize="13" />
                 <TextBlock Text="COUPER" VerticalAlignment="Center" FontSize="13" />
-                <TextBlock Text="RENOMMER" VerticalAlignment="Center" FontSize="13" />
                 <TextBlock Text="{Binding DataGrid.SelectedItemCount, StringFormat='SUPPRIMER ({0})'}"
                            VerticalAlignment="Center" FontSize="13" />
 
