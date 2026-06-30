@@ -33,12 +33,11 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0"
                         Orientation="Horizontal"
-                        Spacing="40"
+                        Spacing="45"
                         VerticalAlignment="Center">
 
                 <Button Command="{Binding Navigation.GoBackCommand}"
@@ -93,46 +92,13 @@
                 </Button>
             </StackPanel>
 
-            <TextBlock Grid.Column="1"
+            <TextBlock Grid.Column="0"
+                       Grid.ColumnSpan="2"
                        Text="{Binding Navigation.CurrentPath}"
                        VerticalAlignment="Center"
-                       HorizontalAlignment="Stretch"
+                       HorizontalAlignment="Center"
                        FontSize="13"
-                       TextTrimming="CharacterEllipsis"
-                       Margin="40,0" />
-
-            <StackPanel Grid.Column="0"
-                        Grid.ColumnSpan="3"
-                        Orientation="Horizontal"
-                        Spacing="15"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center">
-
-                <Border Width="1"
-                        Height="20"
-                        VerticalAlignment="Center"
-                        Background="{StaticResource BorderDefault}" />
-
-                <TextBlock Text="NOUVEAU" VerticalAlignment="Center" FontSize="13" />
-
-                <Border Width="1"
-                        Height="20"
-                        VerticalAlignment="Center"
-                        Background="{StaticResource BorderDefault}" />
-
-                <TextBlock Text="COPIER" VerticalAlignment="Center" FontSize="13" />
-                <TextBlock Text="COLLER" VerticalAlignment="Center" FontSize="13" />
-                <TextBlock Text="COUPER" VerticalAlignment="Center" FontSize="13" />
-                <TextBlock Text="{Binding DataGrid.SelectedItemCount, StringFormat='SUPPRIMER ({0})'}"
-                           VerticalAlignment="Center" FontSize="13" />
-
-                <Border Width="1"
-                        Height="20"
-                        VerticalAlignment="Center"
-                        Background="{StaticResource BorderDefault}" />
-
-                <TextBlock Text="OCR" VerticalAlignment="Center" FontSize="13" />
-            </StackPanel>
+                       TextTrimming="CharacterEllipsis" />
         </Grid>
     </Border>
 </UserControl>
