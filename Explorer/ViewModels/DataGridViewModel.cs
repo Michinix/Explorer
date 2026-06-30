@@ -57,13 +57,20 @@ public partial class DataGridViewModel : ViewModelBase
             entry.PropertyChanged += OnEntryPropertyChanged;
         }
 
-        OnPropertyChanged(nameof(AllSelected));
+        NotifySelectionChanged();
     }
 
     private void OnEntryPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(FileSystemEntry.IsSelected))
-            OnPropertyChanged(nameof(AllSelected));
+        if (e.PropertyName != nameof(FileSystemEntry.IsSelected)) return;
+
+        NotifySelectionChanged();
+    }
+
+    private void NotifySelectionChanged()
+    {
+        OnPropertyChanged(nameof(AllSelected));
+        OnPropertyChanged(nameof(SelectedCount));
     }
 
     public async Task LoadEntriesAsync()
