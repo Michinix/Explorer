@@ -22,7 +22,8 @@ public class App : Application
         services.AddSingleton<NavigationService>();
         services.AddSingleton<FileSystemService>();
         services.AddSingleton<MainWindowViewModel>();
-        services.AddTransient<HomeViewModel>();
+        services.AddSingleton<DataGridViewModel>();
+        services.AddSingleton<HomeViewModel>();
 
         var provider = services.BuildServiceProvider();
 
