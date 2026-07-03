@@ -21,10 +21,7 @@ public partial class DataGridViewModel : ViewModelBase
     private ObservableCollection<FileSystemEntry> _entries = [];
 
     [ObservableProperty] private bool _isLoading;
-
     [ObservableProperty] private FileSystemEntry? _selectedEntry;
-
-    [ObservableProperty] private string? _statusMessage;
 
     public DataGridViewModel(NavigationService navigation, FileSystemService fileSystemService)
     {
@@ -50,9 +47,16 @@ public partial class DataGridViewModel : ViewModelBase
     public int FileCount => Entries.Count(e => !e.IsDirectory);
     public int SelectedItemCount => Entries.Count(e => e.IsSelected);
 
-    partial void OnEntriesChanged(ObservableCollection<FileSystemEntry> value)
+    partial void OnEntriesChanged(
+        ObservableCollection<FileSystemEntry>? oldValue,
+        ObservableCollection<FileSystemEntry> newValue
+    )
     {
-        foreach (var entry in value)
+        if (oldValue != null)
+            foreach (var entry in oldValue)
+                entry.PropertyChanged -= OnEntryPropertyChanged;
+
+        foreach (var entry in newValue)
         {
             entry.IsSelected = false;
             entry.PropertyChanged += OnEntryPropertyChanged;
@@ -77,6 +81,7 @@ public partial class DataGridViewModel : ViewModelBase
     public async Task LoadEntriesAsync()
     {
         IsLoading = true;
+        SelectedEntry = null;
 
         try
         {
@@ -85,15 +90,15 @@ public partial class DataGridViewModel : ViewModelBase
         }
         catch (UnauthorizedAccessException)
         {
-            StatusMessage = "Accès refusé à ce dossier.";
+            // TODO Add Toast
         }
         catch (DirectoryNotFoundException)
         {
-            StatusMessage = "Ce dossier n'existe plus.";
+            // TODO Add Toast
         }
         catch (Exception)
         {
-            StatusMessage = "Une erreur est survenue lors du chargement.";
+            // TODO Add Toast
         }
         finally
         {
@@ -127,7 +132,7 @@ public partial class DataGridViewModel : ViewModelBase
         }
         catch (Exception)
         {
-            StatusMessage = $"Impossible d'ouvrir '{SelectedEntry.Name}'.";
+            // TODO Add Toast
         }
     }
 }
