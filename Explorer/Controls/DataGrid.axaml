@@ -50,6 +50,7 @@
                                         CellStyleClasses="has-border">
                     <DataGridTemplateColumn.Header>
                         <CheckBox IsChecked="{Binding AllSelected, Mode=TwoWay}"
+                                  IsEnabled="{Binding !!Entries.Count}"
                                   HorizontalAlignment="Center" />
                     </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
