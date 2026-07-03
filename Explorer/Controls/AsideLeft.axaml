@@ -13,7 +13,7 @@
             <Setter Property="Foreground" Value="{StaticResource ColorWhiteBrush}" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Padding" Value="0" />
+            <Setter Property="Padding" Value="0, 5" />
             <Setter Property="MinHeight" Value="0" />
             <Setter Property="MinWidth" Value="0" />
             <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -28,7 +28,7 @@
             <Setter Property="FontWeight" Value="Medium" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
-            <Setter Property="Margin" Value="13,20,13,20" />
+            <Setter Property="Margin" Value="13, 15, 13, 12" />
         </Style>
     </UserControl.Styles>
 
@@ -39,7 +39,7 @@
             <StackPanel Orientation="Vertical">
                 <TextBlock Classes="SectionTitle" Text="ACCÈS RAPIDE" />
 
-                <StackPanel Orientation="Vertical" Spacing="20" Margin="13,0">
+                <StackPanel Orientation="Vertical" Spacing="10" Margin="13,0">
                     <Button Classes="MenuLink" Command="{Binding NavigateToDesktopCommand}">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
                             <Svg Path="/Assets/Icons/Home.svg" Width="15" Height="15" VerticalAlignment="Center"
