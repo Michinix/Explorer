@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Explorer.ViewModels"
+             xmlns:models="using:Explorer.Models"
              mc:Ignorable="d"
              x:Name="AsideLeftControl"
              x:Class="Explorer.Controls.AsideLeft"
@@ -35,55 +36,94 @@
     <Border BorderThickness="0,0,1,0"
             BorderBrush="{StaticResource BorderDefault}">
 
-        <StackPanel Orientation="Vertical">
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+
             <StackPanel Orientation="Vertical">
-                <TextBlock Classes="SectionTitle" Text="ACCÈS RAPIDE" />
 
-                <StackPanel Orientation="Vertical" Spacing="10" Margin="13,0">
-                    <Button Classes="MenuLink" Command="{Binding NavigateToDesktopCommand}">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
-                            <Svg Path="/Assets/Icons/Home.svg" Width="15" Height="15" VerticalAlignment="Center"
-                                 Css="path { stroke: white }" />
-                            <TextBlock Text="Bureau" FontSize="13" FontWeight="Normal" />
-                        </StackPanel>
-                    </Button>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Classes="SectionTitle" Text="ACCÈS RAPIDE" />
 
-                    <Button Classes="MenuLink" Command="{Binding NavigateToDownloadsCommand}">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
-                            <Svg Path="/Assets/Icons/Download.svg" Width="15" Height="15" VerticalAlignment="Center"
-                                 Css="path { stroke: white }" />
-                            <TextBlock Text="Téléchargements" FontSize="13" FontWeight="Normal" />
-                        </StackPanel>
-                    </Button>
+                    <StackPanel Orientation="Vertical" Spacing="10" Margin="13,0">
+                        <Button Classes="MenuLink" Command="{Binding NavigateToDesktopCommand}">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
+                                <Svg Path="/Assets/Icons/Home.svg" Width="15" Height="15" VerticalAlignment="Center"
+                                     Css="path { stroke: white }" />
+                                <TextBlock Text="Bureau" FontSize="13" FontWeight="Normal" />
+                            </StackPanel>
+                        </Button>
 
-                    <Button Classes="MenuLink" Command="{Binding NavigateToDocumentsCommand}">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
-                            <Svg Path="/Assets/Icons/Document.svg" Width="15" Height="15" VerticalAlignment="Center"
-                                 Css="path { stroke: white }" />
-                            <TextBlock Text="Documents" FontSize="13" FontWeight="Normal" />
-                        </StackPanel>
-                    </Button>
+                        <Button Classes="MenuLink" Command="{Binding NavigateToDownloadsCommand}">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
+                                <Svg Path="/Assets/Icons/Download.svg" Width="15" Height="15"
+                                     VerticalAlignment="Center" Css="path { stroke: white }" />
+                                <TextBlock Text="Téléchargements" FontSize="13" FontWeight="Normal" />
+                            </StackPanel>
+                        </Button>
 
-                    <Button Classes="MenuLink" Command="{Binding NavigateToPicturesCommand}">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
-                            <Svg Path="/Assets/Icons/Picture.svg" Width="15" Height="15" VerticalAlignment="Center"
-                                 Css="path { stroke: white }" />
-                            <TextBlock Text="Images" FontSize="13" FontWeight="Normal" />
-                        </StackPanel>
-                    </Button>
+                        <Button Classes="MenuLink" Command="{Binding NavigateToDocumentsCommand}">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
+                                <Svg Path="/Assets/Icons/Document.svg" Width="15" Height="15"
+                                     VerticalAlignment="Center" Css="path { stroke: white }" />
+                                <TextBlock Text="Documents" FontSize="13" FontWeight="Normal" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button Classes="MenuLink" Command="{Binding NavigateToPicturesCommand}">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
+                                <Svg Path="/Assets/Icons/Picture.svg" Width="15" Height="15" VerticalAlignment="Center"
+                                     Css="path { stroke: white }" />
+                                <TextBlock Text="Images" FontSize="13" FontWeight="Normal" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
                 </StackPanel>
+
+                <Border BorderBrush="{StaticResource BorderDefault}"
+                        BorderThickness="0,1,0,0"
+                        HorizontalAlignment="Stretch"
+                        Margin="13,20,13,0" />
+
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Classes="SectionTitle" Text="EMPLACEMENTS" />
+
+                    <ItemsControl ItemsSource="{Binding Drives}" Margin="13,0">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="models:DriveItem">
+                                <Button Classes="MenuLink"
+                                        Command="{Binding #AsideLeftControl.DataContext?.NavigateToDriveCommand}"
+                                        CommandParameter="{Binding FullPath}"
+                                        x:CompileBindings="False"
+                                        Margin="0,0,0,12">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="15">
+                                        <Svg Path="/Assets/Icons/Drive.svg" Width="15" Height="15"
+                                             VerticalAlignment="Center" Css="path { stroke: white }" />
+
+                                        <StackPanel Orientation="Vertical" Spacing="4">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <TextBlock Text="{Binding DisplayName}" FontSize="13"
+                                                           Foreground="{StaticResource ColorWhiteBrush}" />
+                                                <TextBlock Text="-" FontSize="13" FontWeight="Thin"
+                                                           Foreground="{StaticResource ColorWhiteBrush}"
+                                                           VerticalAlignment="Center" />
+                                                <TextBlock Text="{Binding Type}" FontSize="13"
+                                                           FontWeight="Normal"
+                                                           Foreground="{StaticResource ColorWhiteBrush}"
+                                                           VerticalAlignment="Center" />
+                                            </StackPanel>
+
+                                            <TextBlock Text="{Binding FreeSpace}" FontSize="11"
+                                                       FontWeight="Thin"
+                                                       Foreground="{StaticResource ColorWhiteBrush}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
             </StackPanel>
-
-            <Border BorderBrush="{StaticResource BorderDefault}"
-                    BorderThickness="0,1,0,0"
-                    HorizontalAlignment="Stretch"
-                    Margin="13,20,13,0" />
-
-            <StackPanel Orientation="Vertical">
-                <TextBlock Classes="SectionTitle" Text="EMPLACEMENTS" />
-            </StackPanel>
-
-        </StackPanel>
-
+        </ScrollViewer>
     </Border>
 </UserControl>

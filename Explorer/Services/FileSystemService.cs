@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -50,13 +51,29 @@ public class FileSystemService
             Process.Start(new ProcessStartInfo(path) { UseShellExecute = true }));
     }
 
-    public async Task<ICollection<DriveInfo>> ListDrivesAsync()
+    public async Task<ICollection<DriveItem>> GetDrivesAsync()
     {
-        return await Task.Run(() =>
-            DriveInfo.GetDrives()
-                .Where(d => d.IsReady)
-                .OrderBy(d => d.DriveType)
-                .ThenBy(d => d.Name)
-                .ToArray());
+        return await Task.Run(() => DriveInfo.GetDrives()
+            .Where(d => d is { IsReady: true, DriveType: DriveType.Removable or DriveType.Fixed }
+                        && (!OperatingSystem.IsMacOS() || d.Name is "/" || d.Name.StartsWith("/Volumes/")))
+            .Select(d =>
+            {
+                var label = string.IsNullOrWhiteSpace(d.VolumeLabel) ? d.Name.TrimEnd('\\') : d.VolumeLabel;
+                var typeName = d.DriveType == DriveType.Removable
+                    ? "Amovible"
+                    : d.Name.StartsWith("C:") || d.Name == "/"
+                        ? "Système"
+                        : "Données";
+
+                return new DriveItem(
+                    label,
+                    typeName,
+                    $"{FormatSize(d.AvailableFreeSpace)} libres",
+                    d.Name
+                );
+            })
+            .OrderBy(d => d.Type)
+            .ThenBy(d => d.DisplayName)
+            .ToArray());
     }
 }

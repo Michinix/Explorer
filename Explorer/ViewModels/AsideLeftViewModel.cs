@@ -1,36 +1,62 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Explorer.Models;
 using Explorer.Services;
 
 namespace Explorer.ViewModels;
 
-public partial class AsideLeftViewModel(NavigationService navigation) : ViewModelBase
+public partial class AsideLeftViewModel : ViewModelBase
 {
-    [RelayCommand]
-    private void NavigateToDesktop()
+    private readonly FileSystemService _fileSystemService;
+    private readonly NavigationService _navigation;
+
+    [ObservableProperty] private ICollection<DriveItem> _drives = [];
+
+    public AsideLeftViewModel(NavigationService navigation, FileSystemService fileSystemService)
     {
-        navigation.NavigateTo(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
+        _navigation = navigation;
+        _fileSystemService = fileSystemService;
+
+        _ = LoadDrivesAsync();
+    }
+
+    private async Task LoadDrivesAsync()
+    {
+        Drives = await _fileSystemService.GetDrivesAsync();
     }
 
     [RelayCommand]
-    private void NavigateToDownloads()
+    private void NavigateToDrive(string path)
     {
-        var downloadsPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads"
-        );
-        navigation.NavigateTo(downloadsPath);
+        _navigation.NavigateTo(path);
+    }
+
+    [RelayCommand]
+    private void NavigateToDesktop()
+    {
+        _navigation.NavigateTo(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
     }
 
     [RelayCommand]
     private void NavigateToDocuments()
     {
-        navigation.NavigateTo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
+        _navigation.NavigateTo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
     }
 
     [RelayCommand]
     private void NavigateToPictures()
     {
-        navigation.NavigateTo(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures));
+        _navigation.NavigateTo(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures));
+    }
+
+    [RelayCommand]
+    private void NavigateToDownloads()
+    {
+        _navigation.NavigateTo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+            "Downloads"));
     }
 }
