@@ -1,11 +1,17 @@
-﻿namespace Explorer.ViewModels;
+﻿using Explorer.Services;
 
-public class HomeViewModel(
-    AsideLeftViewModel asideLeft,
-    DataGridViewModel dataGrid,
-    NavBarViewModel navBar) : ViewModelBase
+namespace Explorer.ViewModels;
+
+public class HomeViewModel : ViewModelBase
 {
-    public AsideLeftViewModel AsideLeft { get; } = asideLeft;
-    public DataGridViewModel DataGrid { get; } = dataGrid;
-    public NavBarViewModel NavBar { get; } = navBar;
+    public HomeViewModel(FileSystemService fileSystemService, NavigationService navigationService)
+    {
+        DataGrid = new DataGridViewModel(navigationService, fileSystemService);
+        NavBar = new NavBarViewModel(navigationService, DataGrid);
+        AsideLeft = new AsideLeftViewModel(navigationService, fileSystemService);
+    }
+
+    public AsideLeftViewModel AsideLeft { get; }
+    public DataGridViewModel DataGrid { get; }
+    public NavBarViewModel NavBar { get; }
 }
