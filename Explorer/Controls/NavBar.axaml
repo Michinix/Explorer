@@ -3,12 +3,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Explorer.ViewModels"
+             xmlns:controls="using:Explorer.Controls"
              mc:Ignorable="d"
              x:Name="NavBarControl"
              x:Class="Explorer.Controls.NavBar"
              x:DataType="vm:NavBarViewModel">
 
     <UserControl.Styles>
+        <Style Selector="TextBox.pathEditor">
+            <Setter Property="Cursor" Value="IBeam" />
+        </Style>
+
         <Style Selector="Button">
             <Setter Property="Padding" Value="6" />
             <Setter Property="Background" Value="Transparent" />
@@ -29,15 +34,13 @@
             <Setter Property="StrokeLineCap" Value="Round" />
             <Setter Property="StrokeJoin" Value="Round" />
         </Style>
-        <Style Selector="Button:disabled Path">
-            <Setter Property="Stroke" Value="#4A4A4A" />
-        </Style>
 
         <Style Selector="Button Svg">
             <Setter Property="Width" Value="15" />
             <Setter Property="Height" Value="15" />
         </Style>
-        <Style Selector="Button:disabled Svg">
+
+        <Style Selector="Button:disabled Path, Button:disabled Svg">
             <Setter Property="Opacity" Value="0.5" />
         </Style>
     </UserControl.Styles>
@@ -81,11 +84,10 @@
                 </StackPanel>
 
                 <Grid Grid.Column="1" ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                    <Border Grid.Column="0" Background="#1C1C1C" CornerRadius="3" Padding="10,6"
-                            VerticalAlignment="Center">
-                        <TextBlock Text="{Binding Navigation.CurrentPath}" FontSize="13"
-                                   TextTrimming="CharacterEllipsis" />
-                    </Border>
+                    <controls:PathEditor Grid.Column="0"
+                                         Text="{Binding Navigation.EditablePath, Mode=TwoWay}"
+                                         SubmitCommand="{Binding Navigation.SubmitEditedPathCommand}"
+                                         VerticalAlignment="Center" />
                     <Border Grid.Column="1" Background="#1C1C1C" CornerRadius="3" Padding="10,6" Width="205"
                             VerticalAlignment="Center">
                         <TextBlock Text="Rechercher..." FontSize="13" TextTrimming="CharacterEllipsis" />

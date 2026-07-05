@@ -1,0 +1,60 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Name="PathEditorControl"
+             x:Class="Explorer.Controls.PathEditor">
+
+    <UserControl.Resources>
+        <ControlTheme x:Key="PathEditorTextBoxTheme" TargetType="TextBox">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="MinHeight" Value="0" />
+            <Setter Property="CaretBrush" Value="{StaticResource ColorWhiteBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource ColorWhiteBrush}" />
+            <Setter Property="SelectionBrush" Value="#3A3A3A" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Template">
+                <ControlTemplate TargetType="TextBox">
+                    <Panel Background="Transparent">
+                        <ScrollViewer Name="PART_ScrollViewer"
+                                      HorizontalScrollBarVisibility="Hidden"
+                                      VerticalScrollBarVisibility="Disabled">
+                            <TextPresenter Name="PART_TextPresenter"
+                                           Text="{TemplateBinding Text}"
+                                           CaretIndex="{TemplateBinding CaretIndex}"
+                                           SelectionStart="{TemplateBinding SelectionStart}"
+                                           SelectionEnd="{TemplateBinding SelectionEnd}"
+                                           TextAlignment="{TemplateBinding TextAlignment}"
+                                           TextWrapping="{TemplateBinding TextWrapping}"
+                                           PasswordChar="{TemplateBinding PasswordChar}"
+                                           SelectionBrush="{TemplateBinding SelectionBrush}"
+                                           CaretBrush="{TemplateBinding CaretBrush}"
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </ScrollViewer>
+                    </Panel>
+                </ControlTemplate>
+            </Setter>
+        </ControlTheme>
+    </UserControl.Resources>
+
+    <UserControl.Styles>
+        <Style Selector="TextBox.pathEditor">
+            <Setter Property="Cursor" Value="IBeam" />
+        </Style>
+    </UserControl.Styles>
+
+    <Border Background="#1C1C1C" CornerRadius="3" Padding="10,6" VerticalAlignment="Center">
+        <TextBox Theme="{StaticResource PathEditorTextBoxTheme}"
+                 Classes="pathEditor"
+                 Text="{Binding Text, ElementName=PathEditorControl, Mode=TwoWay}"
+                 FontSize="13"
+                 TextWrapping="NoWrap">
+            <TextBox.KeyBindings>
+                <KeyBinding Gesture="Enter" Command="{Binding SubmitCommand, ElementName=PathEditorControl}" />
+            </TextBox.KeyBindings>
+        </TextBox>
+    </Border>
+</UserControl>
