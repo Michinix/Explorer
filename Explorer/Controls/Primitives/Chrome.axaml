@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Name="ChromeControl"
-             x:Class="Explorer.Controls.Chrome">
+             x:Class="Explorer.Controls.Primitives.Chrome">
 
     <UserControl.Styles>
         <Style Selector="StackPanel#TrafficLights:pointerover Button /template/ Path.trafficIcon">

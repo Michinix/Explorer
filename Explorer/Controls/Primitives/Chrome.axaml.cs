@@ -2,7 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 
-namespace Explorer.Controls;
+namespace Explorer.Controls.Primitives;
 
 public partial class Chrome : UserControl
 {
