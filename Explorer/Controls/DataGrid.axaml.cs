@@ -1,7 +1,9 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.VisualTree;
+using Explorer.Models;
 using Explorer.ViewModels;
 
 namespace Explorer.Controls;
@@ -20,5 +22,32 @@ public partial class DataGrid : UserControl
 
         if (DataContext is DataGridViewModel vm)
             vm.EntryDoubleClickedCommand.Execute(null);
+    }
+
+    private void OnRenameTextBoxLoaded(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not TextBox textBox) return;
+
+        if (textBox.IsVisible)
+        {
+            textBox.Focus();
+            textBox.SelectAll();
+        }
+
+        textBox.PropertyChanged += (_, args) =>
+        {
+            if (args.Property != IsVisibleProperty || !textBox.IsVisible) return;
+
+            textBox.Focus();
+            textBox.SelectAll();
+        };
+    }
+
+    private void OnRenameTextBoxLostFocus(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not TextBox { DataContext: FileSystemEntry { IsEditing: true } entry }) return;
+        if (DataContext is not DataGridViewModel vm) return;
+
+        vm.CommitRenameCommand.Execute(entry);
     }
 }

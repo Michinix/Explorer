@@ -14,6 +14,9 @@ public partial class FileSystemEntry(
     DateTime lastModified
 ) : ObservableObject
 {
+    [ObservableProperty] private string _editableName = name;
+    [ObservableProperty] private bool _isEditing;
+    [ObservableProperty] private bool _isNew;
     [ObservableProperty] private bool _isSelected;
     public string Name { get; } = name;
     public string FullPath { get; } = fullPath;

@@ -133,4 +133,114 @@ public partial class DataGridViewModel : ViewModelBase
             // TODO Add Toast
         }
     }
+
+    [RelayCommand]
+    private void CreateFile()
+    {
+        AddDraftEntry(false);
+    }
+
+    [RelayCommand]
+    private void CreateFolder()
+    {
+        AddDraftEntry(true);
+    }
+
+    private void AddDraftEntry(bool isDirectory)
+    {
+        var draft = new FileSystemEntry(string.Empty, string.Empty, string.Empty, isDirectory, "—", DateTime.Now)
+        {
+            IsNew = true,
+            IsEditing = true
+        };
+
+        draft.PropertyChanged += OnEntryPropertyChanged;
+        Entries.Insert(0, draft);
+        SelectedEntry = draft;
+
+        OnPropertyChanged(nameof(FolderCount));
+        OnPropertyChanged(nameof(FileCount));
+    }
+
+    [RelayCommand]
+    private void Rename()
+    {
+        if (SelectedEntry is null) return;
+
+        SelectedEntry.EditableName = SelectedEntry.Name;
+        SelectedEntry.IsEditing = true;
+    }
+
+    [RelayCommand]
+    private async Task CommitRename(FileSystemEntry entry)
+    {
+        entry.IsEditing = false;
+        var name = entry.EditableName.Trim();
+
+        if (entry.IsNew)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                Entries.Remove(entry);
+                return;
+            }
+
+            try
+            {
+                var path = Path.Combine(_navigation.CurrentPath, name);
+
+                if (entry.IsDirectory)
+                    await FileSystemService.CreateDirectoryAsync(path);
+                else
+                    await FileSystemService.CreateFileAsync(path);
+
+                await LoadEntriesAsync();
+            }
+            catch (Exception)
+            {
+                Entries.Remove(entry);
+                // TODO Add Toast
+            }
+
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(name) || name == entry.Name) return;
+
+        try
+        {
+            await FileSystemService.RenameAsync(entry, name);
+            await LoadEntriesAsync();
+        }
+        catch (Exception)
+        {
+            // TODO Add Toast
+        }
+    }
+
+    [RelayCommand]
+    private void CancelRename(FileSystemEntry entry)
+    {
+        entry.IsEditing = false;
+
+        if (entry.IsNew)
+            Entries.Remove(entry);
+    }
+
+    [RelayCommand]
+    private async Task DeleteSelected()
+    {
+        var selected = Entries.Where(e => e.IsSelected).ToArray();
+        if (selected.Length == 0) return;
+
+        try
+        {
+            await FileSystemService.DeleteEntriesAsync(selected);
+            await LoadEntriesAsync();
+        }
+        catch (Exception)
+        {
+            // TODO Add Toast
+        }
+    }
 }

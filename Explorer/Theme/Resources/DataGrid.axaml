@@ -43,6 +43,16 @@
         <Setter Property="Margin" Value="0" />
     </Style>
 
+    <!-- DataGrid cell content (TextBox margin reset) -->
+    <Style Selector="DataGridCell TextBox">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Height" Value="22" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="CaretBrush" Value="{StaticResource AccentPrimary}" />
+        <Setter Property="CaretBlinkInterval" Value="0.5" />
+    </Style>
+
     <!-- DataGrid column header content spacing reset -->
     <Style Selector="DataGridColumnHeader ContentPresenter">
         <Setter Property="Margin" Value="0" />

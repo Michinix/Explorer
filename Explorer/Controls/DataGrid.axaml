@@ -24,7 +24,6 @@
                   IsReadOnly="True">
 
             <DataGrid.Styles>
-
                 <Style Selector="DataGridColumnHeader:nth-child(1)">
                     <Setter Property="HorizontalContentAlignment" Value="Center" />
                 </Style>
@@ -72,7 +71,23 @@
                                                    IsDirectory="{Binding IsDirectory}" />
 
                                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center"
-                                           HorizontalAlignment="Center" />
+                                           HorizontalAlignment="Center"
+                                           IsVisible="{Binding !IsEditing}" />
+
+                                <TextBox Text="{Binding EditableName}" VerticalAlignment="Center"
+                                         MinWidth="80" Padding="4,0"
+                                         IsVisible="{Binding IsEditing}"
+                                         Loaded="OnRenameTextBoxLoaded"
+                                         LostFocus="OnRenameTextBoxLostFocus">
+                                    <TextBox.KeyBindings>
+                                        <KeyBinding Gesture="Enter"
+                                                    Command="{Binding ((vm:DataGridViewModel)DataContext)?.CommitRenameCommand, ElementName=DataGridControl}"
+                                                    CommandParameter="{Binding}" />
+                                        <KeyBinding Gesture="Escape"
+                                                    Command="{Binding ((vm:DataGridViewModel)DataContext)?.CancelRenameCommand, ElementName=DataGridControl}"
+                                                    CommandParameter="{Binding}" />
+                                    </TextBox.KeyBindings>
+                                </TextBox>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
