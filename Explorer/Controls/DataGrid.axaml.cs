@@ -24,6 +24,15 @@ public partial class DataGrid : UserControl
             vm.EntryDoubleClickedCommand.Execute(null);
     }
 
+    private void OnDataGridKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.Key != Key.Space || e.Source is TextBox) return;
+        if (DataContext is not DataGridViewModel vm) return;
+
+        vm.TogglePreviewCommand.Execute(null);
+        e.Handled = true;
+    }
+
     private void OnRenameTextBoxLoaded(object? sender, RoutedEventArgs e)
     {
         if (sender is not TextBox textBox) return;

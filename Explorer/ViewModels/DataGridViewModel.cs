@@ -20,6 +20,7 @@ public partial class DataGridViewModel : ViewModelBase
     private ObservableCollection<FileSystemEntry> _entries = [];
 
     [ObservableProperty] private bool _isLoading;
+    [ObservableProperty] private bool _isPreviewOpen;
     [ObservableProperty] private FileSystemEntry? _selectedEntry;
 
     public DataGridViewModel(NavigationService navigation)
@@ -44,6 +45,12 @@ public partial class DataGridViewModel : ViewModelBase
     public int FolderCount => Entries.Count(e => e.IsDirectory);
     public int FileCount => Entries.Count(e => !e.IsDirectory);
     public int SelectedItemCount => Entries.Count(e => e.IsSelected);
+
+    partial void OnSelectedEntryChanged(FileSystemEntry? value)
+    {
+        if (value is null)
+            IsPreviewOpen = false;
+    }
 
     partial void OnEntriesChanged(
         ObservableCollection<FileSystemEntry>? oldValue,
@@ -132,6 +139,14 @@ public partial class DataGridViewModel : ViewModelBase
         {
             // TODO Add Toast
         }
+    }
+
+    [RelayCommand]
+    private void TogglePreview()
+    {
+        if (SelectedEntry is null || SelectedEntry.IsDirectory) return;
+
+        IsPreviewOpen = !IsPreviewOpen;
     }
 
     [RelayCommand]

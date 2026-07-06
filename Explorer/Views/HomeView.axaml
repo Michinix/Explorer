@@ -36,5 +36,9 @@
         </Grid>
 
         <controls:Footer Grid.Row="3" DataContext="{Binding DataGrid}" />
+
+        <primitives:FilePreviewModal Grid.Row="0" Grid.RowSpan="4"
+                                     IsOpen="{Binding DataGrid.IsPreviewOpen, Mode=TwoWay}"
+                                     Entry="{Binding DataGrid.SelectedEntry}" />
     </Grid>
 </UserControl>
