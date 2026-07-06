@@ -4,11 +4,11 @@ namespace Explorer.ViewModels;
 
 public class HomeViewModel : ViewModelBase
 {
-    public HomeViewModel(FileSystemService fileSystemService, NavigationService navigationService)
+    public HomeViewModel(NavigationService navigationService)
     {
-        DataGrid = new DataGridViewModel(navigationService, fileSystemService);
+        DataGrid = new DataGridViewModel(navigationService);
         NavBar = new NavBarViewModel(navigationService, DataGrid);
-        AsideLeft = new AsideLeftViewModel(navigationService, fileSystemService);
+        AsideLeft = new AsideLeftViewModel(navigationService);
     }
 
     public AsideLeftViewModel AsideLeft { get; }

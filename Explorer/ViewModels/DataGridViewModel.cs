@@ -14,7 +14,6 @@ namespace Explorer.ViewModels;
 
 public partial class DataGridViewModel : ViewModelBase
 {
-    private readonly FileSystemService _fileSystemService;
     private readonly NavigationService _navigation;
 
     [ObservableProperty] [NotifyPropertyChangedFor(nameof(FolderCount), nameof(FileCount))]
@@ -23,10 +22,9 @@ public partial class DataGridViewModel : ViewModelBase
     [ObservableProperty] private bool _isLoading;
     [ObservableProperty] private FileSystemEntry? _selectedEntry;
 
-    public DataGridViewModel(NavigationService navigation, FileSystemService fileSystemService)
+    public DataGridViewModel(NavigationService navigation)
     {
         _navigation = navigation;
-        _fileSystemService = fileSystemService;
 
         WeakReferenceMessenger.Default.Register<CurrentPathChangedMessage>(this,
             (r, m) => _ = LoadEntriesAsync());
@@ -86,7 +84,7 @@ public partial class DataGridViewModel : ViewModelBase
         try
         {
             Entries = new ObservableCollection<FileSystemEntry>(
-                await _fileSystemService.ListEntriesAsync(_navigation.CurrentPath));
+                await FileSystemService.ListEntriesAsync(_navigation.CurrentPath));
         }
         catch (UnauthorizedAccessException)
         {
@@ -128,7 +126,7 @@ public partial class DataGridViewModel : ViewModelBase
 
         try
         {
-            await _fileSystemService.LaunchFileAsync(SelectedEntry.FullPath);
+            await FileSystemService.LaunchFileAsync(SelectedEntry.FullPath);
         }
         catch (Exception)
         {

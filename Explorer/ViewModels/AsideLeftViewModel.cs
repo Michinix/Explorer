@@ -11,22 +11,20 @@ namespace Explorer.ViewModels;
 
 public partial class AsideLeftViewModel : ViewModelBase
 {
-    private readonly FileSystemService _fileSystemService;
     private readonly NavigationService _navigation;
 
     [ObservableProperty] private ICollection<DriveItem> _drives = [];
 
-    public AsideLeftViewModel(NavigationService navigation, FileSystemService fileSystemService)
+    public AsideLeftViewModel(NavigationService navigation)
     {
         _navigation = navigation;
-        _fileSystemService = fileSystemService;
 
         _ = LoadDrivesAsync();
     }
 
     private async Task LoadDrivesAsync()
     {
-        Drives = await _fileSystemService.GetDrivesAsync();
+        Drives = await FileSystemService.GetDrivesAsync();
     }
 
     [RelayCommand]

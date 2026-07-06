@@ -8,7 +8,7 @@ using Explorer.Models;
 
 namespace Explorer.Services;
 
-public class FileSystemService
+public static class FileSystemService
 {
     private static string FormatSize(long bytes)
     {
@@ -26,7 +26,7 @@ public class FileSystemService
         };
     }
 
-    public async Task<ICollection<FileSystemEntry>> ListEntriesAsync(string path)
+    public static async Task<ICollection<FileSystemEntry>> ListEntriesAsync(string path)
     {
         return await Task.Run(() =>
             new DirectoryInfo(path)
@@ -45,13 +45,13 @@ public class FileSystemService
                 .ToArray());
     }
 
-    public async Task LaunchFileAsync(string path)
+    public static async Task LaunchFileAsync(string path)
     {
         await Task.Run(() =>
             Process.Start(new ProcessStartInfo(path) { UseShellExecute = true }));
     }
 
-    public async Task<ICollection<DriveItem>> GetDrivesAsync()
+    public static async Task<ICollection<DriveItem>> GetDrivesAsync()
     {
         return await Task.Run(() => DriveInfo.GetDrives()
             .Where(d => d is { IsReady: true, DriveType: DriveType.Removable or DriveType.Fixed }
