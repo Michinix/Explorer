@@ -20,15 +20,12 @@ public partial class FilePreviewModal : UserControl
     public static readonly StyledProperty<FileSystemEntry?> EntryProperty =
         AvaloniaProperty.Register<FilePreviewModal, FileSystemEntry?>(nameof(Entry));
 
-    private readonly FileIcon _fallbackIcon;
-
     private readonly Image _previewImage;
 
     public FilePreviewModal()
     {
         InitializeComponent();
         _previewImage = this.FindControl<Image>("PreviewImage")!;
-        _fallbackIcon = this.FindControl<FileIcon>("FallbackIcon")!;
     }
 
     public bool IsOpen
@@ -73,7 +70,6 @@ public partial class FilePreviewModal : UserControl
 
         _previewImage.Source = bitmap;
         _previewImage.IsVisible = bitmap is not null;
-        _fallbackIcon.IsVisible = bitmap is null;
     }
 
     private void OnOverlayPointerPressed(object? sender, PointerPressedEventArgs e)
