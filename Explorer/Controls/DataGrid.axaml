@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Explorer.ViewModels"
              xmlns:models="using:Explorer.Models"
-             xmlns:controls="using:Explorer.Controls.Primitives"
+             xmlns:primitives="using:Explorer.Controls.Primitives"
              mc:Ignorable="d"
              x:Name="DataGridControl"
              x:Class="Explorer.Controls.DataGrid"
@@ -65,10 +65,10 @@
                         <DataTemplate x:DataType="models:FileSystemEntry">
                             <StackPanel Orientation="Horizontal" Spacing="9" VerticalAlignment="Center"
                                         HorizontalAlignment="Center">
-                                <controls:FileIcon Width="18" Height="20"
-                                                   IconBrush="{Binding IconBrush}"
-                                                   IconLabel="{Binding IconLabel}"
-                                                   IsDirectory="{Binding IsDirectory}" />
+                                <primitives:FileIcon Width="18" Height="20"
+                                                     IconBrush="{Binding IconBrush}"
+                                                     IconLabel="{Binding IconLabel}"
+                                                     IsDirectory="{Binding IsDirectory}" />
 
                                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center"
                                            HorizontalAlignment="Center"

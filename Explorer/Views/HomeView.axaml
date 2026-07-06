@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Explorer.ViewModels"
              xmlns:controls="using:Explorer.Controls"
+             xmlns:primitives="using:Explorer.Controls.Primitives"
              mc:Ignorable="d"
              x:Class="Explorer.Views.HomeView"
              x:DataType="vm:HomeViewModel">
@@ -11,7 +12,7 @@
     <Grid RowDefinitions="Auto, Auto, *, Auto">
 
         <StackPanel Grid.Row="0">
-            <controls:Chrome Height="40" />
+            <primitives:Chrome Height="40" />
             <controls:NavBar DataContext="{Binding NavBar}" />
         </StackPanel>
 
