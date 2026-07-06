@@ -76,4 +76,40 @@ public static class FileSystemService
             .ThenBy(d => d.DisplayName)
             .ToArray());
     }
+
+    public static async Task CreateFileAsync(string path)
+    {
+        await Task.Run(() => new FileStream(path, FileMode.CreateNew).Dispose());
+    }
+
+    public static async Task CreateDirectoryAsync(string path)
+    {
+        await Task.Run(() => Directory.CreateDirectory(path));
+    }
+
+    public static async Task RenameAsync(FileSystemEntry entry, string newName)
+    {
+        var directory = Path.GetDirectoryName(entry.FullPath)!;
+        var destination = Path.Combine(directory, newName);
+
+        await Task.Run(() =>
+        {
+            if (entry.IsDirectory)
+                Directory.Move(entry.FullPath, destination);
+            else
+                File.Move(entry.FullPath, destination);
+        });
+    }
+
+    public static async Task DeleteEntriesAsync(ICollection<FileSystemEntry> entries)
+    {
+        await Task.Run(() =>
+        {
+            foreach (var entry in entries)
+                if (entry.IsDirectory)
+                    Directory.Delete(entry.FullPath, true);
+                else
+                    File.Delete(entry.FullPath);
+        });
+    }
 }
