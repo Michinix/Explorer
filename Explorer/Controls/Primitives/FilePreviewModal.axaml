@@ -9,44 +9,76 @@
              IsVisible="{Binding IsOpen, ElementName=FilePreviewModalControl}"
              KeyDown="OnKeyDown">
 
+    <UserControl.Styles>
+        <Style Selector="Button.toolbarButton">
+            <Setter Property="Background" Value="#22FFFFFF" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="11" />
+            <Setter Property="Width" Value="22" />
+            <Setter Property="Height" Value="22" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="MinWidth" Value="0" />
+            <Setter Property="MinHeight" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style Selector="Button.toolbarButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#3DFFFFFF" />
+        </Style>
+
+        <Style Selector="Button.toolbarPill:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#3DFFFFFF" />
+        </Style>
+    </UserControl.Styles>
+
     <Grid Background="{StaticResource OverlayDim}"
           PointerPressed="OnOverlayPointerPressed">
 
         <Border Background="{StaticResource SurfaceOverlay}"
                 BorderBrush="{StaticResource BorderDefault}"
                 BorderThickness="1"
-                CornerRadius="10"
-                Padding="25,20"
+                CornerRadius="12"
                 MinWidth="450"
-                MaxWidth="800"
+                MaxWidth="650"
                 MaxHeight="700"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
+                BoxShadow="0 24 70 0 #99000000"
+                ClipToBounds="True"
                 PointerPressed="OnCardPointerPressed">
 
-            <Grid RowDefinitions="Auto, *, Auto">
-                <Button Grid.Row="0"
-                        HorizontalAlignment="Right"
-                        Click="OnCloseClicked"
-                        Background="Transparent"
-                        BorderThickness="0"
-                        Padding="4"
-                        MinWidth="0"
-                        MinHeight="0"
-                        Cursor="Hand">
-                    <Path Data="M0,0 L10,10 M10,0 L0,10"
-                          Stroke="{StaticResource ForegroundMuted}"
-                          StrokeThickness="1.5"
-                          StrokeLineCap="Round" />
-                </Button>
+            <Border.Transitions>
+                <Transitions>
+                    <DoubleTransition Property="Opacity" Duration="0:0:0.15" />
+                </Transitions>
+            </Border.Transitions>
 
-                <Image Grid.Row="1"
-                       Name="PreviewImage"
-                       Stretch="Uniform"
-                       Margin="0,10"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       IsVisible="False" />
+            <Grid RowDefinitions="Auto, Auto, *">
+
+                <Grid Grid.Row="0" Margin="10,8" MinHeight="26">
+                    <Button Classes="toolbarButton"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Click="OnCloseClicked">
+                        <Path Data="M0,0 L9,9 M9,0 L0,9"
+                              Stroke="#E6E6E6"
+                              StrokeThickness="1.4"
+                              StrokeLineCap="Round" />
+                    </Button>
+                </Grid>
+
+                <Border Grid.Row="1"
+                        Height="1"
+                        Background="#1FFFFFFF" />
+
+                <Grid Grid.Row="2" Margin="24,20">
+                    <Image Name="PreviewImage"
+                           Stretch="Uniform"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           IsVisible="False" />
+                </Grid>
             </Grid>
         </Border>
     </Grid>

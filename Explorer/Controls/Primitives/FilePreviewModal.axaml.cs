@@ -21,6 +21,7 @@ public partial class FilePreviewModal : UserControl
         AvaloniaProperty.Register<FilePreviewModal, FileSystemEntry?>(nameof(Entry));
 
     private readonly Image _previewImage;
+    private IInputElement? _previouslyFocused;
 
     public FilePreviewModal()
     {
@@ -44,8 +45,19 @@ public partial class FilePreviewModal : UserControl
     {
         base.OnPropertyChanged(change);
 
-        if (change.Property == IsOpenProperty && IsOpen)
-            Focus();
+        if (change.Property == IsOpenProperty)
+        {
+            if (IsOpen)
+            {
+                _previouslyFocused = TopLevel.GetTopLevel(this)?.FocusManager.GetFocusedElement();
+                Focus();
+            }
+            else
+            {
+                _previouslyFocused?.Focus();
+                _previouslyFocused = null;
+            }
+        }
 
         if (change.Property == EntryProperty || change.Property == IsOpenProperty)
             UpdatePreview();
