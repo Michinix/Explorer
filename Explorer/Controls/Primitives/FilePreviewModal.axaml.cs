@@ -7,6 +7,7 @@ using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
+using Avalonia.Threading;
 using Explorer.Models;
 
 namespace Explorer.Controls.Primitives;
@@ -55,6 +56,7 @@ public partial class FilePreviewModal : UserControl
             if (IsOpen)
             {
                 _previouslyFocused = TopLevel.GetTopLevel(this)?.FocusManager.GetFocusedElement();
+                Dispatcher.UIThread.Post(() => Focus());
             }
             else
             {
