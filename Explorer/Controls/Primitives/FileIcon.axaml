@@ -1,8 +1,8 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="using:Explorer.Controls"
+             xmlns:local="using:Explorer.Controls.Primitives"
              x:Name="FileIconControl"
-             x:Class="Explorer.Controls.FileIcon">
+             x:Class="Explorer.Controls.Primitives.FileIcon">
 
     <Viewbox Stretch="Uniform">
         <Grid Width="16" Height="18">

@@ -3,7 +3,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data;
 
-namespace Explorer.Controls;
+namespace Explorer.Controls.Primitives;
 
 public partial class PathEditor : UserControl
 {

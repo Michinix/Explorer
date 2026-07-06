@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Explorer.ViewModels"
              xmlns:models="using:Explorer.Models"
-             xmlns:controls="using:Explorer.Controls"
+             xmlns:controls="using:Explorer.Controls.Primitives"
              mc:Ignorable="d"
              x:Name="DataGridControl"
              x:Class="Explorer.Controls.DataGrid"

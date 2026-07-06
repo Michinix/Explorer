@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
 
-namespace Explorer.Controls;
+namespace Explorer.Controls.Primitives;
 
 public partial class FileIcon : UserControl
 {

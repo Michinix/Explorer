@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Name="PathEditorControl"
-             x:Class="Explorer.Controls.PathEditor">
+             x:Class="Explorer.Controls.Primitives.PathEditor">
 
     <UserControl.Resources>
         <ControlTheme x:Key="PathEditorTextBoxTheme" TargetType="TextBox">
