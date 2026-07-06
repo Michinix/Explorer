@@ -52,11 +52,11 @@
                     <local:FileIcon Name="FallbackIcon"
                                     Width="70" Height="76"
                                     HorizontalAlignment="Center"
-                                    IconBrush="{Binding Entry.IconBrush, ElementName=FilePreviewModalControl}"
-                                    IconLabel="{Binding Entry.IconLabel, ElementName=FilePreviewModalControl}"
-                                    IsDirectory="{Binding Entry.IsDirectory, ElementName=FilePreviewModalControl}" />
+                                    IconBrush="{Binding Entry?.IconBrush, ElementName=FilePreviewModalControl}"
+                                    IconLabel="{Binding Entry?.IconLabel, ElementName=FilePreviewModalControl}"
+                                    IsDirectory="{Binding Entry?.IsDirectory, ElementName=FilePreviewModalControl}" />
 
-                    <TextBlock Text="{Binding Entry.Name, ElementName=FilePreviewModalControl}"
+                    <TextBlock Text="{Binding Entry?.Name, ElementName=FilePreviewModalControl}"
                                Foreground="{StaticResource ColorWhiteBrush}"
                                FontSize="15"
                                FontWeight="Medium"
@@ -65,13 +65,13 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center">
-                    <TextBlock Text="{Binding Entry.TypeLabel, ElementName=FilePreviewModalControl}"
+                    <TextBlock Text="{Binding Entry?.TypeLabel, ElementName=FilePreviewModalControl}"
                                Foreground="{StaticResource ForegroundMuted}"
                                FontSize="12" />
-                    <TextBlock Text="{Binding Entry.DisplaySize, ElementName=FilePreviewModalControl}"
+                    <TextBlock Text="{Binding Entry?.DisplaySize, ElementName=FilePreviewModalControl}"
                                Foreground="{StaticResource ForegroundMuted}"
                                FontSize="12" />
-                    <TextBlock Text="{Binding Entry.LastModified, ElementName=FilePreviewModalControl}"
+                    <TextBlock Text="{Binding Entry?.LastModified, ElementName=FilePreviewModalControl}"
                                Foreground="{StaticResource ForegroundMuted}"
                                FontSize="12" />
                 </StackPanel>
