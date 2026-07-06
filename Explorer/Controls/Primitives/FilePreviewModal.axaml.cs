@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data;
@@ -11,6 +13,7 @@ namespace Explorer.Controls.Primitives;
 
 public partial class FilePreviewModal : UserControl
 {
+    private const int DecodeWidth = 1200;
     private static readonly string[] ImageExtensions = ["JPG", "JPEG", "PNG", "GIF", "BMP", "WEBP"];
 
     public static readonly StyledProperty<bool> IsOpenProperty =
@@ -21,6 +24,8 @@ public partial class FilePreviewModal : UserControl
         AvaloniaProperty.Register<FilePreviewModal, FileSystemEntry?>(nameof(Entry));
 
     private readonly Image _previewImage;
+
+    private int _previewToken;
     private IInputElement? _previouslyFocused;
 
     public FilePreviewModal()
@@ -50,7 +55,6 @@ public partial class FilePreviewModal : UserControl
             if (IsOpen)
             {
                 _previouslyFocused = TopLevel.GetTopLevel(this)?.FocusManager.GetFocusedElement();
-                Focus();
             }
             else
             {
@@ -63,21 +67,37 @@ public partial class FilePreviewModal : UserControl
             UpdatePreview();
     }
 
-    private void UpdatePreview()
+    private async void UpdatePreview()
     {
-        Bitmap? bitmap = null;
+        var token = ++_previewToken;
 
-        if (Entry is { IsDirectory: false } entry &&
-            ImageExtensions.Contains(entry.Type, StringComparer.OrdinalIgnoreCase))
+        _previewImage.Source = null;
+        _previewImage.IsVisible = false;
+
+        if (!IsOpen ||
+            Entry is not { IsDirectory: false } entry ||
+            !ImageExtensions.Contains(entry.Type, StringComparer.OrdinalIgnoreCase))
+            return;
+
+        var path = entry.FullPath;
+
+        var bitmap = await Task.Run(() =>
         {
             try
             {
-                bitmap = new Bitmap(entry.FullPath);
+                using var stream = File.OpenRead(path);
+                return Bitmap.DecodeToWidth(stream, DecodeWidth);
             }
             catch (Exception)
             {
-                bitmap = null;
+                return null;
             }
+        });
+
+        if (token != _previewToken)
+        {
+            bitmap?.Dispose();
+            return;
         }
 
         _previewImage.Source = bitmap;
