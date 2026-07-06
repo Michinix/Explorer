@@ -21,7 +21,7 @@
             <Setter Property="HorizontalContentAlignment" Value="Left" />
         </Style>
 
-        <Style Selector="Button.MenuLink:pointerover /template/ ContentPresenter">
+        <Style Selector="Button:pointerover /template/ ContentPresenter, Button:pressed /template/ ContentPresenter">
             <Setter Property="Background" Value="Transparent" />
         </Style>
 
