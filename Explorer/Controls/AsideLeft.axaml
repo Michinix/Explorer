@@ -56,7 +56,7 @@
                         <Button Classes="MenuLink" Command="{Binding NavigateToDownloadsCommand}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
                                 <Svg Path="/Assets/Icons/Download.svg" Width="15" Height="15"
-                                     VerticalAlignment="Center" Css="path { stroke: white }" />
+                                     VerticalAlignment="Center" Css="path { fill: white }" />
                                 <TextBlock Text="Téléchargements" FontSize="13" FontWeight="Normal" />
                             </StackPanel>
                         </Button>
@@ -97,7 +97,7 @@
                                         Margin="0,0,0,12">
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="15">
                                         <Svg Path="/Assets/Icons/Drive.svg" Width="15" Height="15"
-                                             VerticalAlignment="Center" Css="path { stroke: white }" />
+                                             VerticalAlignment="Center" Css="path { fill: white }" />
 
                                         <StackPanel Orientation="Vertical" Spacing="4">
                                             <StackPanel Orientation="Horizontal" Spacing="6">
