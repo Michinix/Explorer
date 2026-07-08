@@ -19,8 +19,7 @@
         <Grid Grid.Row="2" ColumnDefinitions="Auto, *, Auto">
 
             <controls:AsideLeft Grid.Column="0"
-                                MinWidth="220"
-                                MaxWidth="250"
+                                Width="220"
                                 DataContext="{Binding AsideLeft}" />
 
             <controls:DataGrid Grid.Column="1"
@@ -29,8 +28,7 @@
                                DataContext="{Binding DataGrid}" />
 
             <controls:AsideRight Grid.Column="2"
-                                 MinWidth="220"
-                                 MaxWidth="250"
+                                 Width="220"
                                  DataContext="{Binding DataGrid}" />
 
         </Grid>
