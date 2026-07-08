@@ -30,7 +30,7 @@
 
             <controls:AsideRight Grid.Column="2"
                                  MinWidth="220"
-                                 MaxWidth="300"
+                                 MaxWidth="250"
                                  DataContext="{Binding DataGrid}" />
 
         </Grid>
