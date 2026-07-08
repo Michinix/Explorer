@@ -29,6 +29,7 @@
             <Setter Property="Width" Value="15" />
             <Setter Property="Height" Value="15" />
             <Setter Property="Css" Value="path { fill: white }" />
+            <Setter Property="IsHitTestVisible" Value="False" />
         </Style>
 
         <Style Selector="Button:disabled Svg">
