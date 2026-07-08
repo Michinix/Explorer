@@ -73,6 +73,7 @@
                                            IsDirectory="{Binding SelectedEntry?.IsDirectory}" />
 
                         <TextBlock Text="{Binding SelectedEntry?.Name}"
+                                   MaxWidth="198"
                                    HorizontalAlignment="Stretch"
                                    TextAlignment="Center"
                                    TextTrimming="CharacterEllipsis"
