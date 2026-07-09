@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
@@ -63,7 +64,6 @@ public partial class FileOperationsViewModel(
             catch (Exception)
             {
                 dataGrid.Remove(entry);
-                // TODO Add Toast
             }
 
             return;
@@ -76,9 +76,9 @@ public partial class FileOperationsViewModel(
             await FileSystemService.RenameAsync(entry, name);
             await dataGrid.LoadEntriesAsync();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // TODO Add Toast
+            Debug.WriteLine(ex.Message);
         }
     }
 
@@ -111,9 +111,9 @@ public partial class FileOperationsViewModel(
             await Clipboard.PasteAsync(navigation.CurrentPath);
             await dataGrid.LoadEntriesAsync();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // TODO Add Toast
+            Debug.WriteLine(ex.Message);
         }
     }
 
@@ -128,9 +128,9 @@ public partial class FileOperationsViewModel(
             await FileSystemService.DeleteEntriesAsync(targets);
             await dataGrid.LoadEntriesAsync();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // TODO Add Toast
+            Debug.WriteLine(ex.Message);
         }
     }
 }

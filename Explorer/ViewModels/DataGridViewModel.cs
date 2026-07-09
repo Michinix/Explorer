@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -115,17 +116,17 @@ public partial class DataGridViewModel : ViewModelBase
             Entries = new ObservableCollection<FileSystemEntry>(
                 await FileSystemService.ListEntriesAsync(_navigation.CurrentPath));
         }
-        catch (UnauthorizedAccessException)
+        catch (UnauthorizedAccessException ex)
         {
-            // TODO Add Toast
+            Debug.WriteLine(ex.Message);
         }
-        catch (DirectoryNotFoundException)
+        catch (DirectoryNotFoundException ex)
         {
-            // TODO Add Toast
+            Debug.WriteLine(ex.Message);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // TODO Add Toast
+            Debug.WriteLine(ex.Message);
         }
         finally
         {
@@ -157,9 +158,9 @@ public partial class DataGridViewModel : ViewModelBase
         {
             await FileSystemService.LaunchFileAsync(SelectedEntry.FullPath);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // TODO Add Toast
+            Debug.WriteLine(ex.Message);
         }
     }
 
@@ -168,9 +169,11 @@ public partial class DataGridViewModel : ViewModelBase
     {
         if (SelectedEntry is null || SelectedEntry.IsDirectory) return;
 
+        var selectedEntryType = SelectedEntry.FullPath.Split('.').LastOrDefault()?.ToLower();
+
         ICollection<string> imagesType = ["png", "jpeg", "jpg", "gif", "bmp", "tiff", "webp"];
 
-        if (!imagesType.Contains(Path.GetExtension(SelectedEntry.FullPath).TrimStart('.').ToLower()))
+        if (selectedEntryType is null || !imagesType.Contains(selectedEntryType))
             return;
 
         IsPreviewOpen = !IsPreviewOpen;
