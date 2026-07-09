@@ -24,17 +24,6 @@
         <Style Selector="Button:pointerover /template/ ContentPresenter, Button:pressed /template/ ContentPresenter">
             <Setter Property="Background" Value="Transparent" />
         </Style>
-
-        <Style Selector="Svg">
-            <Setter Property="Width" Value="15" />
-            <Setter Property="Height" Value="15" />
-            <Setter Property="Css" Value="path { fill: white }" />
-            <Setter Property="IsHitTestVisible" Value="False" />
-        </Style>
-
-        <Style Selector="Button:disabled Svg">
-            <Setter Property="Css" Value="path { opacity: 0.35 }" />
-        </Style>
     </UserControl.Styles>
 
     <StackPanel Orientation="Vertical">
@@ -55,22 +44,20 @@
                             Spacing="31"
                             VerticalAlignment="Center">
 
-                    <Button Command="{Binding Navigation.GoBackCommand}" IsEnabled="{Binding Navigation.CanGoBack}">
-                        <Svg Path="/Assets/Icons/Left.svg" />
-                    </Button>
+                    <primitives:IconButton IconPath="/Assets/Icons/Left.svg"
+                                           Command="{Binding Navigation.GoBackCommand}"
+                                           IsEnabled="{Binding Navigation.CanGoBack}" />
 
-                    <Button Command="{Binding Navigation.GoForwardCommand}"
-                            IsEnabled="{Binding Navigation.CanGoForward}">
-                        <Svg Path="/Assets/Icons/Right.svg" />
-                    </Button>
+                    <primitives:IconButton IconPath="/Assets/Icons/Right.svg"
+                                           Command="{Binding Navigation.GoForwardCommand}"
+                                           IsEnabled="{Binding Navigation.CanGoForward}" />
 
-                    <Button Command="{Binding Navigation.GoUpCommand}" IsEnabled="{Binding Navigation.CanGoUp}">
-                        <Svg Path="/Assets/Icons/Top.svg" />
-                    </Button>
+                    <primitives:IconButton IconPath="/Assets/Icons/Top.svg"
+                                           Command="{Binding Navigation.GoUpCommand}"
+                                           IsEnabled="{Binding Navigation.CanGoUp}" />
 
-                    <Button Command="{Binding Navigation.ReloadCommand}">
-                        <Svg Path="/Assets/Icons/Reload.svg" />
-                    </Button>
+                    <primitives:IconButton IconPath="/Assets/Icons/Reload.svg"
+                                           Command="{Binding Navigation.ReloadCommand}" />
                 </StackPanel>
 
                 <Grid Grid.Column="1" ColumnDefinitions="*,Auto" ColumnSpacing="8">
@@ -93,7 +80,7 @@
 
             <StackPanel Orientation="Horizontal"
                         Spacing="11"
-                        Margin="13,0,0,0"
+                        Margin="9,0,0,0"
                         VerticalAlignment="Center">
 
                 <primitives:NewItemButton CreateFolderCommand="{Binding FileOperations.CreateFolderCommand}"
@@ -102,26 +89,21 @@
                 <Border Width="1" Height="30" Background="{StaticResource BorderDefault}" />
 
                 <StackPanel Orientation="Horizontal" Spacing="18">
-                    <Button Command="{Binding FileOperations.CutCommand}"
-                            IsEnabled="{Binding DataGrid.HasSelectionTargets}">
-                        <Svg Path="/Assets/Icons/Cut.svg" />
-                    </Button>
-                    <Button Command="{Binding FileOperations.CopyCommand}"
-                            IsEnabled="{Binding DataGrid.HasSelectionTargets}">
-                        <Svg Path="/Assets/Icons/Copy.svg" />
-                    </Button>
-                    <Button Command="{Binding FileOperations.PasteCommand}"
-                            IsEnabled="{Binding FileOperations.Clipboard.CanPaste}">
-                        <Svg Path="/Assets/Icons/Paste.svg" />
-                    </Button>
-                    <Button Command="{Binding FileOperations.RenameCommand}"
-                            IsEnabled="{Binding DataGrid.SelectedEntry, Converter={x:Static converters:ObjectConverters.IsNotNull}}">
-                        <Svg Path="/Assets/Icons/Rename.svg" />
-                    </Button>
-                    <Button Command="{Binding FileOperations.DeleteSelectedCommand}"
-                            IsEnabled="{Binding DataGrid.HasSelectionTargets}">
-                        <Svg Path="/Assets/Icons/Trash.svg" />
-                    </Button>
+                    <primitives:IconButton IconPath="/Assets/Icons/Cut.svg"
+                                           Command="{Binding FileOperations.CutCommand}"
+                                           IsEnabled="{Binding DataGrid.HasSelectionTargets}" />
+                    <primitives:IconButton IconPath="/Assets/Icons/Copy.svg"
+                                           Command="{Binding FileOperations.CopyCommand}"
+                                           IsEnabled="{Binding DataGrid.HasSelectionTargets}" />
+                    <primitives:IconButton IconPath="/Assets/Icons/Paste.svg"
+                                           Command="{Binding FileOperations.PasteCommand}"
+                                           IsEnabled="{Binding FileOperations.Clipboard.CanPaste}" />
+                    <primitives:IconButton IconPath="/Assets/Icons/Rename.svg"
+                                           Command="{Binding FileOperations.RenameCommand}"
+                                           IsEnabled="{Binding DataGrid.SelectedEntry, Converter={x:Static converters:ObjectConverters.IsNotNull}}" />
+                    <primitives:IconButton IconPath="/Assets/Icons/Trash.svg"
+                                           Command="{Binding FileOperations.DeleteSelectedCommand}"
+                                           IsEnabled="{Binding DataGrid.HasSelectionTargets}" />
                 </StackPanel>
 
                 <Border Width="1" Height="30" Background="{StaticResource BorderDefault}" />

@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:primitives="using:Explorer.Controls.Primitives"
              mc:Ignorable="d"
              x:Name="NewItemButtonControl"
              x:Class="Explorer.Controls.Primitives.NewItemButton">
@@ -69,8 +70,8 @@
                 </MenuItem>
             </MenuFlyout>
         </Button.Flyout>
-        <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
-            <Svg Path="/Assets/Icons/New.svg" />
+        <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+            <primitives:IconButton Padding="0" IconPath="/Assets/Icons/New.svg" />
             <TextBlock Text="Nouveau" FontSize="13" VerticalAlignment="Center" />
         </StackPanel>
     </Button>
