@@ -11,6 +11,7 @@
                  Width="16"
                  Height="18"
                  Stretch="Uniform"
+                 Css="path { fill: #00AAFF; stroke; #00AAFF}"
                  IsVisible="{Binding IsDirectory, RelativeSource={RelativeSource AncestorType={x:Type local:FileIcon}}}" />
 
             <Path Data="M2,2 L10,2 L13,5 L13,16 L2,16 Z"

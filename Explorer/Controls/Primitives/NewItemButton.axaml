@@ -58,12 +58,13 @@
             <MenuFlyout Placement="BottomEdgeAlignedLeft" HorizontalOffset="-10" VerticalOffset="5">
                 <MenuItem Header="Dossier" Command="{Binding CreateFolderCommand, ElementName=NewItemButtonControl}">
                     <MenuItem.Icon>
-                        <Svg Path="/Assets/Icons/Directory.svg" Width="14" Height="14" />
+                        <Svg Path="/Assets/Icons/Directory.svg" Width="14" Height="14"
+                             Css="path { fill: #00AAFF; stroke: #00AAFF } " />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Fichier" Command="{Binding CreateFileCommand, ElementName=NewItemButtonControl}">
                     <MenuItem.Icon>
-                        <Svg Path="/Assets/Icons/Document.svg" Width="14" Height="14" />
+                        <Svg Path="/Assets/Icons/Document.svg" Width="14" Height="14" Css="path { fill: transparent; }" />
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuFlyout>
