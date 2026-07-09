@@ -168,6 +168,11 @@ public partial class DataGridViewModel : ViewModelBase
     {
         if (SelectedEntry is null || SelectedEntry.IsDirectory) return;
 
+        ICollection<string> imagesType = ["png", "jpeg", "jpg", "gif", "bmp", "tiff", "webp"];
+
+        if (!imagesType.Contains(Path.GetExtension(SelectedEntry.FullPath).TrimStart('.').ToLower()))
+            return;
+
         IsPreviewOpen = !IsPreviewOpen;
     }
 
