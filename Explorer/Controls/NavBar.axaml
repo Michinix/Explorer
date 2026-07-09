@@ -96,29 +96,29 @@
                         Margin="13,0,0,0"
                         VerticalAlignment="Center">
 
-                <primitives:NewItemButton CreateFolderCommand="{Binding DataGrid.CreateFolderCommand}"
-                                          CreateFileCommand="{Binding DataGrid.CreateFileCommand}" />
+                <primitives:NewItemButton CreateFolderCommand="{Binding FileOperations.CreateFolderCommand}"
+                                          CreateFileCommand="{Binding FileOperations.CreateFileCommand}" />
 
                 <Border Width="1" Height="30" Background="{StaticResource BorderDefault}" />
 
                 <StackPanel Orientation="Horizontal" Spacing="18">
-                    <Button Command="{Binding DataGrid.CutCommand}"
+                    <Button Command="{Binding FileOperations.CutCommand}"
                             IsEnabled="{Binding DataGrid.HasSelectionTargets}">
                         <Svg Path="/Assets/Icons/Cut.svg" />
                     </Button>
-                    <Button Command="{Binding DataGrid.CopyCommand}"
+                    <Button Command="{Binding FileOperations.CopyCommand}"
                             IsEnabled="{Binding DataGrid.HasSelectionTargets}">
                         <Svg Path="/Assets/Icons/Copy.svg" />
                     </Button>
-                    <Button Command="{Binding DataGrid.PasteCommand}"
-                            IsEnabled="{Binding DataGrid.Clipboard.CanPaste}">
+                    <Button Command="{Binding FileOperations.PasteCommand}"
+                            IsEnabled="{Binding FileOperations.Clipboard.CanPaste}">
                         <Svg Path="/Assets/Icons/Paste.svg" />
                     </Button>
-                    <Button Command="{Binding DataGrid.RenameCommand}"
+                    <Button Command="{Binding FileOperations.RenameCommand}"
                             IsEnabled="{Binding DataGrid.SelectedEntry, Converter={x:Static converters:ObjectConverters.IsNotNull}}">
                         <Svg Path="/Assets/Icons/Rename.svg" />
                     </Button>
-                    <Button Command="{Binding DataGrid.DeleteSelectedCommand}"
+                    <Button Command="{Binding FileOperations.DeleteSelectedCommand}"
                             IsEnabled="{Binding DataGrid.HasSelectionTargets}">
                         <Svg Path="/Assets/Icons/Trash.svg" />
                     </Button>

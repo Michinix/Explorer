@@ -82,10 +82,10 @@
                                          LostFocus="OnRenameTextBoxLostFocus">
                                     <TextBox.KeyBindings>
                                         <KeyBinding Gesture="Enter"
-                                                    Command="{Binding ((vm:DataGridViewModel)DataContext)?.CommitRenameCommand, ElementName=DataGridControl}"
+                                                    Command="{Binding ((vm:DataGridViewModel)DataContext)?.FileOps.CommitRenameCommand, ElementName=DataGridControl}"
                                                     CommandParameter="{Binding}" />
                                         <KeyBinding Gesture="Escape"
-                                                    Command="{Binding ((vm:DataGridViewModel)DataContext)?.CancelRenameCommand, ElementName=DataGridControl}"
+                                                    Command="{Binding ((vm:DataGridViewModel)DataContext)?.FileOps.CancelRenameCommand, ElementName=DataGridControl}"
                                                     CommandParameter="{Binding}" />
                                     </TextBox.KeyBindings>
                                 </TextBox>

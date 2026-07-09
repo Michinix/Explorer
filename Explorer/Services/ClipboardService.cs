@@ -121,5 +121,8 @@ public partial class ClipboardService : ObservableObject
             CopyDirectory(directory, Path.Combine(destination, Path.GetFileName(directory)));
     }
 
-    private static bool Exists(string path) => File.Exists(path) || Directory.Exists(path);
+    private static bool Exists(string path)
+    {
+        return File.Exists(path) || Directory.Exists(path);
+    }
 }

@@ -24,16 +24,15 @@ public partial class DataGridViewModel : ViewModelBase
     [ObservableProperty] private bool _isPreviewOpen;
     [ObservableProperty] private FileSystemEntry? _selectedEntry;
 
-    public DataGridViewModel(NavigationService navigation, ClipboardService clipboard)
+    public DataGridViewModel(NavigationService navigation)
     {
         _navigation = navigation;
-        Clipboard = clipboard;
 
         WeakReferenceMessenger.Default.Register<CurrentPathChangedMessage>(this,
             (r, m) => _ = LoadEntriesAsync());
     }
 
-    public ClipboardService Clipboard { get; }
+    public FileOperationsViewModel FileOps { get; set; } = null!;
 
     public bool AllSelected
     {
@@ -172,19 +171,7 @@ public partial class DataGridViewModel : ViewModelBase
         IsPreviewOpen = !IsPreviewOpen;
     }
 
-    [RelayCommand]
-    private void CreateFile()
-    {
-        AddDraftEntry(false);
-    }
-
-    [RelayCommand]
-    private void CreateFolder()
-    {
-        AddDraftEntry(true);
-    }
-
-    private void AddDraftEntry(bool isDirectory)
+    public void AddDraft(bool isDirectory)
     {
         var draft = new FileSystemEntry(string.Empty, string.Empty, string.Empty, isDirectory, "—", DateTime.Now)
         {
@@ -200,111 +187,8 @@ public partial class DataGridViewModel : ViewModelBase
         OnPropertyChanged(nameof(FileCount));
     }
 
-    [RelayCommand]
-    private void Rename()
+    public void Remove(FileSystemEntry entry)
     {
-        if (SelectedEntry is null) return;
-
-        SelectedEntry.EditableName = SelectedEntry.Name;
-        SelectedEntry.IsEditing = true;
-    }
-
-    [RelayCommand]
-    private async Task CommitRename(FileSystemEntry entry)
-    {
-        entry.IsEditing = false;
-        var name = entry.EditableName.Trim();
-
-        if (entry.IsNew)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                Entries.Remove(entry);
-                return;
-            }
-
-            try
-            {
-                var path = Path.Combine(_navigation.CurrentPath, name);
-
-                if (entry.IsDirectory)
-                    await FileSystemService.CreateDirectoryAsync(path);
-                else
-                    await FileSystemService.CreateFileAsync(path);
-
-                await LoadEntriesAsync();
-            }
-            catch (Exception)
-            {
-                Entries.Remove(entry);
-                // TODO Add Toast
-            }
-
-            return;
-        }
-
-        if (string.IsNullOrWhiteSpace(name) || name == entry.Name) return;
-
-        try
-        {
-            await FileSystemService.RenameAsync(entry, name);
-            await LoadEntriesAsync();
-        }
-        catch (Exception)
-        {
-            // TODO Add Toast
-        }
-    }
-
-    [RelayCommand]
-    private void CancelRename(FileSystemEntry entry)
-    {
-        entry.IsEditing = false;
-
-        if (entry.IsNew)
-            Entries.Remove(entry);
-    }
-
-    [RelayCommand]
-    private void Copy()
-    {
-        Clipboard.Copy(SelectionTargets);
-    }
-
-    [RelayCommand]
-    private void Cut()
-    {
-        Clipboard.Cut(SelectionTargets);
-    }
-
-    [RelayCommand]
-    private async Task Paste()
-    {
-        try
-        {
-            await Clipboard.PasteAsync(_navigation.CurrentPath);
-            await LoadEntriesAsync();
-        }
-        catch (Exception)
-        {
-            // TODO Add Toast
-        }
-    }
-
-    [RelayCommand]
-    private async Task DeleteSelected()
-    {
-        var targets = SelectionTargets;
-        if (targets.Count == 0) return;
-
-        try
-        {
-            await FileSystemService.DeleteEntriesAsync(targets);
-            await LoadEntriesAsync();
-        }
-        catch (Exception)
-        {
-            // TODO Add Toast
-        }
+        Entries.Remove(entry);
     }
 }

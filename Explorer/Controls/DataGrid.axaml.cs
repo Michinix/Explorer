@@ -57,6 +57,6 @@ public partial class DataGrid : UserControl
         if (sender is not TextBox { DataContext: FileSystemEntry { IsEditing: true } entry }) return;
         if (DataContext is not DataGridViewModel vm) return;
 
-        vm.CommitRenameCommand.Execute(entry);
+        vm.FileOps.CommitRenameCommand.Execute(entry);
     }
 }
