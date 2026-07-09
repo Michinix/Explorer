@@ -101,7 +101,7 @@ public static class FileSystemService
         });
     }
 
-    public static async Task DeleteEntriesAsync(ICollection<FileSystemEntry> entries)
+    public static async Task DeleteEntriesAsync(IEnumerable<FileSystemEntry> entries)
     {
         await Task.Run(() =>
         {

@@ -102,13 +102,16 @@
                 <Border Width="1" Height="30" Background="{StaticResource BorderDefault}" />
 
                 <StackPanel Orientation="Horizontal" Spacing="18">
-                    <Button IsEnabled="{Binding !!DataGrid.SelectedItemCount}">
+                    <Button Command="{Binding DataGrid.CutCommand}"
+                            IsEnabled="{Binding DataGrid.HasSelectionTargets}">
                         <Svg Path="/Assets/Icons/Cut.svg" />
                     </Button>
-                    <Button IsEnabled="{Binding !!DataGrid.SelectedItemCount}">
+                    <Button Command="{Binding DataGrid.CopyCommand}"
+                            IsEnabled="{Binding DataGrid.HasSelectionTargets}">
                         <Svg Path="/Assets/Icons/Copy.svg" />
                     </Button>
-                    <Button>
+                    <Button Command="{Binding DataGrid.PasteCommand}"
+                            IsEnabled="{Binding DataGrid.Clipboard.CanPaste}">
                         <Svg Path="/Assets/Icons/Paste.svg" />
                     </Button>
                     <Button Command="{Binding DataGrid.RenameCommand}"
@@ -116,7 +119,7 @@
                         <Svg Path="/Assets/Icons/Rename.svg" />
                     </Button>
                     <Button Command="{Binding DataGrid.DeleteSelectedCommand}"
-                            IsEnabled="{Binding !!DataGrid.SelectedItemCount}">
+                            IsEnabled="{Binding DataGrid.HasSelectionTargets}">
                         <Svg Path="/Assets/Icons/Trash.svg" />
                     </Button>
                 </StackPanel>

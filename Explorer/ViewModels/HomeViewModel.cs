@@ -4,9 +4,9 @@ namespace Explorer.ViewModels;
 
 public class HomeViewModel : ViewModelBase
 {
-    public HomeViewModel(NavigationService navigationService)
+    public HomeViewModel(NavigationService navigationService, ClipboardService clipboardService)
     {
-        DataGrid = new DataGridViewModel(navigationService);
+        DataGrid = new DataGridViewModel(navigationService, clipboardService);
         NavBar = new NavBarViewModel(navigationService, DataGrid);
         AsideLeft = new AsideLeftViewModel(navigationService);
     }

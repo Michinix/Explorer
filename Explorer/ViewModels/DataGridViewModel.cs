@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -23,13 +24,16 @@ public partial class DataGridViewModel : ViewModelBase
     [ObservableProperty] private bool _isPreviewOpen;
     [ObservableProperty] private FileSystemEntry? _selectedEntry;
 
-    public DataGridViewModel(NavigationService navigation)
+    public DataGridViewModel(NavigationService navigation, ClipboardService clipboard)
     {
         _navigation = navigation;
+        Clipboard = clipboard;
 
         WeakReferenceMessenger.Default.Register<CurrentPathChangedMessage>(this,
             (r, m) => _ = LoadEntriesAsync());
     }
+
+    public ClipboardService Clipboard { get; }
 
     public bool AllSelected
     {
@@ -46,10 +50,27 @@ public partial class DataGridViewModel : ViewModelBase
     public int FileCount => Entries.Count(e => !e.IsDirectory);
     public int SelectedItemCount => Entries.Count(e => e.IsSelected);
 
+    public IReadOnlyList<FileSystemEntry> SelectionTargets
+    {
+        get
+        {
+            var selected = Entries.Where(e => e is { IsSelected: true, IsNew: false }).ToArray();
+            if (selected.Length > 0)
+                return selected;
+
+            return SelectedEntry is { IsNew: false } ? [SelectedEntry] : [];
+        }
+    }
+
+    public bool HasSelectionTargets => SelectionTargets.Count > 0;
+
     partial void OnSelectedEntryChanged(FileSystemEntry? value)
     {
         if (value is null)
             IsPreviewOpen = false;
+
+        OnPropertyChanged(nameof(SelectionTargets));
+        OnPropertyChanged(nameof(HasSelectionTargets));
     }
 
     partial void OnEntriesChanged(
@@ -81,6 +102,8 @@ public partial class DataGridViewModel : ViewModelBase
     {
         OnPropertyChanged(nameof(AllSelected));
         OnPropertyChanged(nameof(SelectedItemCount));
+        OnPropertyChanged(nameof(SelectionTargets));
+        OnPropertyChanged(nameof(HasSelectionTargets));
     }
 
     public async Task LoadEntriesAsync()
@@ -243,14 +266,40 @@ public partial class DataGridViewModel : ViewModelBase
     }
 
     [RelayCommand]
+    private void Copy()
+    {
+        Clipboard.Copy(SelectionTargets);
+    }
+
+    [RelayCommand]
+    private void Cut()
+    {
+        Clipboard.Cut(SelectionTargets);
+    }
+
+    [RelayCommand]
+    private async Task Paste()
+    {
+        try
+        {
+            await Clipboard.PasteAsync(_navigation.CurrentPath);
+            await LoadEntriesAsync();
+        }
+        catch (Exception)
+        {
+            // TODO Add Toast
+        }
+    }
+
+    [RelayCommand]
     private async Task DeleteSelected()
     {
-        var selected = Entries.Where(e => e.IsSelected).ToArray();
-        if (selected.Length == 0) return;
+        var targets = SelectionTargets;
+        if (targets.Count == 0) return;
 
         try
         {
-            await FileSystemService.DeleteEntriesAsync(selected);
+            await FileSystemService.DeleteEntriesAsync(targets);
             await LoadEntriesAsync();
         }
         catch (Exception)
