@@ -193,7 +193,7 @@ public partial class DataGridViewModel : ViewModelBase
         };
 
         draft.PropertyChanged += OnEntryPropertyChanged;
-        Entries.Insert(0, draft);
+        Entries.Add(draft);
         SelectedEntry = draft;
 
         OnPropertyChanged(nameof(FolderCount));
