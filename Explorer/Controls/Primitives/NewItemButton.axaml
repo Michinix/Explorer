@@ -2,7 +2,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:primitives="using:Explorer.Controls.Primitives"
              mc:Ignorable="d"
              x:Name="NewItemButtonControl"
              x:Class="Explorer.Controls.Primitives.NewItemButton">
@@ -56,7 +55,7 @@
 
     <Button>
         <Button.Flyout>
-            <MenuFlyout Placement="BottomEdgeAlignedLeft" HorizontalOffset="-10" VerticalOffset="5">
+            <MenuFlyout Placement="BottomEdgeAlignedLeft" HorizontalOffset="-5" VerticalOffset="5">
                 <MenuItem Header="Dossier" Command="{Binding CreateFolderCommand, ElementName=NewItemButtonControl}">
                     <MenuItem.Icon>
                         <Svg Path="/Assets/Icons/Directory.svg" Width="14" Height="14"
@@ -70,8 +69,9 @@
                 </MenuItem>
             </MenuFlyout>
         </Button.Flyout>
-        <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
-            <primitives:IconButton Padding="0" IconPath="/Assets/Icons/New.svg" />
+        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+            <Svg Path="/Assets/Icons/New.svg" Width="15" Height="15"
+                 Css="path { fill: white }" IsHitTestVisible="False" />
             <TextBlock Text="Nouveau" FontSize="13" VerticalAlignment="Center" />
         </StackPanel>
     </Button>
