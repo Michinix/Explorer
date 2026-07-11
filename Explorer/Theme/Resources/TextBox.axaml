@@ -15,7 +15,7 @@
             <Setter Property="Template">
                 <ControlTemplate TargetType="TextBox">
                     <Panel Background="Transparent" Cursor="Ibeam">
-                        <TextBlock Text="{TemplateBinding Watermark}"
+                        <TextBlock Text="{TemplateBinding PlaceholderText}"
                                    Foreground="#7A7A7A"
                                    VerticalAlignment="Center"
                                    IsVisible="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNullOrEmpty}}" />

@@ -26,6 +26,30 @@ public static class FileSystemService
         };
     }
 
+    public static async Task<FileSystemEntry[]> SearchEntriesAsync(string path, string searchTerm)
+    {
+        EnumerationOptions options = new()
+        {
+            RecurseSubdirectories = true,
+            IgnoreInaccessible = true,
+            AttributesToSkip = FileAttributes.Hidden | FileAttributes.System
+        };
+
+        return await Task.Run(() =>
+            new DirectoryInfo(path)
+                .EnumerateFileSystemInfos("*", options)
+                .Where(e => e.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                .Select(e => new FileSystemEntry(
+                    e.Name,
+                    e.FullName,
+                    e.Extension.TrimStart('.').ToUpper(),
+                    e is DirectoryInfo,
+                    e is FileInfo f ? FormatSize(f.Length) : "—",
+                    e.LastWriteTime
+                ))
+                .ToArray());
+    }
+
     public static async Task<ICollection<FileSystemEntry>> ListEntriesAsync(string path)
     {
         return await Task.Run(() =>

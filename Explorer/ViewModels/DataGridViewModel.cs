@@ -18,20 +18,35 @@ public partial class DataGridViewModel : ViewModelBase
 {
     private readonly NavigationService _navigation;
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(FolderCount), nameof(FileCount))]
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(FolderCount), nameof(FileCount), nameof(NoResultsFound))]
     private ObservableCollection<FileSystemEntry> _entries = [];
 
-    [ObservableProperty] private bool _isLoading;
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(NoResultsFound))]
+    private bool _isLoading;
+
     [ObservableProperty] private bool _isPreviewOpen;
+
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(NoResultsFound))]
+    private bool _isSearchResult;
+
+    [ObservableProperty] private string _searchTerm = string.Empty;
     [ObservableProperty] private FileSystemEntry? _selectedEntry;
 
     public DataGridViewModel(NavigationService navigation)
     {
         _navigation = navigation;
 
-        WeakReferenceMessenger.Default.Register<CurrentPathChangedMessage>(this,
-            (r, m) => _ = LoadEntriesAsync());
+        WeakReferenceMessenger.Default.Register<CurrentPathChangedMessage>(this, (r, m) =>
+        {
+            SearchTerm = string.Empty;
+            OnPropertyChanged(nameof(SearchPlaceholder));
+            _ = LoadEntriesAsync();
+        });
     }
+
+    public string SearchPlaceholder => $"Rechercher dans : {GetFolderDisplayName(_navigation.CurrentPath)}";
+
+    public bool NoResultsFound => IsSearchResult && !IsLoading && Entries.Count == 0;
 
     public FileOperationsViewModel FileOps { get; set; } = null!;
 
@@ -109,6 +124,7 @@ public partial class DataGridViewModel : ViewModelBase
     public async Task LoadEntriesAsync()
     {
         IsLoading = true;
+        IsSearchResult = false;
         SelectedEntry = null;
 
         try
@@ -133,6 +149,42 @@ public partial class DataGridViewModel : ViewModelBase
             await Task.Delay(300);
             IsLoading = false;
         }
+    }
+
+    [RelayCommand]
+    private async Task Search()
+    {
+        if (string.IsNullOrWhiteSpace(SearchTerm))
+        {
+            await LoadEntriesAsync();
+            return;
+        }
+
+        IsLoading = true;
+        IsSearchResult = true;
+        SelectedEntry = null;
+
+        try
+        {
+            Entries = new ObservableCollection<FileSystemEntry>(
+                await FileSystemService.SearchEntriesAsync(_navigation.CurrentPath, SearchTerm));
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+        }
+        finally
+        {
+            await Task.Delay(300);
+            IsLoading = false;
+        }
+    }
+
+    private static string GetFolderDisplayName(string path)
+    {
+        var trimmed = path.TrimEnd('/', '\\');
+        var folder = Path.GetFileName(trimmed);
+        return string.IsNullOrEmpty(folder) ? path : folder;
     }
 
     [RelayCommand]

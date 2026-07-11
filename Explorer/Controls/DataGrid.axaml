@@ -112,6 +112,22 @@
             </DataGrid.Columns>
         </DataGrid>
 
+        <StackPanel IsVisible="{Binding NoResultsFound}"
+                    Orientation="Vertical"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Spacing="12">
+            <Svg Path="/Assets/Icons/Search.svg"
+                 Width="20"
+                 Height="20"
+                 HorizontalAlignment="Center" />
+            <TextBlock
+                Text="Aucune correspondance trouvée"
+                Foreground="{StaticResource ColorWhiteBrush}"
+                FontSize="14"
+                HorizontalAlignment="Center" />
+        </StackPanel>
+
         <Border IsVisible="{Binding IsLoading}"
                 Background="#80000000"
                 HorizontalAlignment="Stretch"
