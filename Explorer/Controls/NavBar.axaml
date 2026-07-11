@@ -65,9 +65,13 @@
                                            Text="{Binding Navigation.EditablePath, Mode=TwoWay}"
                                            SubmitCommand="{Binding Navigation.SubmitEditedPathCommand}"
                                            VerticalAlignment="Center" />
-                    <Border Grid.Column="1" Background="#1C1C1C" CornerRadius="3" Padding="10,6" Width="205"
+                    <Border Grid.Column="1" Background="{StaticResource TextBoxBackground}" CornerRadius="3"
+                            Padding="10,6" Width="205"
                             VerticalAlignment="Center">
-                        <TextBlock Text="Rechercher..." FontSize="13" TextTrimming="CharacterEllipsis" />
+                        <TextBox PlaceholderText="Rechercher..."
+                                 FontSize="13"
+                                 TextWrapping="NoWrap">
+                        </TextBox>
                     </Border>
                 </Grid>
             </Grid>

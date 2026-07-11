@@ -14,6 +14,7 @@
     <Color x:Key="OverlayDimColor">#BF000000</Color>
     <Color x:Key="AccentSelectionColor">#2400AAFF</Color>
     <Color x:Key="SurfaceOverlayColor">#252525</Color>
+    <Color x:Key="TextBoxBackgroundColor">#1C1C1C</Color>
 
     <SolidColorBrush x:Key="ColorWhiteBrush" Color="{StaticResource ColorWhite}" />
     <SolidColorBrush x:Key="BorderDefault" Color="{StaticResource BorderDefaultColor}" />
@@ -28,4 +29,5 @@
     <SolidColorBrush x:Key="OverlayDim" Color="{StaticResource OverlayDimColor}" />
     <SolidColorBrush x:Key="AccentSelection" Color="{StaticResource AccentSelectionColor}" />
     <SolidColorBrush x:Key="SurfaceOverlay" Color="{StaticResource SurfaceOverlayColor}" />
+    <SolidColorBrush x:Key="TextBoxBackground" Color="{StaticResource TextBoxBackgroundColor}" />
 </ResourceDictionary>
