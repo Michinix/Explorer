@@ -6,13 +6,43 @@
              x:Name="PathEditorControl"
              x:Class="Explorer.Controls.Primitives.PathEditor">
 
-    <Border Background="{StaticResource TextBoxBackground}" CornerRadius="3" Padding="10,6" VerticalAlignment="Center">
-        <TextBox Text="{Binding Text, ElementName=PathEditorControl, Mode=TwoWay}"
+    <UserControl.Styles>
+        <Style Selector="Button#ClearButton /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style
+            Selector="Button#ClearButton:pointerover /template/ ContentPresenter, Button#ClearButton:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid>
+        <TextBox Name="InputBox"
+                 Text="{Binding Text, ElementName=PathEditorControl, Mode=TwoWay}"
                  FontSize="13"
-                 TextWrapping="NoWrap">
+                 TextWrapping="NoWrap"
+                 Padding="10,6,30,6"
+                 VerticalAlignment="Center">
             <TextBox.KeyBindings>
                 <KeyBinding Gesture="Enter" Command="{Binding SubmitCommand, ElementName=PathEditorControl}" />
             </TextBox.KeyBindings>
         </TextBox>
-    </Border>
+
+        <Button Name="ClearButton"
+                Click="OnClearClick"
+                Focusable="False"
+                Padding="4"
+                Margin="0,0,6,0"
+                Background="Transparent"
+                BorderThickness="0"
+                Cursor="Hand"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                IsVisible="{Binding #InputBox.IsFocused}">
+            <Svg Path="/Assets/Icons/Close.svg"
+                 Width="12" Height="12"
+                 Css="path { fill: white }"
+                 IsHitTestVisible="False" />
+        </Button>
+    </Grid>
 </UserControl>

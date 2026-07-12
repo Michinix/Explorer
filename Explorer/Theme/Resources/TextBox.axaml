@@ -3,9 +3,11 @@
 
     <Styles.Resources>
         <ControlTheme x:Key="{x:Type TextBox}" TargetType="TextBox">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Padding" Value="0" />
+            <Setter Property="Background" Value="{StaticResource TextBoxBackground}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0.2,0.2,0.2,1" />
+            <Setter Property="CornerRadius" Value="3" />
+            <Setter Property="Padding" Value="10,6" />
             <Setter Property="MinHeight" Value="0" />
             <Setter Property="CaretBrush" Value="{StaticResource ColorWhiteBrush}" />
             <Setter Property="Foreground" Value="{StaticResource ColorWhiteBrush}" />
@@ -14,29 +16,46 @@
             <Setter Property="Cursor" Value="Ibeam" />
             <Setter Property="Template">
                 <ControlTemplate TargetType="TextBox">
-                    <Panel Background="Transparent" Cursor="Ibeam">
-                        <TextBlock Text="{TemplateBinding PlaceholderText}"
-                                   Foreground="#7A7A7A"
-                                   VerticalAlignment="Center"
-                                   IsVisible="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNullOrEmpty}}" />
-                        <ScrollViewer Name="PART_ScrollViewer"
-                                      HorizontalScrollBarVisibility="Hidden"
-                                      VerticalScrollBarVisibility="Disabled">
-                            <TextPresenter Name="PART_TextPresenter"
-                                           Text="{TemplateBinding Text}"
-                                           CaretIndex="{TemplateBinding CaretIndex}"
-                                           SelectionStart="{TemplateBinding SelectionStart}"
-                                           SelectionEnd="{TemplateBinding SelectionEnd}"
-                                           TextAlignment="{TemplateBinding TextAlignment}"
-                                           TextWrapping="{TemplateBinding TextWrapping}"
-                                           PasswordChar="{TemplateBinding PasswordChar}"
-                                           SelectionBrush="{TemplateBinding SelectionBrush}"
-                                           CaretBrush="{TemplateBinding CaretBrush}"
-                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                        </ScrollViewer>
-                    </Panel>
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            Padding="{TemplateBinding Padding}"
+                            Cursor="Ibeam">
+                        <Panel Background="Transparent" Cursor="Ibeam">
+                            <TextBlock Text="{TemplateBinding PlaceholderText}"
+                                       Foreground="#7A7A7A"
+                                       VerticalAlignment="Center"
+                                       IsVisible="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNullOrEmpty}}" />
+                            <ScrollViewer Name="PART_ScrollViewer"
+                                          HorizontalScrollBarVisibility="Hidden"
+                                          VerticalScrollBarVisibility="Disabled">
+                                <TextPresenter Name="PART_TextPresenter"
+                                               Text="{TemplateBinding Text}"
+                                               CaretIndex="{TemplateBinding CaretIndex}"
+                                               SelectionStart="{TemplateBinding SelectionStart}"
+                                               SelectionEnd="{TemplateBinding SelectionEnd}"
+                                               TextAlignment="{TemplateBinding TextAlignment}"
+                                               TextWrapping="{TemplateBinding TextWrapping}"
+                                               PasswordChar="{TemplateBinding PasswordChar}"
+                                               SelectionBrush="{TemplateBinding SelectionBrush}"
+                                               CaretBrush="{TemplateBinding CaretBrush}"
+                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </ScrollViewer>
+                        </Panel>
+                    </Border>
                 </ControlTemplate>
             </Setter>
+
+            <!-- Survol : fond légèrement plus clair -->
+            <Style Selector="^:pointerover">
+                <Setter Property="Background" Value="#262626" />
+            </Style>
+
+            <!-- Focus (clic) : border bas plus clair -->
+            <Style Selector="^:focus">
+                <Setter Property="BorderBrush" Value="#6A6A6A" />
+            </Style>
         </ControlTheme>
     </Styles.Resources>
 

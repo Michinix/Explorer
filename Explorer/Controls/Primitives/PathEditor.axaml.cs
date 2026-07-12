@@ -2,6 +2,7 @@ using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data;
+using Avalonia.Interactivity;
 
 namespace Explorer.Controls.Primitives;
 
@@ -29,5 +30,11 @@ public partial class PathEditor : UserControl
     {
         get => GetValue(SubmitCommandProperty);
         set => SetValue(SubmitCommandProperty, value);
+    }
+
+    private void OnClearClick(object? sender, RoutedEventArgs e)
+    {
+        Text = string.Empty;
+        InputBox.Focus();
     }
 }

@@ -65,18 +65,16 @@
                                            Text="{Binding Navigation.EditablePath, Mode=TwoWay}"
                                            SubmitCommand="{Binding Navigation.SubmitEditedPathCommand}"
                                            VerticalAlignment="Center" />
-                    <Border Grid.Column="1" Background="{StaticResource TextBoxBackground}" CornerRadius="3"
-                            Padding="10,6" Width="205"
-                            VerticalAlignment="Center">
-                        <TextBox Text="{Binding DataGrid.SearchTerm, Mode=TwoWay}"
-                                 PlaceholderText="{Binding DataGrid.SearchPlaceholder}"
-                                 FontSize="13"
-                                 TextWrapping="NoWrap">
-                            <TextBox.KeyBindings>
-                                <KeyBinding Gesture="Enter" Command="{Binding DataGrid.SearchCommand}" />
-                            </TextBox.KeyBindings>
-                        </TextBox>
-                    </Border>
+                    <TextBox Grid.Column="1" Width="220"
+                             Text="{Binding DataGrid.SearchTerm, Mode=TwoWay}"
+                             PlaceholderText="{Binding DataGrid.SearchPlaceholder}"
+                             FontSize="13"
+                             TextWrapping="NoWrap"
+                             VerticalAlignment="Center">
+                        <TextBox.KeyBindings>
+                            <KeyBinding Gesture="Enter" Command="{Binding DataGrid.SearchCommand}" />
+                        </TextBox.KeyBindings>
+                    </TextBox>
                 </Grid>
             </Grid>
         </Border>
