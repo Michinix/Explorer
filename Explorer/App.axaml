@@ -27,6 +27,7 @@
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Simple.xaml" />
         <StyleInclude Source="avares://Explorer/Theme/Resources/DataGrid.axaml" />
         <StyleInclude Source="avares://Explorer/Theme/Resources/Checkbox.axaml" />
+        <StyleInclude Source="avares://Explorer/Theme/Resources/Button.axaml" />
         <StyleInclude Source="avares://Explorer/Theme/Resources/TextBox.axaml" />
     </Application.Styles>
 </Application>

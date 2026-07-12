@@ -6,16 +6,6 @@
              x:Name="PathEditorControl"
              x:Class="Explorer.Controls.Primitives.PathEditor">
 
-    <UserControl.Styles>
-        <Style Selector="Button#ClearButton /template/ ContentPresenter">
-            <Setter Property="Background" Value="Transparent" />
-        </Style>
-        <Style
-            Selector="Button#ClearButton:pointerover /template/ ContentPresenter, Button#ClearButton:pressed /template/ ContentPresenter">
-            <Setter Property="Background" Value="Transparent" />
-        </Style>
-    </UserControl.Styles>
-
     <Grid>
         <TextBox Name="InputBox"
                  Text="{Binding Text, ElementName=PathEditorControl, Mode=TwoWay}"
@@ -29,13 +19,11 @@
         </TextBox>
 
         <Button Name="ClearButton"
+                Classes="ghost"
                 Click="OnClearClick"
                 Focusable="False"
                 Padding="4"
                 Margin="0,0,6,0"
-                Background="Transparent"
-                BorderThickness="0"
-                Cursor="Hand"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 IsVisible="{Binding #InputBox.IsFocused}">
