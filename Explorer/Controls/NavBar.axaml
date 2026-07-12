@@ -65,16 +65,41 @@
                                            Text="{Binding Navigation.EditablePath, Mode=TwoWay}"
                                            SubmitCommand="{Binding Navigation.SubmitEditedPathCommand}"
                                            VerticalAlignment="Center" />
-                    <TextBox Grid.Column="1" Width="220"
-                             Text="{Binding DataGrid.SearchTerm, Mode=TwoWay}"
-                             PlaceholderText="{Binding DataGrid.SearchPlaceholder}"
-                             FontSize="13"
-                             TextWrapping="NoWrap"
-                             VerticalAlignment="Center">
-                        <TextBox.KeyBindings>
-                            <KeyBinding Gesture="Enter" Command="{Binding DataGrid.SearchCommand}" />
-                        </TextBox.KeyBindings>
-                    </TextBox>
+                    <Grid Grid.Column="1" Width="220" VerticalAlignment="Center">
+                        <TextBox Name="SearchBox"
+                                 Text="{Binding DataGrid.SearchTerm, Mode=TwoWay}"
+                                 PlaceholderText="{Binding DataGrid.SearchPlaceholder}"
+                                 FontSize="13"
+                                 TextWrapping="NoWrap"
+                                 Padding="10,6,30,6"
+                                 VerticalAlignment="Center">
+                            <TextBox.KeyBindings>
+                                <KeyBinding Gesture="Enter" Command="{Binding DataGrid.SearchCommand}" />
+                            </TextBox.KeyBindings>
+                        </TextBox>
+
+                        <Svg Path="/Assets/Icons/Search.svg"
+                             Width="14" Height="14"
+                             Margin="0,0,10,0"
+                             HorizontalAlignment="Right"
+                             VerticalAlignment="Center"
+                             Css="path { fill: #7A7A7A }"
+                             IsHitTestVisible="False"
+                             IsVisible="{Binding !#SearchBox.IsFocused}" />
+
+                        <Button Command="{Binding DataGrid.ClearSearchCommand}"
+                                Focusable="False"
+                                Padding="4"
+                                Margin="0,0,6,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                IsVisible="{Binding #SearchBox.IsFocused}">
+                            <Svg Path="/Assets/Icons/Close.svg"
+                                 Width="13" Height="13"
+                                 Css="path { fill: white }"
+                                 IsHitTestVisible="False" />
+                        </Button>
+                    </Grid>
                 </Grid>
             </Grid>
         </Border>

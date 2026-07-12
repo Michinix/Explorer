@@ -152,6 +152,13 @@ public partial class DataGridViewModel : ViewModelBase
     }
 
     [RelayCommand]
+    private async Task ClearSearch()
+    {
+        SearchTerm = string.Empty;
+        await LoadEntriesAsync();
+    }
+
+    [RelayCommand]
     private async Task Search()
     {
         if (string.IsNullOrWhiteSpace(SearchTerm))

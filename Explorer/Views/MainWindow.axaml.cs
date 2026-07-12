@@ -16,7 +16,9 @@ public partial class MainWindow : Window
 
     private void OnWindowPointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        if (e.Source is Visual source && source.FindAncestorOfType<TextBox>(includeSelf: true) is not null)
+        if (e.Source is Visual source &&
+            (source.FindAncestorOfType<TextBox>(includeSelf: true) is not null ||
+             source.FindAncestorOfType<Button>(includeSelf: true) is not null))
             return;
 
         FocusManager?.Focus(null);
