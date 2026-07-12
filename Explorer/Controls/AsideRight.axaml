@@ -68,8 +68,6 @@
                     <StackPanel Spacing="15">
                         <controls:FileIcon Width="58" Height="60"
                                            HorizontalAlignment="Center"
-                                           IconBrush="{Binding SelectedEntry?.IconBrush}"
-                                           IconLabel="{Binding SelectedEntry?.IconLabel}"
                                            IsDirectory="{Binding SelectedEntry?.IsDirectory}" />
 
                         <TextBlock Text="{Binding SelectedEntry?.Name}"

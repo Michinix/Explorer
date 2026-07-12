@@ -67,8 +67,6 @@
                             <StackPanel Orientation="Horizontal" Spacing="9" VerticalAlignment="Center"
                                         HorizontalAlignment="Center">
                                 <primitives:FileIcon Width="18" Height="20"
-                                                     IconBrush="{Binding IconBrush}"
-                                                     IconLabel="{Binding IconLabel}"
                                                      IsDirectory="{Binding IsDirectory}" />
 
                                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center"
