@@ -77,6 +77,8 @@
 
                                 <TextBox Text="{Binding EditableName}" VerticalAlignment="Center"
                                          MinWidth="80" Padding="4,0"
+                                         Background="Transparent" BorderThickness="1"
+                                         BorderBrush="{StaticResource AccentPrimary}" CornerRadius="3"
                                          IsVisible="{Binding IsEditing}"
                                          Loaded="OnRenameTextBoxLoaded"
                                          LostFocus="OnRenameTextBoxLostFocus">

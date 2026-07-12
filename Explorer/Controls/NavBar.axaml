@@ -65,7 +65,7 @@
                                            Text="{Binding Navigation.EditablePath, Mode=TwoWay}"
                                            SubmitCommand="{Binding Navigation.SubmitEditedPathCommand}"
                                            VerticalAlignment="Center" />
-                    <Grid Grid.Column="1" Width="220" VerticalAlignment="Center">
+                    <Grid Grid.Column="1" MinWidth="220" MaxWidth="240" VerticalAlignment="Center">
                         <TextBox Name="SearchBox"
                                  Text="{Binding DataGrid.SearchTerm, Mode=TwoWay}"
                                  PlaceholderText="{Binding DataGrid.SearchPlaceholder}"
