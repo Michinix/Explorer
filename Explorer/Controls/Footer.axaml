@@ -18,42 +18,44 @@
                         VerticalAlignment="Center"
                         Spacing="6">
 
-                <TextBlock FontSize="11" Tag="{Binding Entries.Count}">
-                    <TextBlock.Styles>
-                        <Style Selector="TextBlock">
-                            <Setter Property="Text" Value="{Binding Entries.Count, StringFormat='{}{0} éléments'}" />
-                        </Style>
-                        <Style Selector="TextBlock[Tag=0], TextBlock[Tag=1]">
-                            <Setter Property="Text" Value="{Binding Entries.Count, StringFormat='{}{0} élément'}" />
-                        </Style>
-                    </TextBlock.Styles>
-                </TextBlock>
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                    <TextBlock FontSize="11" Tag="{Binding Entries.Count}">
+                        <TextBlock.Styles>
+                            <Style Selector="TextBlock">
+                                <Setter Property="Text" Value="{Binding Entries.Count, StringFormat='{}{0} éléments'}" />
+                            </Style>
+                            <Style Selector="TextBlock[Tag=0], TextBlock[Tag=1]">
+                                <Setter Property="Text" Value="{Binding Entries.Count, StringFormat='{}{0} élément'}" />
+                            </Style>
+                        </TextBlock.Styles>
+                    </TextBlock>
 
-                <TextBlock FontSize="11" Text="-" VerticalAlignment="Center" />
+                    <TextBlock FontSize="11" Text="-" VerticalAlignment="Center" />
 
-                <TextBlock FontSize="11" Tag="{Binding FolderCount}">
-                    <TextBlock.Styles>
-                        <Style Selector="TextBlock">
-                            <Setter Property="Text" Value="{Binding FolderCount, StringFormat='{}{0} dossiers'}" />
-                        </Style>
-                        <Style Selector="TextBlock[Tag=0], TextBlock[Tag=1]">
-                            <Setter Property="Text" Value="{Binding FolderCount, StringFormat='{}{0} dossier'}" />
-                        </Style>
-                    </TextBlock.Styles>
-                </TextBlock>
+                    <TextBlock FontSize="11" Tag="{Binding FolderCount}">
+                        <TextBlock.Styles>
+                            <Style Selector="TextBlock">
+                                <Setter Property="Text" Value="{Binding FolderCount, StringFormat='{}{0} dossiers'}" />
+                            </Style>
+                            <Style Selector="TextBlock[Tag=0], TextBlock[Tag=1]">
+                                <Setter Property="Text" Value="{Binding FolderCount, StringFormat='{}{0} dossier'}" />
+                            </Style>
+                        </TextBlock.Styles>
+                    </TextBlock>
 
-                <TextBlock FontSize="11" Text="-" VerticalAlignment="Center" />
+                    <TextBlock FontSize="11" Text="-" VerticalAlignment="Center" />
 
-                <TextBlock FontSize="11" Tag="{Binding FileCount}">
-                    <TextBlock.Styles>
-                        <Style Selector="TextBlock">
-                            <Setter Property="Text" Value="{Binding FileCount, StringFormat='{}{0} fichiers'}" />
-                        </Style>
-                        <Style Selector="TextBlock[Tag=0], TextBlock[Tag=1]">
-                            <Setter Property="Text" Value="{Binding FileCount, StringFormat='{}{0} fichier'}" />
-                        </Style>
-                    </TextBlock.Styles>
-                </TextBlock>
+                    <TextBlock FontSize="11" Tag="{Binding FileCount}">
+                        <TextBlock.Styles>
+                            <Style Selector="TextBlock">
+                                <Setter Property="Text" Value="{Binding FileCount, StringFormat='{}{0} fichiers'}" />
+                            </Style>
+                            <Style Selector="TextBlock[Tag=0], TextBlock[Tag=1]">
+                                <Setter Property="Text" Value="{Binding FileCount, StringFormat='{}{0} fichier'}" />
+                            </Style>
+                        </TextBlock.Styles>
+                    </TextBlock>
+                </StackPanel>
 
             </StackPanel>
 
