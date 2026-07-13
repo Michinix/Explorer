@@ -83,21 +83,13 @@ public static class FileSystemService
             .Select(d =>
             {
                 var label = string.IsNullOrWhiteSpace(d.VolumeLabel) ? d.Name.TrimEnd('\\') : d.VolumeLabel;
-                var typeName = d.DriveType == DriveType.Removable
-                    ? "Amovible"
-                    : d.Name.StartsWith("C:") || d.Name == "/"
-                        ? "Système"
-                        : "Données";
+                var isSystem = d.Name.StartsWith("C:") || d.Name == "/";
+                var typeName = d.DriveType == DriveType.Removable ? "Amovible" : isSystem ? "Système" : "Données";
 
-                return new DriveItem(
-                    label,
-                    typeName,
-                    $"{FormatSize(d.AvailableFreeSpace)} libres",
-                    d.Name
-                );
+                return new DriveItem(label, typeName, $"{FormatSize(d.AvailableFreeSpace)} libres", d.Name);
             })
-            .OrderBy(d => d.Type)
-            .ThenBy(d => d.DisplayName)
+            .OrderBy(item => item.Type == "Système" ? 0 : 1)
+            .ThenBy(item => item.Type)
             .ToArray());
     }
 
