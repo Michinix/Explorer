@@ -55,7 +55,10 @@ public static class FileSystemService
         return await Task.Run(() =>
             new DirectoryInfo(path)
                 .EnumerateFileSystemInfos()
-                .Where(e => !e.Name.StartsWith('.') && !e.Attributes.HasFlag(FileAttributes.Hidden))
+                .Where(e =>
+                    e.Name.StartsWith('.') ||
+                    (!e.Attributes.HasFlag(FileAttributes.Hidden) &&
+                     !e.Attributes.HasFlag(FileAttributes.System)))
                 .OrderBy(e => e is FileInfo)
                 .ThenBy(e => e.Name)
                 .Select(e => new FileSystemEntry(
