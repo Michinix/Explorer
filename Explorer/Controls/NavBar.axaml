@@ -18,9 +18,9 @@
 
         <Grid VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" MinWidth="220" MaxWidth="250" />
+                <ColumnDefinition Width="220" />
                 <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="*" MinWidth="220" MaxWidth="250" />
+                <ColumnDefinition Width="220" />
             </Grid.ColumnDefinitions>
 
             <UniformGrid Grid.Column="0"
