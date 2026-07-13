@@ -74,4 +74,8 @@
         <Setter Property="Foreground" Value="{StaticResource AccentPrimary}" />
     </Style>
 
+    <!-- DataGrid last row margin -->
+    <Style Selector="DataGridRow:nth-last-child(1)">
+        <Setter Property="Margin" Value="0,0,0,25" />
+    </Style>
 </Styles>
