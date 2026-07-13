@@ -20,7 +20,7 @@ public partial class DataGridViewModel : ViewModelBase
 
     private string _activeSearchTerm = string.Empty;
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(FolderCount), nameof(FileCount), nameof(NoResultsFound))]
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(NoResultsFound))]
     private ObservableCollection<FileSystemEntry> _entries = [];
 
     [ObservableProperty] [NotifyPropertyChangedFor(nameof(NoResultsFound))]
@@ -63,9 +63,10 @@ public partial class DataGridViewModel : ViewModelBase
         }
     }
 
-    public int FolderCount => Entries.Count(e => e.IsDirectory);
-    public int FileCount => Entries.Count(e => !e.IsDirectory);
-    public int SelectedItemCount => Entries.Count(e => e.IsSelected);
+    private int SelectedItemCount => Entries.Count(e => e.IsSelected);
+
+    public string SelectedItemCountText =>
+        SelectedItemCount == 1 ? "1 élément sélectionné" : $"{SelectedItemCount} éléments sélectionnés";
 
     public IReadOnlyList<FileSystemEntry> SelectionTargets
     {
@@ -80,15 +81,6 @@ public partial class DataGridViewModel : ViewModelBase
     }
 
     public bool HasSelectionTargets => SelectionTargets.Count > 0;
-
-    partial void OnSelectedEntryChanged(FileSystemEntry? value)
-    {
-        if (value is null)
-            IsPreviewOpen = false;
-
-        OnPropertyChanged(nameof(SelectionTargets));
-        OnPropertyChanged(nameof(HasSelectionTargets));
-    }
 
     partial void OnEntriesChanged(
         ObservableCollection<FileSystemEntry>? oldValue,
@@ -119,6 +111,7 @@ public partial class DataGridViewModel : ViewModelBase
     {
         OnPropertyChanged(nameof(AllSelected));
         OnPropertyChanged(nameof(SelectedItemCount));
+        OnPropertyChanged(nameof(SelectedItemCountText));
         OnPropertyChanged(nameof(SelectionTargets));
         OnPropertyChanged(nameof(HasSelectionTargets));
     }
@@ -260,8 +253,7 @@ public partial class DataGridViewModel : ViewModelBase
         Entries.Add(draft);
         SelectedEntry = draft;
 
-        OnPropertyChanged(nameof(FolderCount));
-        OnPropertyChanged(nameof(FileCount));
+        OnPropertyChanged(nameof(NoResultsFound));
     }
 
     public void Remove(FileSystemEntry entry)
