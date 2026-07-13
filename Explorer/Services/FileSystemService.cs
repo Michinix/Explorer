@@ -85,11 +85,13 @@ public static class FileSystemService
                         && (!OperatingSystem.IsMacOS() || d.Name is "/" || d.Name.StartsWith("/Volumes/")))
             .Select(d =>
             {
-                var label = string.IsNullOrWhiteSpace(d.VolumeLabel) ? d.Name.TrimEnd('\\') : d.VolumeLabel;
+                var letter = d.Name == "/"
+                    ? (string.IsNullOrWhiteSpace(d.VolumeLabel) ? "/" : d.VolumeLabel)
+                    : d.Name.TrimEnd('\\', '/');
                 var isSystem = d.Name.StartsWith("C:") || d.Name == "/";
                 var typeName = d.DriveType == DriveType.Removable ? "Amovible" : isSystem ? "Système" : "Données";
 
-                return new DriveItem(label, typeName, $"{FormatSize(d.AvailableFreeSpace)} libres", d.Name);
+                return new DriveItem(letter, typeName, $"{FormatSize(d.AvailableFreeSpace)} libres", d.Name);
             })
             .OrderBy(item => item.Type == "Système" ? 0 : 1)
             .ThenBy(item => item.Type)
