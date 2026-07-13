@@ -22,7 +22,7 @@
 
             <StackPanel Grid.Column="0"
                         Orientation="Horizontal"
-                        Spacing="31"
+                        Spacing="25"
                         VerticalAlignment="Center">
 
                 <primitives:IconButton IconPath="/Assets/Icons/Left.svg"
@@ -46,8 +46,9 @@
                                        Text="{Binding Navigation.EditablePath, Mode=TwoWay}"
                                        SubmitCommand="{Binding Navigation.SubmitEditedPathCommand}"
                                        RevertCommand="{Binding Navigation.RevertEditedPathCommand}"
+                                       NavigateCommand="{Binding Navigation.NavigateToPathCommand}"
                                        VerticalAlignment="Center" />
-                <Grid Grid.Column="1" MinWidth="220" MaxWidth="240" VerticalAlignment="Center">
+                <Grid Grid.Column="1" Width="205" VerticalAlignment="Center">
                     <TextBox Name="SearchBox"
                              Text="{Binding DataGrid.SearchTerm, Mode=TwoWay}"
                              PlaceholderText="{Binding DataGrid.SearchPlaceholder}"

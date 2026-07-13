@@ -2,36 +2,100 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="using:Explorer.Models"
              mc:Ignorable="d"
              x:Name="PathEditorControl"
              x:Class="Explorer.Controls.Primitives.PathEditor">
 
-    <Grid>
-        <TextBox Name="InputBox"
-                 Text="{Binding Text, ElementName=PathEditorControl, Mode=TwoWay}"
-                 FontSize="13"
-                 TextWrapping="NoWrap"
-                 Padding="10,6,30,6"
-                 VerticalAlignment="Center"
-                 LostFocus="OnInputLostFocus">
-            <TextBox.KeyBindings>
-                <KeyBinding Gesture="Enter" Command="{Binding SubmitCommand, ElementName=PathEditorControl}" />
-            </TextBox.KeyBindings>
-        </TextBox>
+    <UserControl.Styles>
+        <Style Selector="Button.crumb">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Foreground" Value="{StaticResource ColorWhiteBrush}" />
+            <Setter Property="Padding" Value="6,3" />
+            <Setter Property="MinHeight" Value="0" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
 
-        <Button Name="ClearButton"
-                Classes="ghost"
-                Click="OnClearClick"
-                Focusable="False"
-                Padding="4"
-                Margin="0,0,6,0"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center"
-                IsVisible="{Binding #InputBox.IsFocused}">
-            <Svg Path="/Assets/Icons/Close.svg"
-                 Width="13" Height="13"
-                 Css="path { fill: white }"
-                 IsHitTestVisible="False" />
-        </Button>
+        <Style Selector="Button.crumb /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+
+        <Style Selector="Button.crumb:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource SurfaceOverlay}" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid>
+        <Border Background="{StaticResource TextBoxBackground}"
+                CornerRadius="3"
+                Padding="4,3"
+                Cursor="Ibeam"
+                PointerPressed="OnBreadcrumbPressed"
+                IsVisible="{Binding !IsEditing, ElementName=PathEditorControl}">
+            <ScrollViewer HorizontalScrollBarVisibility="Hidden"
+                          VerticalScrollBarVisibility="Disabled">
+                <ItemsControl ItemsSource="{Binding Segments, ElementName=PathEditorControl}"
+                              VerticalAlignment="Center">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="models:PathSegment">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+
+                                <Svg Path="/Assets/Icons/ChevronRight.svg"
+                                     Width="15"
+                                     Height="15"
+                                     IsVisible="{Binding !IsFirst}" />
+
+                                <Button Classes="crumb"
+                                        Command="{Binding NavigateCommand, ElementName=PathEditorControl}"
+                                        CommandParameter="{Binding FullPath}">
+                                    <Panel>
+                                        <Svg Path="/Assets/Icons/Home.svg" Width="15" Height="15"
+                                             IsVisible="{Binding IsFirst}" />
+                                        <TextBlock Text="{Binding Name}"
+                                                   VerticalAlignment="Center"
+                                                   IsVisible="{Binding !IsFirst}" />
+                                    </Panel>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+
+        <Grid IsVisible="{Binding IsEditing, ElementName=PathEditorControl}">
+            <TextBox Name="InputBox"
+                     Text="{Binding Text, ElementName=PathEditorControl, Mode=TwoWay}"
+                     FontSize="13"
+                     TextWrapping="NoWrap"
+                     Padding="10,6,30,6"
+                     VerticalAlignment="Center"
+                     KeyDown="OnInputKeyDown"
+                     LostFocus="OnInputLostFocus" />
+
+            <Button Name="ClearButton"
+                    Classes="ghost"
+                    Click="OnClearClick"
+                    Focusable="False"
+                    Padding="4"
+                    Margin="0,0,6,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    IsVisible="{Binding #InputBox.IsFocused}">
+                <Svg Path="/Assets/Icons/Close.svg"
+                     Width="13" Height="13"
+                     Css="path { fill: white }"
+                     IsHitTestVisible="False" />
+            </Button>
+        </Grid>
     </Grid>
 </UserControl>

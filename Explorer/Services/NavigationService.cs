@@ -55,6 +55,13 @@ public partial class NavigationService : ObservableObject
         EditablePath = CurrentPath;
     }
 
+    [RelayCommand]
+    private void NavigateToPath(string? path)
+    {
+        if (!string.IsNullOrWhiteSpace(path))
+            NavigateTo(path);
+    }
+
     [RelayCommand(CanExecute = nameof(CanGoBack))]
     private void GoBack()
     {
