@@ -49,6 +49,12 @@ public partial class NavigationService : ObservableObject
         NavigateTo(EditablePath);
     }
 
+    [RelayCommand]
+    private void RevertEditedPath()
+    {
+        EditablePath = CurrentPath;
+    }
+
     [RelayCommand(CanExecute = nameof(CanGoBack))]
     private void GoBack()
     {

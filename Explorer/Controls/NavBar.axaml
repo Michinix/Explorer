@@ -45,6 +45,7 @@
                 <primitives:PathEditor Grid.Column="0"
                                        Text="{Binding Navigation.EditablePath, Mode=TwoWay}"
                                        SubmitCommand="{Binding Navigation.SubmitEditedPathCommand}"
+                                       RevertCommand="{Binding Navigation.RevertEditedPathCommand}"
                                        VerticalAlignment="Center" />
                 <Grid Grid.Column="1" MinWidth="220" MaxWidth="240" VerticalAlignment="Center">
                     <TextBox Name="SearchBox"

@@ -18,6 +18,8 @@ public partial class DataGridViewModel : ViewModelBase
 {
     private readonly NavigationService _navigation;
 
+    private string _activeSearchTerm = string.Empty;
+
     [ObservableProperty] [NotifyPropertyChangedFor(nameof(FolderCount), nameof(FileCount), nameof(NoResultsFound))]
     private ObservableCollection<FileSystemEntry> _entries = [];
 
@@ -126,6 +128,7 @@ public partial class DataGridViewModel : ViewModelBase
         IsLoading = true;
         IsSearchResult = false;
         SelectedEntry = null;
+        _activeSearchTerm = string.Empty;
 
         try
         {
@@ -155,7 +158,9 @@ public partial class DataGridViewModel : ViewModelBase
     private async Task ClearSearch()
     {
         SearchTerm = string.Empty;
-        await LoadEntriesAsync();
+
+        if (IsSearchResult)
+            await LoadEntriesAsync();
     }
 
     [RelayCommand]
@@ -163,10 +168,15 @@ public partial class DataGridViewModel : ViewModelBase
     {
         if (string.IsNullOrWhiteSpace(SearchTerm))
         {
-            await LoadEntriesAsync();
+            if (IsSearchResult)
+                await LoadEntriesAsync();
             return;
         }
 
+        if (IsSearchResult && string.Equals(SearchTerm, _activeSearchTerm, StringComparison.OrdinalIgnoreCase))
+            return;
+
+        _activeSearchTerm = SearchTerm;
         IsLoading = true;
         IsSearchResult = true;
         SelectedEntry = null;

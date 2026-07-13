@@ -12,7 +12,8 @@
                  FontSize="13"
                  TextWrapping="NoWrap"
                  Padding="10,6,30,6"
-                 VerticalAlignment="Center">
+                 VerticalAlignment="Center"
+                 LostFocus="OnInputLostFocus">
             <TextBox.KeyBindings>
                 <KeyBinding Gesture="Enter" Command="{Binding SubmitCommand, ElementName=PathEditorControl}" />
             </TextBox.KeyBindings>
