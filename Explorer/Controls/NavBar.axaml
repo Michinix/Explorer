@@ -16,9 +16,11 @@
             CornerRadius="10,10,0,0"
             ClipToBounds="True">
 
-        <DockPanel Margin="10,0,10,0" VerticalAlignment="Center" LastChildFill="True">
+        <Grid Margin="10,0,10,0"
+              VerticalAlignment="Center"
+              ColumnDefinitions="Auto,*,Auto">
 
-            <StackPanel DockPanel.Dock="Left"
+            <StackPanel Grid.Column="0"
                         Orientation="Horizontal"
                         Spacing="25"
                         VerticalAlignment="Center">
@@ -38,10 +40,15 @@
                                        Command="{Binding Navigation.ReloadCommand}" />
             </StackPanel>
 
-            <Panel DockPanel.Dock="Right"
-                   Width="212"
-                   Margin="5,0,0,0"
-                   VerticalAlignment="Center">
+            <primitives:PathEditor Grid.Column="1"
+                                   Text="{Binding Navigation.EditablePath, Mode=TwoWay}"
+                                   SubmitCommand="{Binding Navigation.SubmitEditedPathCommand}"
+                                   RevertCommand="{Binding Navigation.RevertEditedPathCommand}"
+                                   NavigateCommand="{Binding Navigation.NavigateToPathCommand}"
+                                   VerticalAlignment="Center"
+                                   Margin="20,0,10,0" />
+
+            <Panel Grid.Column="2" VerticalAlignment="Center" Width="205" HorizontalAlignment="Right">
                 <TextBox Name="SearchBox"
                          Text="{Binding DataGrid.SearchTerm, Mode=TwoWay}"
                          PlaceholderText="{Binding DataGrid.SearchPlaceholder}"
@@ -77,13 +84,6 @@
                          IsHitTestVisible="False" />
                 </Button>
             </Panel>
-
-            <primitives:PathEditor Text="{Binding Navigation.EditablePath, Mode=TwoWay}"
-                                   SubmitCommand="{Binding Navigation.SubmitEditedPathCommand}"
-                                   RevertCommand="{Binding Navigation.RevertEditedPathCommand}"
-                                   NavigateCommand="{Binding Navigation.NavigateToPathCommand}"
-                                   VerticalAlignment="Center"
-                                   Margin="23,0,0,0" />
-        </DockPanel>
+        </Grid>
     </Border>
 </UserControl>
