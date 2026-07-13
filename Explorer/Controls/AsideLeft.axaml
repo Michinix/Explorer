@@ -35,7 +35,7 @@
                     <StackPanel Orientation="Vertical" Spacing="10" Margin="13,10,13,0">
                         <Button Classes="ghost" Command="{Binding NavigateToDesktopCommand}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
-                                <Svg Path="/Assets/Icons/Home.svg" Width="15" Height="15" VerticalAlignment="Center"
+                                <Svg Path="/Assets/Icons/Home.svg" Width="15" VerticalAlignment="Center"
                                      Css="path { stroke: white }" />
                                 <TextBlock Text="Accueil" FontSize="13" FontWeight="Normal" />
                             </StackPanel>
@@ -47,7 +47,7 @@
                     <StackPanel Orientation="Vertical" Spacing="10" Margin="13,0">
                         <Button Classes="ghost" Command="{Binding NavigateToDesktopCommand}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
-                                <Svg Path="/Assets/Icons/Desktop.svg" Width="13" Height="13" VerticalAlignment="Center"
+                                <Svg Path="/Assets/Icons/Desktop.svg" Width="13" VerticalAlignment="Center"
                                      Css="path { stroke: white }" />
                                 <TextBlock Text="Bureau" FontSize="13" FontWeight="Normal" />
                             </StackPanel>
@@ -55,7 +55,7 @@
 
                         <Button Classes="ghost" Command="{Binding NavigateToDownloadsCommand}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
-                                <Svg Path="/Assets/Icons/Download.svg" Width="15" Height="15"
+                                <Svg Path="/Assets/Icons/Download.svg" Width="15"
                                      VerticalAlignment="Center" Css="path { fill: white }" />
                                 <TextBlock Text="Téléchargements" FontSize="13" FontWeight="Normal" />
                             </StackPanel>
@@ -63,7 +63,7 @@
 
                         <Button Classes="ghost" Command="{Binding NavigateToDocumentsCommand}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
-                                <Svg Path="/Assets/Icons/Document.svg" Width="15" Height="15"
+                                <Svg Path="/Assets/Icons/Document.svg" Width="15"
                                      VerticalAlignment="Center" Css="path { stroke: white }" />
                                 <TextBlock Text="Documents" FontSize="13" FontWeight="Normal" />
                             </StackPanel>
@@ -71,7 +71,7 @@
 
                         <Button Classes="ghost" Command="{Binding NavigateToPicturesCommand}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
-                                <Svg Path="/Assets/Icons/Picture.svg" Width="15" Height="15" VerticalAlignment="Center"
+                                <Svg Path="/Assets/Icons/Picture.svg" Width="15" VerticalAlignment="Center"
                                      Css="path { stroke: white }" />
                                 <TextBlock Text="Images" FontSize="13" FontWeight="Normal" />
                             </StackPanel>

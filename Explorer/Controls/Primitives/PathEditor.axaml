@@ -49,15 +49,14 @@
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 
                                 <Svg Path="/Assets/Icons/ChevronRight.svg"
-                                     Width="15"
-                                     Height="15"
+                                     Width="13"
                                      IsVisible="{Binding !IsFirst}" />
 
                                 <Button Classes="crumb"
                                         Command="{Binding NavigateCommand, ElementName=PathEditorControl}"
                                         CommandParameter="{Binding FullPath}">
                                     <Panel>
-                                        <Svg Path="/Assets/Icons/Home.svg" Width="15" Height="15"
+                                        <Svg Path="/Assets/Icons/Home.svg" Width="15"
                                              IsVisible="{Binding IsFirst}" />
                                         <TextBlock Text="{Binding Name}"
                                                    VerticalAlignment="Center"
@@ -91,7 +90,7 @@
                     VerticalAlignment="Center"
                     IsVisible="{Binding #InputBox.IsFocused}">
                 <Svg Path="/Assets/Icons/Close.svg"
-                     Width="13" Height="13"
+                     Width="13"
                      Css="path { fill: white }"
                      IsHitTestVisible="False" />
             </Button>
