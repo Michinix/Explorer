@@ -16,30 +16,35 @@
             CornerRadius="10,10,0,0"
             ClipToBounds="True">
 
-        <Grid Margin="10,0,10,0"
-              VerticalAlignment="Center"
-              ColumnDefinitions="Auto,*,Auto">
+        <Grid VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="220" MaxWidth="250" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" MinWidth="220" MaxWidth="250" />
+            </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0"
-                        Orientation="Horizontal"
-                        Spacing="25"
-                        MinWidth="220" MaxWidth="250"
-                        VerticalAlignment="Center">
+            <UniformGrid Grid.Column="0"
+                         Rows="1"
+                         VerticalAlignment="Center">
                 <primitives:IconButton IconPath="/Assets/Icons/Left.svg"
                                        Command="{Binding Navigation.GoBackCommand}"
-                                       IsEnabled="{Binding Navigation.CanGoBack}" />
+                                       IsEnabled="{Binding Navigation.CanGoBack}"
+                                       HorizontalAlignment="Center" />
 
                 <primitives:IconButton IconPath="/Assets/Icons/Right.svg"
                                        Command="{Binding Navigation.GoForwardCommand}"
-                                       IsEnabled="{Binding Navigation.CanGoForward}" />
+                                       IsEnabled="{Binding Navigation.CanGoForward}"
+                                       HorizontalAlignment="Center" />
 
                 <primitives:IconButton IconPath="/Assets/Icons/Top.svg"
                                        Command="{Binding Navigation.GoUpCommand}"
-                                       IsEnabled="{Binding Navigation.CanGoUp}" />
+                                       IsEnabled="{Binding Navigation.CanGoUp}"
+                                       HorizontalAlignment="Center" />
 
                 <primitives:IconButton IconPath="/Assets/Icons/Reload.svg"
-                                       Command="{Binding Navigation.ReloadCommand}" />
-            </StackPanel>
+                                       Command="{Binding Navigation.ReloadCommand}"
+                                       HorizontalAlignment="Center" />
+            </UniformGrid>
 
             <primitives:PathEditor Grid.Column="1"
                                    Text="{Binding Navigation.EditablePath, Mode=TwoWay}"
@@ -47,44 +52,46 @@
                                    RevertCommand="{Binding Navigation.RevertEditedPathCommand}"
                                    NavigateCommand="{Binding Navigation.NavigateToPathCommand}"
                                    VerticalAlignment="Center"
-                                   MinWidth="400"
-                                   Margin="10,0,10,0" />
+                                   Margin="9,0,9,0" />
 
-            <Panel Grid.Column="2" VerticalAlignment="Center" MinWidth="220" MaxWidth="250" HorizontalAlignment="Right">
-                <TextBox Name="SearchBox"
-                         Text="{Binding DataGrid.SearchTerm, Mode=TwoWay}"
-                         PlaceholderText="{Binding DataGrid.SearchPlaceholder}"
-                         FontSize="13"
-                         TextWrapping="NoWrap"
-                         Padding="10,6,30,6"
-                         VerticalAlignment="Center">
-                    <TextBox.KeyBindings>
-                        <KeyBinding Gesture="Enter" Command="{Binding DataGrid.SearchCommand}" />
-                    </TextBox.KeyBindings>
-                </TextBox>
+            <Panel Grid.Column="2"
+                   VerticalAlignment="Center">
+                <Grid Margin="13,0">
+                    <TextBox Name="SearchBox"
+                             Text="{Binding DataGrid.SearchTerm, Mode=TwoWay}"
+                             PlaceholderText="{Binding DataGrid.SearchPlaceholder}"
+                             FontSize="13"
+                             TextWrapping="NoWrap"
+                             Padding="10,6,30,6"
+                             VerticalAlignment="Center">
+                        <TextBox.KeyBindings>
+                            <KeyBinding Gesture="Enter" Command="{Binding DataGrid.SearchCommand}" />
+                        </TextBox.KeyBindings>
+                    </TextBox>
 
-                <Svg Path="/Assets/Icons/Search.svg"
-                     Width="14" Height="14"
-                     Margin="0,0,10,0"
-                     HorizontalAlignment="Right"
-                     VerticalAlignment="Center"
-                     Css="path { fill: #7A7A7A }"
-                     IsHitTestVisible="False"
-                     IsVisible="{Binding !#SearchBox.IsFocused}" />
+                    <Svg Path="/Assets/Icons/Search.svg"
+                         Width="14" Height="14"
+                         Margin="0,0,10,0"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Center"
+                         Css="path { fill: #7A7A7A }"
+                         IsHitTestVisible="False"
+                         IsVisible="{Binding !#SearchBox.IsFocused}" />
 
-                <Button Classes="ghost"
-                        Command="{Binding DataGrid.ClearSearchCommand}"
-                        Focusable="False"
-                        Padding="4"
-                        Margin="0,0,6,0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        IsVisible="{Binding #SearchBox.IsFocused}">
-                    <Svg Path="/Assets/Icons/Close.svg"
-                         Width="13" Height="13"
-                         Css="path { fill: white }"
-                         IsHitTestVisible="False" />
-                </Button>
+                    <Button Classes="ghost"
+                            Command="{Binding DataGrid.ClearSearchCommand}"
+                            Focusable="False"
+                            Padding="4"
+                            Margin="0,0,6,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            IsVisible="{Binding #SearchBox.IsFocused}">
+                        <Svg Path="/Assets/Icons/Close.svg"
+                             Width="13" Height="13"
+                             Css="path { fill: white }"
+                             IsHitTestVisible="False" />
+                    </Button>
+                </Grid>
             </Panel>
         </Grid>
     </Border>
