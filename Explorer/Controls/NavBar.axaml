@@ -23,6 +23,7 @@
             <StackPanel Grid.Column="0"
                         Orientation="Horizontal"
                         Spacing="25"
+                        MinWidth="220" MaxWidth="250"
                         VerticalAlignment="Center">
                 <primitives:IconButton IconPath="/Assets/Icons/Left.svg"
                                        Command="{Binding Navigation.GoBackCommand}"
@@ -46,9 +47,10 @@
                                    RevertCommand="{Binding Navigation.RevertEditedPathCommand}"
                                    NavigateCommand="{Binding Navigation.NavigateToPathCommand}"
                                    VerticalAlignment="Center"
-                                   Margin="20,0,10,0" />
+                                   MinWidth="400"
+                                   Margin="10,0,10,0" />
 
-            <Panel Grid.Column="2" VerticalAlignment="Center" Width="205" HorizontalAlignment="Right">
+            <Panel Grid.Column="2" VerticalAlignment="Center" MinWidth="220" MaxWidth="250" HorizontalAlignment="Right">
                 <TextBox Name="SearchBox"
                          Text="{Binding DataGrid.SearchTerm, Mode=TwoWay}"
                          PlaceholderText="{Binding DataGrid.SearchPlaceholder}"
