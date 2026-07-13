@@ -9,24 +9,28 @@
              x:Class="Explorer.Views.HomeView"
              x:DataType="vm:HomeViewModel">
 
-    <Grid RowDefinitions="Auto, Auto, *, Auto">
+    <Grid RowDefinitions="Auto, *, Auto">
 
         <StackPanel Grid.Row="0">
             <primitives:Chrome Height="40" />
             <controls:NavBar DataContext="{Binding NavBar}" />
         </StackPanel>
 
-        <Grid Grid.Row="2" ColumnDefinitions="Auto, *, Auto">
+        <Grid Grid.Row="1" ColumnDefinitions="Auto, *, Auto">
 
             <controls:AsideLeft Grid.Column="0"
                                 MinWidth="220"
                                 MaxWidth="250"
                                 DataContext="{Binding AsideLeft}" />
 
-            <controls:DataGrid Grid.Column="1"
-                               MinWidth="400"
-                               MinHeight="300"
-                               DataContext="{Binding DataGrid}" />
+            <Grid Grid.Column="1" RowDefinitions="Auto, *">
+                <controls:Toolbar Grid.Row="0" DataContext="{Binding NavBar}" />
+
+                <controls:DataGrid Grid.Row="1"
+                                   MinWidth="400"
+                                   MinHeight="300"
+                                   DataContext="{Binding DataGrid}" />
+            </Grid>
 
             <controls:AsideRight Grid.Column="2"
                                  MinWidth="220"
@@ -35,9 +39,9 @@
 
         </Grid>
 
-        <controls:Footer Grid.Row="3" DataContext="{Binding DataGrid}" />
+        <controls:Footer Grid.Row="2" DataContext="{Binding DataGrid}" />
 
-        <primitives:FilePreviewModal Grid.Row="0" Grid.RowSpan="4"
+        <primitives:FilePreviewModal Grid.Row="0" Grid.RowSpan="3"
                                      IsOpen="{Binding DataGrid.IsPreviewOpen, Mode=TwoWay}"
                                      Entry="{Binding DataGrid.SelectedEntry}" />
     </Grid>
