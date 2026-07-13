@@ -52,11 +52,11 @@
                                    RevertCommand="{Binding Navigation.RevertEditedPathCommand}"
                                    NavigateCommand="{Binding Navigation.NavigateToPathCommand}"
                                    VerticalAlignment="Center"
-                                   Margin="9,0,9,0" />
+                                   Margin="3,0,3,0" />
 
             <Panel Grid.Column="2"
                    VerticalAlignment="Center">
-                <Grid Margin="13,0">
+                <Grid Margin="5, 0, 7, 0">
                     <TextBox Name="SearchBox"
                              Text="{Binding DataGrid.SearchTerm, Mode=TwoWay}"
                              PlaceholderText="{Binding DataGrid.SearchPlaceholder}"
