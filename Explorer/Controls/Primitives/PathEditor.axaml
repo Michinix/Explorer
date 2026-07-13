@@ -33,7 +33,6 @@
         <Border Background="{StaticResource TextBoxBackground}"
                 CornerRadius="3"
                 Padding="4,3"
-                Cursor="Ibeam"
                 PointerPressed="OnBreadcrumbPressed"
                 IsVisible="{Binding !IsEditing, ElementName=PathEditorControl}">
             <ScrollViewer HorizontalScrollBarVisibility="Hidden"
