@@ -14,6 +14,17 @@ public partial class FileOperationsViewModel(
     DataGridViewModel dataGrid) : ViewModelBase
 {
     public ClipboardService Clipboard { get; } = clipboard;
+    
+    public bool CanModifySelection => dataGrid.HasSelectionTargets;
+    public bool CanRenameSelection => dataGrid.SelectionTargets.Count == 1;
+
+    public void NotifySelectionChanged()
+    {
+        RenameCommand.NotifyCanExecuteChanged();
+        CopyCommand.NotifyCanExecuteChanged();
+        CutCommand.NotifyCanExecuteChanged();
+        DeleteSelectedCommand.NotifyCanExecuteChanged();
+    }
 
     [RelayCommand]
     private void CreateFile()
@@ -27,10 +38,10 @@ public partial class FileOperationsViewModel(
         dataGrid.AddDraft(true);
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanRenameSelection))]
     private void Rename()
     {
-        if (dataGrid.SelectedEntry is not { } entry) return;
+        if (dataGrid.SelectionTargets is not [{ } entry]) return;
 
         entry.EditableName = entry.Name;
         entry.IsEditing = true;
@@ -91,13 +102,13 @@ public partial class FileOperationsViewModel(
             dataGrid.Remove(entry);
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanModifySelection))]
     private void Copy()
     {
         Clipboard.Copy(dataGrid.SelectionTargets);
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanModifySelection))]
     private void Cut()
     {
         Clipboard.Cut(dataGrid.SelectionTargets);
@@ -117,7 +128,7 @@ public partial class FileOperationsViewModel(
         }
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanModifySelection))]
     private async Task DeleteSelected()
     {
         var targets = dataGrid.SelectionTargets;

@@ -110,6 +110,8 @@ public partial class DataGridViewModel : ViewModelBase
         NotifySelectionChanged();
     }
 
+    partial void OnSelectedEntryChanged(FileSystemEntry? value) => NotifySelectionChanged();
+
     private void OnEntryPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName != nameof(FileSystemEntry.IsSelected)) return;
@@ -122,8 +124,11 @@ public partial class DataGridViewModel : ViewModelBase
         OnPropertyChanged(nameof(AllSelected));
         OnPropertyChanged(nameof(SelectedItemCount));
         OnPropertyChanged(nameof(SelectedItemCountText));
+        OnPropertyChanged(nameof(ItemCountText));
         OnPropertyChanged(nameof(SelectionTargets));
         OnPropertyChanged(nameof(HasSelectionTargets));
+
+        FileOps?.NotifySelectionChanged();
     }
 
     public async Task LoadEntriesAsync()
