@@ -33,18 +33,13 @@ public partial class PathEditor : UserControl
     public static readonly StyledProperty<bool> IsEditingProperty =
         AvaloniaProperty.Register<PathEditor, bool>(nameof(IsEditing));
 
-    // Vrai si le clic courant vise un segment (BreadcrumbItem) plutôt que le fond.
     private bool _pressedOnSegment;
 
     public PathEditor()
     {
         InitializeComponent();
         RebuildSegments();
-
-        // Détection en phase tunnel : le BreadcrumbItem exécute sa commande de
-        // navigation au pointeur, ce qui reconstruit les segments et détache la
-        // source avant que le handler bouillonnant du fond ne s'exécute. On capture
-        // donc l'origine du clic en amont, tant que l'arbre visuel est intact.
+        
         AddHandler(PointerPressedEvent, OnTunnelPointerPressed, RoutingStrategies.Tunnel);
     }
 
@@ -88,7 +83,6 @@ public partial class PathEditor : UserControl
             RebuildSegments();
     }
 
-    // Découpe le chemin courant en segments cliquables (racine → dossier courant).
     private void RebuildSegments()
     {
         Segments.Clear();
@@ -123,7 +117,6 @@ public partial class PathEditor : UserControl
 
     private void OnBreadcrumbPressed(object? sender, PointerPressedEventArgs e)
     {
-        // Un clic sur un segment (BreadcrumbItem) déclenche la navigation, pas l'édition.
         if (_pressedOnSegment)
             return;
 
