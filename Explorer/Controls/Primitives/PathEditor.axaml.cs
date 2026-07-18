@@ -11,6 +11,7 @@ using Avalonia.Interactivity;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
 using Explorer.Models;
+using Ursa.Controls;
 
 namespace Explorer.Controls.Primitives;
 
@@ -32,10 +33,19 @@ public partial class PathEditor : UserControl
     public static readonly StyledProperty<bool> IsEditingProperty =
         AvaloniaProperty.Register<PathEditor, bool>(nameof(IsEditing));
 
+    // Vrai si le clic courant vise un segment (BreadcrumbItem) plutôt que le fond.
+    private bool _pressedOnSegment;
+
     public PathEditor()
     {
         InitializeComponent();
         RebuildSegments();
+
+        // Détection en phase tunnel : le BreadcrumbItem exécute sa commande de
+        // navigation au pointeur, ce qui reconstruit les segments et détache la
+        // source avant que le handler bouillonnant du fond ne s'exécute. On capture
+        // donc l'origine du clic en amont, tant que l'arbre visuel est intact.
+        AddHandler(PointerPressedEvent, OnTunnelPointerPressed, RoutingStrategies.Tunnel);
     }
 
     public ObservableCollection<PathSegment> Segments { get; } = [];
@@ -102,15 +112,19 @@ public partial class PathEditor : UserControl
         }
         catch
         {
-            // Chemin invalide : pas de fil d'Ariane.
         }
     }
 
-    // Clic dans la zone : un segment (bouton) navigue, le vide bascule en édition.
+    private void OnTunnelPointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        _pressedOnSegment = e.Source is Visual source &&
+                            source.GetSelfAndVisualAncestors().Any(v => v is BreadcrumbItem);
+    }
+
     private void OnBreadcrumbPressed(object? sender, PointerPressedEventArgs e)
     {
-        if (e.Source is Visual source &&
-            source.GetSelfAndVisualAncestors().Any(v => v is Button))
+        // Un clic sur un segment (BreadcrumbItem) déclenche la navigation, pas l'édition.
+        if (_pressedOnSegment)
             return;
 
         IsEditing = true;
@@ -147,7 +161,6 @@ public partial class PathEditor : UserControl
         }
     }
 
-    // Sorti sans valider : on restaure le chemin courant et on repasse en fil d'Ariane.
     private void OnInputLostFocus(object? sender, RoutedEventArgs e)
     {
         if (RevertCommand?.CanExecute(null) == true)
