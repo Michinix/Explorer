@@ -65,8 +65,18 @@ public partial class DataGridViewModel : ViewModelBase
 
     private int SelectedItemCount => Entries.Count(e => e.IsSelected);
 
-    public string SelectedItemCountText =>
-        SelectedItemCount == 1 ? "1 élément sélectionné" : $"{SelectedItemCount} éléments sélectionnés";
+    public string SelectedItemCountText => SelectedItemCount switch
+    {
+        0 or 1 => $"{SelectedItemCount} élément sélectionné",
+        _      => $"{SelectedItemCount} éléments sélectionnés"
+    };
+
+    public string ItemCountText => Entries.Count switch
+    {
+        0 => "Aucun élément",
+        1 => "1 élément",
+        _ => $"{Entries.Count} éléments"
+    };
 
     public IReadOnlyList<FileSystemEntry> SelectionTargets
     {

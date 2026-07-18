@@ -20,7 +20,7 @@
 
                 <StackPanel Orientation="Horizontal" Spacing="6">
                     <TextBlock FontSize="11"
-                               Text="{Binding Entries.Count, StringFormat='{}{0} éléments'}" />
+                               Text="{Binding ItemCountText}" />
 
                     <TextBlock FontSize="11" Text="-" VerticalAlignment="Center" />
 
