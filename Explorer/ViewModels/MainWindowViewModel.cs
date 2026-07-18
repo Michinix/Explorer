@@ -16,7 +16,7 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             await HomeContent.DataGrid.LoadEntriesAsync();
 
-            await Task.Delay(2000);
+            await Task.Delay(2500);
 
             IsSplashVisible = false;
         });
