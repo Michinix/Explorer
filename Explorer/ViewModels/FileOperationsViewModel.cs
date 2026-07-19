@@ -14,7 +14,7 @@ public partial class FileOperationsViewModel(
     DataGridViewModel dataGrid) : ViewModelBase
 {
     public ClipboardService Clipboard { get; } = clipboard;
-    
+
     public bool CanModifySelection => dataGrid.HasSelectionTargets;
     public bool CanRenameSelection => dataGrid.SelectionTargets.Count == 1;
 

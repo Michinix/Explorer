@@ -68,7 +68,7 @@ public partial class DataGridViewModel : ViewModelBase
     public string SelectedItemCountText => SelectedItemCount switch
     {
         0 or 1 => $"{SelectedItemCount} élément sélectionné",
-        _      => $"{SelectedItemCount} éléments sélectionnés"
+        _ => $"{SelectedItemCount} éléments sélectionnés"
     };
 
     public string ItemCountText => Entries.Count switch
@@ -110,7 +110,10 @@ public partial class DataGridViewModel : ViewModelBase
         NotifySelectionChanged();
     }
 
-    partial void OnSelectedEntryChanged(FileSystemEntry? value) => NotifySelectionChanged();
+    partial void OnSelectedEntryChanged(FileSystemEntry? value)
+    {
+        NotifySelectionChanged();
+    }
 
     private void OnEntryPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {

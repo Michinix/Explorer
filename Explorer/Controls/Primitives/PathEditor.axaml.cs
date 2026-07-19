@@ -39,7 +39,7 @@ public partial class PathEditor : UserControl
     {
         InitializeComponent();
         RebuildSegments();
-        
+
         AddHandler(PointerPressedEvent, OnTunnelPointerPressed, RoutingStrategies.Tunnel);
     }
 

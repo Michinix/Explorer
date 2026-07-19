@@ -86,7 +86,7 @@ public static class FileSystemService
             .Select(d =>
             {
                 var letter = d.Name == "/"
-                    ? (string.IsNullOrWhiteSpace(d.VolumeLabel) ? "/" : d.VolumeLabel)
+                    ? string.IsNullOrWhiteSpace(d.VolumeLabel) ? "/" : d.VolumeLabel
                     : d.Name.TrimEnd('\\', '/');
                 var isSystem = d.Name.StartsWith("C:") || d.Name == "/";
                 var typeName = d.DriveType == DriveType.Removable ? "Amovible" : isSystem ? "Système" : "Données";
