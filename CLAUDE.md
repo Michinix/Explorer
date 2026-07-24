@@ -1,8 +1,10 @@
 # CLAUDE.md
 
-## Guide de Développement - Explorateur de fichiers cross-platform
+Guide pour travailler sur ce dépôt. À lire avant toute modification.
 
-## Commandes Fréquentes
+## Commandes
+
+Toujours se placer dans le bon sous-dossier.
 
 - **Build :** `dotnet build`
 - **Run :** `dotnet run --project Explorer`
@@ -27,6 +29,7 @@ Le projet suit scrupuleusement le pattern MVVM. Aucune logique UI/visuelle ne do
 - **Views :** Fichiers `.axaml` et `.axaml.cs` (`UserControl` ou `Window`), dans `Views/` (pages) et `Controls/` (
   composants réutilisables : `NavBar`, `AsideLeft`, `AsideRight`, `DataGrid`, `Chrome`, `Footer`, `PathEditor`,
   `FileIcon`).
+- **Composants :** Les petits composants réutilisables doivent se trouver dans le dossier `Controls/Primitives`.
 - **ViewModels :** Héritent obligatoirement de `ViewModelBase` (dans `ViewModels/`).
 - **Génération MVVM :** Utiliser exclusivement les attributs du toolkit (`[ObservableProperty]`, `[RelayCommand]`) sur
   des classes `partial`.
@@ -34,22 +37,6 @@ Le projet suit scrupuleusement le pattern MVVM. Aucune logique UI/visuelle ne do
   `NavigationService` pour l'historique de navigation, `FileTypeColorsService`).
 - **Models :** POCOs/records dans `Models/` (ex. `FileSystemEntry`, `DriveItem`), plus les messages échangés via le
   messenger (ex. `CurrentPathChangedMessage`).
-
-### Composition des ViewModels
-
-Seuls `MainWindowViewModel` et `HomeViewModel` sont enregistrés dans le conteneur DI (`App.axaml.cs`), avec
-`NavigationService` et `FileSystemService` en singletons. Les ViewModels "enfants" (`DataGridViewModel`,
-`NavBarViewModel`, `AsideLeftViewModel`) ne sont **pas** résolus via le conteneur : ils sont instanciés manuellement
-dans le constructeur de `HomeViewModel`, qui leur passe les services partagés. En ajoutant un nouveau ViewModel enfant à
-`HomeViewModel`, suivre ce même pattern plutôt que d'enregistrer une nouvelle entrée DI.
-
-### Communication inter-ViewModels
-
-La navigation ne se fait pas par référence directe entre ViewModels : `NavigationService` publie un
-`CurrentPathChangedMessage` via `WeakReferenceMessenger.Default` à chaque changement de `CurrentPath`, et les ViewModels
-intéressés (ex. `DataGridViewModel`) s'y abonnent dans leur constructeur pour recharger leurs données. Suivre ce pattern
-pour toute nouvelle réaction à un changement de répertoire courant plutôt que d'appeler directement une méthode d'un
-autre ViewModel.
 
 ## Styles & XAML
 
@@ -69,3 +56,12 @@ autre ViewModel.
 Les messages de commit suivent le format `PREFIX: description au participe/infinitif` (ex:
 `FEAT: Add PathEditor control for editable path navigation`). Préfixes observés : `FEAT` (nouvelle fonctionnalité),
 `REFAC` (refactorisation), `STYLE` (changements visuels/XAML uniquement).
+
+## Règles de génération de code
+
+- **Commentaires** : Aucun commentaire dans le code généré, le code doit être auto-explicatif.
+
+## Règle générale
+
+Tu n'as aucunement le droit de killer le processus de l'application depuis le code, depuis une commande ni de forcer la
+fermeture d'une fenêtre. Toute action de fermeture doit être initiée par l'utilisateur via l'UI.
