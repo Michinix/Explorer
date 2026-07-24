@@ -1,0 +1,41 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Explorer.ViewModels"
+             mc:Ignorable="d"
+             x:Name="HomeContentControl"
+             x:Class="Explorer.Controls.HomeContent"
+             x:DataType="vm:HomeContentViewModel">
+
+    <UserControl.Styles>
+        <Style Selector="TextBlock.SectionTitle">
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
+            <Setter Property="Margin" Value="0,0,0,14" />
+        </Style>
+
+        <Style Selector="Button.tile">
+            <Setter Property="Background" Value="{StaticResource SurfaceElevated}" />
+            <Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="14,12" />
+            <Setter Property="Width" Value="170" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+        </Style>
+
+        <Style Selector="Button.tile:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource SurfaceOverlay}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AccentPrimary}" />
+        </Style>
+    </UserControl.Styles>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Orientation="Vertical" Margin="28,24" Spacing="30">
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

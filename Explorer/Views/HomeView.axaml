@@ -23,14 +23,21 @@
                                 DataContext="{Binding AsideLeft}" />
 
             <Grid Grid.Column="1" RowDefinitions="Auto, *">
-                <controls:Toolbar Grid.Row="0" DataContext="{Binding NavBar}" />
+                <controls:Toolbar Grid.Row="0" DataContext="{Binding NavBar}"
+                                  IsVisible="{Binding !IsVisible, ElementName=HomeContentView}" />
 
-                <controls:DataGrid Grid.Row="1" DataContext="{Binding DataGrid}" />
+                <controls:DataGrid Grid.Row="1" DataContext="{Binding DataGrid}"
+                                   IsVisible="{Binding !IsVisible, ElementName=HomeContentView}" />
+
+                <controls:HomeContent Grid.Row="0" Grid.RowSpan="2"
+                                      x:Name="HomeContentView"
+                                      DataContext="{Binding HomeContent}"
+                                      IsVisible="{Binding IsActive}" />
             </Grid>
 
             <controls:AsideRight Grid.Column="2"
                                  Width="220"
-                                 DataContext="{Binding DataGrid}" />
+                                 DataContext="{Binding DataGrid}"/>
         </Grid>
 
         <controls:Footer Grid.Row="2" DataContext="{Binding DataGrid}" />

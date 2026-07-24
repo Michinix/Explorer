@@ -1,3 +1,12 @@
+using CommunityToolkit.Mvvm.ComponentModel;
+
 namespace Explorer.Models;
 
-public record DriveItem(string DisplayName, string Type, string FreeSpace, string FullPath);
+public partial class DriveItem(string displayName, string type, string fullPath) : ObservableObject
+{
+    [ObservableProperty] private bool _isActive;
+
+    public string DisplayName { get; } = displayName;
+    public string Type { get; } = type;
+    public string FullPath { get; } = fullPath;
+}

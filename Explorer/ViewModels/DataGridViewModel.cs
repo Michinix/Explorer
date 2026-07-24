@@ -136,10 +136,18 @@ public partial class DataGridViewModel : ViewModelBase
 
     public async Task LoadEntriesAsync()
     {
-        IsLoading = true;
         IsSearchResult = false;
         SelectedEntry = null;
         _activeSearchTerm = string.Empty;
+
+        if (string.Equals(_navigation.CurrentPath, NavigationService.HomePath, StringComparison.OrdinalIgnoreCase))
+        {
+            Entries = [];
+            IsLoading = false;
+            return;
+        }
+
+        IsLoading = true;
 
         try
         {

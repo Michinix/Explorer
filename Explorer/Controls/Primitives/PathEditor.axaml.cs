@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -11,6 +12,7 @@ using Avalonia.Interactivity;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
 using Explorer.Models;
+using Explorer.Services;
 using Ursa.Controls;
 
 namespace Explorer.Controls.Primitives;
@@ -90,6 +92,12 @@ public partial class PathEditor : UserControl
         if (string.IsNullOrWhiteSpace(Text))
             return;
 
+        if (string.Equals(Text, NavigationService.HomePath, StringComparison.OrdinalIgnoreCase))
+        {
+            Segments.Add(new PathSegment("Accueil", NavigationService.HomePath, true));
+            return;
+        }
+
         try
         {
             var chain = new List<DirectoryInfo>();
@@ -118,6 +126,9 @@ public partial class PathEditor : UserControl
     private void OnBreadcrumbPressed(object? sender, PointerPressedEventArgs e)
     {
         if (_pressedOnSegment)
+            return;
+
+        if (string.Equals(Text, NavigationService.HomePath, StringComparison.OrdinalIgnoreCase))
             return;
 
         IsEditing = true;

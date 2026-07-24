@@ -10,20 +10,21 @@ namespace Explorer.Services;
 
 public partial class NavigationService : ObservableObject
 {
+    public static readonly string HomePath = "\\Accueil";
     private readonly Stack<string> _backStack = new();
     private readonly Stack<string> _forwardStack = new();
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanGoBack), nameof(CanGoForward), nameof(CanGoUp))]
     [NotifyCanExecuteChangedFor(nameof(GoBackCommand), nameof(GoForwardCommand), nameof(GoUpCommand))]
-    private string _currentPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+    private string _currentPath = HomePath;
 
-    [ObservableProperty]
-    private string _editablePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+    [ObservableProperty] private string _editablePath = HomePath;
 
     public bool CanGoBack => _backStack.Count > 0;
     public bool CanGoForward => _forwardStack.Count > 0;
-    public bool CanGoUp => Directory.GetParent(CurrentPath) is not null;
+    public bool CanGoUp => !string.Equals(CurrentPath, HomePath, StringComparison.OrdinalIgnoreCase) &&
+                           Directory.GetParent(CurrentPath) is not null;
 
     partial void OnCurrentPathChanged(string value)
     {
