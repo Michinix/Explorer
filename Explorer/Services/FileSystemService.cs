@@ -26,94 +26,108 @@ public static class FileSystemService
         };
     }
 
-    public static async Task<FileSystemEntry[]> SearchEntriesAsync(string path, string searchTerm)
+    public static Task<FileSystemEntry[]> SearchEntriesAsync(string path, string searchTerm)
     {
-        EnumerationOptions options = new()
+        return Task.Run(() =>
         {
-            RecurseSubdirectories = true,
-            IgnoreInaccessible = true,
-            AttributesToSkip = FileAttributes.Hidden | FileAttributes.System
-        };
+            var options = new EnumerationOptions
+            {
+                RecurseSubdirectories = true,
+                IgnoreInaccessible = true,
+                AttributesToSkip = FileAttributes.Hidden | FileAttributes.System
+            };
 
-        return await Task.Run(() =>
-            new DirectoryInfo(path)
+            return new DirectoryInfo(path)
                 .EnumerateFileSystemInfos("*", options)
                 .Where(e => e.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
-                .Select(e => new FileSystemEntry(
-                    e.Name,
-                    e.FullName,
-                    e.Extension.TrimStart('.').ToUpper(),
-                    e is DirectoryInfo,
-                    e is FileInfo f ? FormatSize(f.Length) : "—",
-                    e.LastWriteTime
-                ))
-                .ToArray());
+                .Select(MapToEntry)
+                .ToArray();
+        });
     }
 
-    public static async Task<ICollection<FileSystemEntry>> ListEntriesAsync(string path)
+    public static Task<FileSystemEntry[]> ListEntriesAsync(string path)
     {
-        return await Task.Run(() =>
-            new DirectoryInfo(path)
-                .EnumerateFileSystemInfos()
-                .Where(e =>
-                    e.Name.StartsWith('.') ||
-                    (!e.Attributes.HasFlag(FileAttributes.Hidden) &&
-                     !e.Attributes.HasFlag(FileAttributes.System)))
-                .OrderBy(e => e is FileInfo)
-                .ThenBy(e => e.Name)
-                .Select(e => new FileSystemEntry(
-                    e.Name,
-                    e.FullName,
-                    e.Extension.TrimStart('.').ToUpper(),
-                    e is DirectoryInfo,
-                    e is FileInfo f ? FormatSize(f.Length) : "—",
-                    e.LastWriteTime
-                ))
-                .ToArray());
-    }
-
-    public static async Task LaunchFileAsync(string path)
-    {
-        await Task.Run(() =>
-            Process.Start(new ProcessStartInfo(path) { UseShellExecute = true }));
-    }
-
-    public static async Task<ICollection<DriveItem>> GetDrivesAsync()
-    {
-        return await Task.Run(() => DriveInfo.GetDrives()
-            .Where(d => d is { IsReady: true, DriveType: DriveType.Removable or DriveType.Fixed }
-                        && (!OperatingSystem.IsMacOS() || d.Name is "/" || d.Name.StartsWith("/Volumes/")))
-            .Select(d =>
+        return Task.Run(() =>
+        {
+            var options = new EnumerationOptions
             {
-                var letter = d.Name == "/"
-                    ? string.IsNullOrWhiteSpace(d.VolumeLabel) ? "/" : d.VolumeLabel
-                    : d.Name.TrimEnd('\\', '/');
-                var isSystem = d.Name.StartsWith("C:") || d.Name == "/";
-                var typeName = d.DriveType == DriveType.Removable ? "Amovible" : isSystem ? "Système" : "Données";
+                IgnoreInaccessible = true,
+                AttributesToSkip = FileAttributes.None
+            };
 
-                return new DriveItem(letter, typeName, $"{FormatSize(d.AvailableFreeSpace)} libres", d.Name);
-            })
-            .OrderBy(item => item.Type == "Système" ? 0 : 1)
-            .ThenBy(item => item.Type)
-            .ToArray());
+            return new DirectoryInfo(path)
+                .EnumerateFileSystemInfos("*", options)
+                .Where(e => e.Name.StartsWith('.') || 
+                           (!e.Attributes.HasFlag(FileAttributes.Hidden) && 
+                            !e.Attributes.HasFlag(FileAttributes.System)))
+                .OrderBy(e => e is FileInfo)
+                .ThenBy(e => e.Name, StringComparer.OrdinalIgnoreCase)
+                .Select(MapToEntry)
+                .ToArray();
+        });
     }
 
-    public static async Task CreateFileAsync(string path)
+    public static Task LaunchFileAsync(string path)
     {
-        await Task.Run(() => new FileStream(path, FileMode.CreateNew).Dispose());
+        return Task.Run(() => Process.Start(new ProcessStartInfo(path) { UseShellExecute = true }));
     }
 
-    public static async Task CreateDirectoryAsync(string path)
+    public static Task<DriveItem[]> GetDrivesAsync()
     {
-        await Task.Run(() => Directory.CreateDirectory(path));
+        return Task.Run(() =>
+        {
+            var drives = DriveInfo.GetDrives();
+            var result = new List<DriveItem>(drives.Length);
+
+            foreach (var drive in drives)
+            {
+                try
+                {
+                    if (!drive.IsReady) continue;
+                    if (drive.DriveType is not (DriveType.Removable or DriveType.Fixed)) continue;
+                    if (OperatingSystem.IsMacOS() && drive.Name != "/" && !drive.Name.StartsWith("/Volumes/")) continue;
+
+                    var isSystem = drive.Name.StartsWith("C:", StringComparison.OrdinalIgnoreCase) || drive.Name == "/";
+                    var rawLetter = drive.Name.TrimEnd('\\', '/');
+                    
+                    var label = !string.IsNullOrWhiteSpace(drive.VolumeLabel) 
+                        ? drive.VolumeLabel 
+                        : (isSystem ? "Disque Système" : "Disque Local");
+
+                    var displayName = $"{label} ({rawLetter})";
+                    var type = drive.DriveType == DriveType.Removable ? "Amovible" : isSystem ? "Système" : "Données";
+
+                    result.Add(new DriveItem(displayName, type, drive.Name));
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+            }
+
+            return result
+                .OrderBy(item => item.Type == "Système" ? 0 : 1)
+                .ThenBy(item => item.Type)
+                .ToArray();
+        });
     }
 
-    public static async Task RenameAsync(FileSystemEntry entry, string newName)
+    public static Task CreateFileAsync(string path)
+    {
+        return Task.Run(() => File.Create(path).Dispose());
+    }
+
+    public static Task CreateDirectoryAsync(string path)
+    {
+        return Task.Run(() => Directory.CreateDirectory(path));
+    }
+
+    public static Task RenameAsync(FileSystemEntry entry, string newName)
     {
         var directory = Path.GetDirectoryName(entry.FullPath)!;
         var destination = Path.Combine(directory, newName);
 
-        await Task.Run(() =>
+        return Task.Run(() =>
         {
             if (entry.IsDirectory)
                 Directory.Move(entry.FullPath, destination);
@@ -122,15 +136,31 @@ public static class FileSystemService
         });
     }
 
-    public static async Task DeleteEntriesAsync(IEnumerable<FileSystemEntry> entries)
+    public static Task DeleteEntriesAsync(IEnumerable<FileSystemEntry> entries)
     {
-        await Task.Run(() =>
+        return Task.Run(() =>
         {
             foreach (var entry in entries)
-                if (entry.IsDirectory)
-                    Directory.Delete(entry.FullPath, true);
-                else
-                    File.Delete(entry.FullPath);
+            {
+                try
+                {
+                    if (entry.IsDirectory)
+                        Directory.Delete(entry.FullPath, true);
+                    else
+                        File.Delete(entry.FullPath);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+            }
         });
+    }
+
+    private static FileSystemEntry MapToEntry(FileSystemInfo e)
+    {
+        var ext = e.Extension.Length > 0 ? e.Extension[1..].ToUpperInvariant() : string.Empty;
+        var size = e is FileInfo f ? FormatSize(f.Length) : "—";
+        return new FileSystemEntry(e.Name, e.FullName, ext, e is DirectoryInfo, size, e.LastWriteTime);
     }
 }
