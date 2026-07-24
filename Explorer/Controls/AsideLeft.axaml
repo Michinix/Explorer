@@ -4,48 +4,64 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Explorer.ViewModels"
              xmlns:models="using:Explorer.Models"
+             xmlns:ic="using:FluentIcons.Avalonia"
              mc:Ignorable="d"
              x:Name="AsideLeftControl"
              x:Class="Explorer.Controls.AsideLeft"
              x:DataType="vm:AsideLeftViewModel">
 
     <UserControl.Styles>
-        <Style Selector="TextBlock.SectionTitle">
-            <Setter Property="FontWeight" Value="Medium" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
-            <Setter Property="Margin" Value="13, 15, 13, 12" />
+        <Style Selector="Button.ghost /template/ ContentPresenter">
+            <Setter Property="BorderThickness" Value="2,0,0,0" />
+            <Setter Property="BorderBrush" Value="Transparent" />
         </Style>
 
         <Style Selector="Button.ghost">
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="Padding" Value="10, 8, 10, 8" />
+        </Style>
+
+        <Style Selector="Button.ghost.active /template/ ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource SurfaceOverlay}" />
+            <Setter Property="BorderBrush" Value="{StaticResource AccentPrimary}" />
+        </Style>
+
+        <Style Selector="Button.ghost.active:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource SurfaceHighlight}" />
         </Style>
     </UserControl.Styles>
 
     <Border BorderThickness="0,0,1,0"
             BorderBrush="{StaticResource BorderDefault}">
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto"
-                      HorizontalScrollBarVisibility="Disabled">
+        <ScrollViewer VerticalScrollBarVisibility="Hidden"
+                      HorizontalScrollBarVisibility="Disabled"
+                      AllowAutoHide="True">
 
-            <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Vertical" Spacing="10" Margin="0,10,0,10">
+                
+                <Border Margin="13,0,13,0">
 
-                <StackPanel Orientation="Vertical">
-                    <StackPanel Orientation="Vertical" Spacing="10" Margin="13,10,13,0">
-                        <Button Classes="ghost" Command="{Binding NavigateToDesktopCommand}">
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
-                                <Svg Path="/Assets/Icons/Home.svg" Width="15" VerticalAlignment="Center"
-                                     Css="path { stroke: white }" />
-                                <TextBlock Text="Accueil" FontSize="13" FontWeight="Normal" />
-                            </StackPanel>
-                        </Button>
-                    </StackPanel>
+                    <Button Classes="ghost" 
+                            Classes.active="{Binding IsHomeActive}"
+                            Command="{Binding NavigateToHomeCommand}">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
+                            <Svg Path="/Assets/Icons/Home.svg" Width="15" VerticalAlignment="Center"
+                                 Css="path { stroke: white }" />
+                            <TextBlock Text="Accueil" FontSize="13" FontWeight="Normal" />
+                        </StackPanel>
+                    </Button>
+                </Border>
 
-                    <TextBlock Classes="SectionTitle" Text="ACCÈS RAPIDE" />
+                <Expander IsExpanded="True">
+                    <Expander.Header>
+                        <TextBlock Classes="SectionTitle" Text="Épinglé" />
+                    </Expander.Header>
 
-                    <StackPanel Orientation="Vertical" Spacing="10" Margin="13,0">
-                        <Button Classes="ghost" Command="{Binding NavigateToDesktopCommand}">
+                    <StackPanel Orientation="Vertical" Spacing="5" Margin="13,4,13,10">
+                        <Button Classes="ghost" Classes.active="{Binding IsDesktopActive}"
+                                Command="{Binding NavigateToDesktopCommand}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
                                 <Svg Path="/Assets/Icons/Desktop.svg" Width="13" VerticalAlignment="Center"
                                      Css="path { stroke: white }" />
@@ -53,7 +69,8 @@
                             </StackPanel>
                         </Button>
 
-                        <Button Classes="ghost" Command="{Binding NavigateToDownloadsCommand}">
+                        <Button Classes="ghost" Classes.active="{Binding IsDownloadsActive}"
+                                Command="{Binding NavigateToDownloadsCommand}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
                                 <Svg Path="/Assets/Icons/Download.svg" Width="15"
                                      VerticalAlignment="Center" Css="path { fill: white }" />
@@ -61,7 +78,8 @@
                             </StackPanel>
                         </Button>
 
-                        <Button Classes="ghost" Command="{Binding NavigateToDocumentsCommand}">
+                        <Button Classes="ghost" Classes.active="{Binding IsDocumentsActive}"
+                                Command="{Binding NavigateToDocumentsCommand}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
                                 <Svg Path="/Assets/Icons/Document.svg" Width="15"
                                      VerticalAlignment="Center" Css="path { stroke: white }" />
@@ -69,7 +87,8 @@
                             </StackPanel>
                         </Button>
 
-                        <Button Classes="ghost" Command="{Binding NavigateToPicturesCommand}">
+                        <Button Classes="ghost" Classes.active="{Binding IsPicturesActive}"
+                                Command="{Binding NavigateToPicturesCommand}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
                                 <Svg Path="/Assets/Icons/Picture.svg" Width="15" VerticalAlignment="Center"
                                      Css="path { stroke: white }" />
@@ -77,20 +96,18 @@
                             </StackPanel>
                         </Button>
                     </StackPanel>
-                </StackPanel>
+                </Expander>
 
-                <Border BorderBrush="{StaticResource BorderDefault}"
-                        BorderThickness="0,1,0,0"
-                        HorizontalAlignment="Stretch"
-                        Margin="13,20,13,0" />
+                <Expander IsExpanded="True">
+                    <Expander.Header>
+                        <TextBlock Classes="SectionTitle" Text="Lecteurs" />
+                    </Expander.Header>
 
-                <StackPanel Orientation="Vertical">
-                    <TextBlock Classes="SectionTitle" Text="EMPLACEMENTS" />
-
-                    <ItemsControl ItemsSource="{Binding Drives}" Margin="13,0">
+                    <ItemsControl ItemsSource="{Binding Drives}" Margin="13,4,13,0">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="models:DriveItem">
                                 <Button Classes="ghost"
+                                        Classes.active="{Binding IsActive}"
                                         Command="{Binding #AsideLeftControl.DataContext?.NavigateToDriveCommand}"
                                         CommandParameter="{Binding FullPath}"
                                         x:CompileBindings="False"
@@ -99,30 +116,15 @@
                                         <Svg Path="/Assets/Icons/Drive.svg" Width="15" Height="15"
                                              VerticalAlignment="Center" Css="path { fill: white }" />
 
-                                        <StackPanel Orientation="Vertical" Spacing="4">
-                                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                                <TextBlock Text="{Binding DisplayName}" FontSize="13"
-                                                           FontWeight="Normal"
-                                                           Foreground="{StaticResource ColorWhiteBrush}" />
-                                                <TextBlock Text="-" FontSize="13" FontWeight="Normal"
-                                                           Foreground="{StaticResource ColorWhiteBrush}"
-                                                           VerticalAlignment="Center" />
-                                                <TextBlock Text="{Binding Type}" FontSize="13"
-                                                           FontWeight="Normal"
-                                                           Foreground="{StaticResource ColorWhiteBrush}"
-                                                           VerticalAlignment="Center" />
-                                            </StackPanel>
-
-                                            <TextBlock Text="{Binding FreeSpace}" FontSize="11"
-                                                       FontWeight="Normal"
-                                                       Foreground="{StaticResource ColorWhiteBrush}" />
-                                        </StackPanel>
+                                        <TextBlock Text="{Binding DisplayName}" FontSize="13"
+                                                   FontWeight="Normal"
+                                                   Foreground="{StaticResource ColorWhiteBrush}" />
                                     </StackPanel>
                                 </Button>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                </StackPanel>
+                </Expander>
 
             </StackPanel>
         </ScrollViewer>
