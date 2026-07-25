@@ -11,7 +11,8 @@
         <Setter Property="Foreground" Value="{StaticResource ColorWhiteBrush}" />
     </Style>
 
-    <Style Selector="Button.ghost:pointerover /template/ ContentPresenter, Button.ghost:pressed /template/ ContentPresenter">
+    <Style
+        Selector="Button.ghost:pointerover /template/ ContentPresenter, Button.ghost:pressed /template/ ContentPresenter">
         <Setter Property="Background" Value="Transparent" />
     </Style>
 </Styles>

@@ -42,7 +42,7 @@
 
 
             </Expander>
-            
+
             <Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}">
                 <Expander.Header>
                     <TextBlock Text="Lecteurs" FontSize="12" />
@@ -50,7 +50,7 @@
 
 
             </Expander>
-            
+
             <Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}">
                 <Expander.Header>
                     <TextBlock Text="Réseau" FontSize="12" />
@@ -58,7 +58,7 @@
 
 
             </Expander>
-            
+
             <Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}">
                 <Expander.Header>
                     <TextBlock Text="Fichiers récents" FontSize="12" />

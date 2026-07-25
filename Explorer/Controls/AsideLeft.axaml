@@ -35,12 +35,12 @@
                         <TextBlock Classes="SectionTitle" Text="Épinglé" />
                     </Expander.Header>
 
-                    <StackPanel Orientation="Vertical" 
-                                Spacing="5" 
+                    <StackPanel Orientation="Vertical"
+                                Spacing="5"
                                 Margin="13,4,13,10"
                                 Tag="{Binding #PinnedExpander.IsExpanded}">
-                        
-                        <Button Theme="{StaticResource SidebarButtonTheme}" 
+
+                        <Button Theme="{StaticResource SidebarButtonTheme}"
                                 Classes.active="{Binding IsDesktopActive}"
                                 Command="{Binding NavigateToDesktopCommand}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
@@ -50,7 +50,7 @@
                             </StackPanel>
                         </Button>
 
-                        <Button Theme="{StaticResource SidebarButtonTheme}" 
+                        <Button Theme="{StaticResource SidebarButtonTheme}"
                                 Classes.active="{Binding IsDownloadsActive}"
                                 Command="{Binding NavigateToDownloadsCommand}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
@@ -60,7 +60,7 @@
                             </StackPanel>
                         </Button>
 
-                        <Button Theme="{StaticResource SidebarButtonTheme}" 
+                        <Button Theme="{StaticResource SidebarButtonTheme}"
                                 Classes.active="{Binding IsDocumentsActive}"
                                 Command="{Binding NavigateToDocumentsCommand}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
@@ -70,7 +70,7 @@
                             </StackPanel>
                         </Button>
 
-                        <Button Theme="{StaticResource SidebarButtonTheme}" 
+                        <Button Theme="{StaticResource SidebarButtonTheme}"
                                 Classes.active="{Binding IsPicturesActive}"
                                 Command="{Binding NavigateToPicturesCommand}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
@@ -87,7 +87,7 @@
                         <TextBlock Classes="SectionTitle" Text="Lecteurs" />
                     </Expander.Header>
 
-                    <ItemsControl ItemsSource="{Binding Drives}" 
+                    <ItemsControl ItemsSource="{Binding Drives}"
                                   Margin="13,4,13,10"
                                   Tag="{Binding #DrivesExpander.IsExpanded}"
                                   ItemContainerTheme="{StaticResource DriveItemContainerTheme}">
