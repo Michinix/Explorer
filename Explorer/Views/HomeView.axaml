@@ -37,6 +37,7 @@
 
             <controls:AsideRight Grid.Column="2"
                                  Width="220"
+                                 IsVisible="{Binding !IsVisible, ElementName=HomeContentView}"
                                  DataContext="{Binding DataGrid}" />
         </Grid>
 
