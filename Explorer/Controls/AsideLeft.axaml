@@ -9,28 +9,6 @@
              x:Class="Explorer.Controls.AsideLeft"
              x:DataType="vm:AsideLeftViewModel">
 
-    <UserControl.Styles>
-        <Style Selector="Button.ghost /template/ ContentPresenter">
-            <Setter Property="BorderThickness" Value="2,0,0,0" />
-            <Setter Property="BorderBrush" Value="Transparent" />
-        </Style>
-
-        <Style Selector="Button.ghost">
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="HorizontalContentAlignment" Value="Left" />
-            <Setter Property="Padding" Value="10, 8, 10, 8" />
-        </Style>
-
-        <Style Selector="Button.ghost.active /template/ ContentPresenter">
-            <Setter Property="Background" Value="{StaticResource SurfaceOverlay}" />
-            <Setter Property="BorderBrush" Value="{StaticResource AccentPrimary}" />
-        </Style>
-
-        <Style Selector="Button.ghost.active:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="{StaticResource SurfaceHighlight}" />
-        </Style>
-    </UserControl.Styles>
-
     <Border BorderThickness="0,0,1,0"
             BorderBrush="{StaticResource BorderDefault}">
 
@@ -41,8 +19,7 @@
             <StackPanel Orientation="Vertical" Spacing="15" Margin="0,15,0,10">
 
                 <Border Margin="13,0,13,0">
-
-                    <Button Classes="ghost"
+                    <Button Theme="{StaticResource SidebarButtonTheme}"
                             Classes.active="{Binding IsHomeActive}"
                             Command="{Binding NavigateToHomeCommand}">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
@@ -53,13 +30,18 @@
                     </Button>
                 </Border>
 
-                <Expander IsExpanded="True">
+                <Expander x:Name="PinnedExpander" IsExpanded="True" Theme="{StaticResource AsideExpanderTheme}">
                     <Expander.Header>
                         <TextBlock Classes="SectionTitle" Text="Épinglé" />
                     </Expander.Header>
 
-                    <StackPanel Orientation="Vertical" Spacing="5" Margin="13,4,13,10">
-                        <Button Classes="ghost" Classes.active="{Binding IsDesktopActive}"
+                    <StackPanel Orientation="Vertical" 
+                                Spacing="5" 
+                                Margin="13,4,13,10"
+                                Tag="{Binding #PinnedExpander.IsExpanded}">
+                        
+                        <Button Theme="{StaticResource SidebarButtonTheme}" 
+                                Classes.active="{Binding IsDesktopActive}"
                                 Command="{Binding NavigateToDesktopCommand}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
                                 <Svg Path="/Assets/Icons/Desktop.svg" Width="13" VerticalAlignment="Center"
@@ -68,7 +50,8 @@
                             </StackPanel>
                         </Button>
 
-                        <Button Classes="ghost" Classes.active="{Binding IsDownloadsActive}"
+                        <Button Theme="{StaticResource SidebarButtonTheme}" 
+                                Classes.active="{Binding IsDownloadsActive}"
                                 Command="{Binding NavigateToDownloadsCommand}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
                                 <Svg Path="/Assets/Icons/Download.svg" Width="15"
@@ -77,7 +60,8 @@
                             </StackPanel>
                         </Button>
 
-                        <Button Classes="ghost" Classes.active="{Binding IsDocumentsActive}"
+                        <Button Theme="{StaticResource SidebarButtonTheme}" 
+                                Classes.active="{Binding IsDocumentsActive}"
                                 Command="{Binding NavigateToDocumentsCommand}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
                                 <Svg Path="/Assets/Icons/Document.svg" Width="15"
@@ -86,7 +70,8 @@
                             </StackPanel>
                         </Button>
 
-                        <Button Classes="ghost" Classes.active="{Binding IsPicturesActive}"
+                        <Button Theme="{StaticResource SidebarButtonTheme}" 
+                                Classes.active="{Binding IsPicturesActive}"
                                 Command="{Binding NavigateToPicturesCommand}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
                                 <Svg Path="/Assets/Icons/Picture.svg" Width="15" VerticalAlignment="Center"
@@ -97,12 +82,20 @@
                     </StackPanel>
                 </Expander>
 
-                <Expander IsExpanded="True">
+                <Expander x:Name="DrivesExpander" IsExpanded="True" Theme="{StaticResource AsideExpanderTheme}">
                     <Expander.Header>
                         <TextBlock Classes="SectionTitle" Text="Lecteurs" />
                     </Expander.Header>
 
-                    <ItemsControl ItemsSource="{Binding Drives}" Margin="13,4,13,10">
+                    <ItemsControl ItemsSource="{Binding Drives}" 
+                                  Margin="13,4,13,10"
+                                  Tag="{Binding #DrivesExpander.IsExpanded}"
+                                  ItemContainerTheme="{StaticResource DriveItemContainerTheme}">
+                        <ItemsControl.Styles>
+                            <Style Selector="ContentPresenter" x:DataType="models:DriveItem">
+                                <Setter Property="Classes.active" Value="{Binding IsActive}" />
+                            </Style>
+                        </ItemsControl.Styles>
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Vertical" Spacing="5" />
@@ -110,7 +103,7 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="models:DriveItem">
-                                <Button Classes="ghost"
+                                <Button Theme="{StaticResource SidebarButtonTheme}"
                                         Classes.active="{Binding IsActive}"
                                         Command="{Binding #AsideLeftControl.DataContext?.NavigateToDriveCommand}"
                                         CommandParameter="{Binding FullPath}"
