@@ -69,7 +69,7 @@
                          Margin="0,0,10,0"
                          HorizontalAlignment="Right"
                          VerticalAlignment="Center"
-                         Css="path { fill: #7A7A7A }"
+                         Css="path { stroke: #7A7A7A; }, circle { stroke: #7A7A7A; } "
                          IsHitTestVisible="False"
                          IsVisible="{Binding !#SearchBox.IsFocused}" />
 

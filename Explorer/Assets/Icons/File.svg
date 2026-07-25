@@ -1,6 +1,5 @@
-<svg width="24" height="24" viewBox="-3 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#ffffff">
-    <g id="Icon-Set-Filled" transform="translate(-156.000000, -101.000000)" fill="#ffffff">
-        <path d="M176,109 C174.896,109 174,108.104 174,107 L174,103 L180,109 L176,109 L176,109 Z M174,101 L174,101.028 C173.872,101.028 160,101 160,101 C157.791,101 156,102.791 156,105 L156,129 C156,131.209 157.791,133 160,133 L178,133 C180.209,133 182,131.209 182,129 L182,111 L182,109 L174,101 L174,101 Z"
-              id="file-document"/>
-    </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-icon lucide-file">
+    <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/>
+    <path d="M14 2v5a1 1 0 0 0 1 1h5"/>
 </svg>
