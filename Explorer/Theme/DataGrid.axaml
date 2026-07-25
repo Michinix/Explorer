@@ -1,7 +1,6 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- DataGrid column headers -->
     <Style Selector="DataGridColumnHeader">
         <Setter Property="Background" Value="{StaticResource SurfaceElevated}" />
         <Setter Property="Foreground" Value="{StaticResource ColorWhite}" />
@@ -13,17 +12,14 @@
         <Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
     </Style>
 
-    <!-- Always display sort icon -->
     <Style Selector="DataGridColumnHeader /template/ Path#SortIcon">
         <Setter Property="Opacity" Value="1" />
     </Style>
 
-    <!-- First 4 column headers: right border to match cell separators (has-border class) -->
     <Style Selector="DataGridColumnHeader:nth-child(-n+4)">
         <Setter Property="BorderThickness" Value="0,0,1,1" />
     </Style>
 
-    <!-- DataGrid cells -->
     <Style Selector="DataGridCell">
         <Setter Property="Padding" Value="10,8" />
         <Setter Property="FontSize" Value="12" />
@@ -33,17 +29,14 @@
         <Setter Property="BorderThickness" Value="0,0,0,1" />
     </Style>
 
-    <!-- Cells flagged with this class get an extra right border (column separator) -->
     <Style Selector="DataGridCell.has-border">
         <Setter Property="BorderThickness" Value="0,0,1,1" />
     </Style>
 
-    <!-- DataGrid cell content (TextBlock margin reset) -->
     <Style Selector="DataGridCell TextBlock">
         <Setter Property="Margin" Value="0" />
     </Style>
 
-    <!-- DataGrid cell content (TextBox margin reset) -->
     <Style Selector="DataGridCell TextBox">
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="Padding" Value="0" />
@@ -52,29 +45,24 @@
         <Setter Property="CaretBlinkInterval" Value="0.5" />
     </Style>
 
-    <!-- DataGrid column header content spacing reset -->
     <Style Selector="DataGridColumnHeader ContentPresenter">
         <Setter Property="Margin" Value="0" />
     </Style>
 
-    <!-- DataGrid cell content presenter spacing reset -->
     <Style Selector="DataGridCell ContentPresenter">
         <Setter Property="Margin" Value="0" />
     </Style>
 
-    <!-- DataGrid row hover state -->
     <Style Selector="DataGridRow:pointerover">
         <Setter Property="Background" Value="{StaticResource AccentSelection}" />
         <Setter Property="Cursor" Value="Hand" />
     </Style>
 
-    <!-- DataGrid row selected state -->
     <Style Selector="DataGridRow:selected">
         <Setter Property="Background" Value="{StaticResource AccentSelection}" />
         <Setter Property="Foreground" Value="{StaticResource AccentPrimary}" />
     </Style>
 
-    <!-- DataGrid rows presenter -->
     <Style Selector="DataGridRowsPresenter">
         <Setter Property="Margin" Value="0,0,0,25" />
     </Style>

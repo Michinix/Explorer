@@ -64,7 +64,6 @@
             </Border>
 
             <Grid.Styles>
-                <!-- Position initiale et finale pour HomeHost -->
                 <Style Selector="ContentControl#HomeHost">
                     <Setter Property="RenderTransform" Value="translate(140px, 0px)" />
                 </Style>
@@ -72,7 +71,6 @@
                     <Setter Property="RenderTransform" Value="translate(0px, 0px)" />
                 </Style>
 
-                <!-- Effacement et décalage pour SplashHost -->
                 <Style Selector="Border#SplashHost.leaving">
                     <Setter Property="Opacity" Value="0" />
                     <Setter Property="RenderTransform" Value="translate(-140px, 0px)" />
