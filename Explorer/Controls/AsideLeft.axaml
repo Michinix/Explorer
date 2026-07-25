@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Explorer.ViewModels"
              xmlns:models="using:Explorer.Models"
-             xmlns:ic="using:FluentIcons.Avalonia"
              mc:Ignorable="d"
              x:Name="AsideLeftControl"
              x:Class="Explorer.Controls.AsideLeft"
@@ -39,11 +38,11 @@
                       HorizontalScrollBarVisibility="Disabled"
                       AllowAutoHide="True">
 
-            <StackPanel Orientation="Vertical" Spacing="10" Margin="0,10,0,10">
-                
+            <StackPanel Orientation="Vertical" Spacing="15" Margin="0,15,0,10">
+
                 <Border Margin="13,0,13,0">
 
-                    <Button Classes="ghost" 
+                    <Button Classes="ghost"
                             Classes.active="{Binding IsHomeActive}"
                             Command="{Binding NavigateToHomeCommand}">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
@@ -103,16 +102,20 @@
                         <TextBlock Classes="SectionTitle" Text="Lecteurs" />
                     </Expander.Header>
 
-                    <ItemsControl ItemsSource="{Binding Drives}" Margin="13,4,13,0">
+                    <ItemsControl ItemsSource="{Binding Drives}" Margin="13,4,13,10">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" Spacing="5" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="models:DriveItem">
                                 <Button Classes="ghost"
                                         Classes.active="{Binding IsActive}"
                                         Command="{Binding #AsideLeftControl.DataContext?.NavigateToDriveCommand}"
                                         CommandParameter="{Binding FullPath}"
-                                        x:CompileBindings="False"
-                                        Margin="0,0,0,12">
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="15">
+                                        x:CompileBindings="False">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
                                         <Svg Path="/Assets/Icons/Drive.svg" Width="15" Height="15"
                                              VerticalAlignment="Center" Css="path { fill: white }" />
 
