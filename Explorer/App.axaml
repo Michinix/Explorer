@@ -15,7 +15,7 @@
             <StaticResource x:Key="DefaultFontFamily" ResourceKey="DmSansFont" />
 
             <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="avares://Explorer/Theme/Styles/Colors.axaml" />
+                <ResourceInclude Source="avares://Explorer/Theme/Colors.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
@@ -25,10 +25,10 @@
         <semi:UrsaSemiTheme Locale="fr-FR" />
 
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Simple.xaml" />
-        <StyleInclude Source="avares://Explorer/Theme/Resources/DataGrid.axaml" />
-        <StyleInclude Source="avares://Explorer/Theme/Resources/Checkbox.axaml" />
-        <StyleInclude Source="avares://Explorer/Theme/Resources/Button.axaml" />
-        <StyleInclude Source="avares://Explorer/Theme/Resources/TextBox.axaml" />
-        <StyleInclude Source="avares://Explorer/Theme/Resources/Expander.axaml" />
+        <StyleInclude Source="avares://Explorer/Theme/DataGrid.axaml" />
+        <StyleInclude Source="avares://Explorer/Theme/Checkbox.axaml" />
+        <StyleInclude Source="avares://Explorer/Theme/Button.axaml" />
+        <StyleInclude Source="avares://Explorer/Theme/TextBox.axaml" />
+        <StyleInclude Source="avares://Explorer/Theme/Expander.axaml" />
     </Application.Styles>
 </Application>

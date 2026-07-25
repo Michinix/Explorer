@@ -46,12 +46,10 @@
                 </ControlTemplate>
             </Setter>
 
-            <!-- Survol : fond légèrement plus clair -->
             <Style Selector="^:pointerover">
                 <Setter Property="Background" Value="#262626" />
             </Style>
 
-            <!-- Focus (clic) : border bas plus clair -->
             <Style Selector="^:focus">
                 <Setter Property="BorderBrush" Value="#6A6A6A" />
             </Style>

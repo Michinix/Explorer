@@ -1,0 +1,244 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Styles.Resources>
+        <ControlTheme x:Key="SidebarButtonTheme" TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Padding" Value="12, 8, 10, 8" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="Foreground" Value="White" />
+
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Grid>
+                        <Border x:Name="PART_BackgroundBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}" />
+
+                        <Border x:Name="PART_SelectionIndicator"
+                                Width="3"
+                                Height="16"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left"
+                                Margin="0"
+                                CornerRadius="0,1.5,1.5,0"
+                                Background="{StaticResource AccentPrimary}"
+                                IsVisible="False" />
+
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Padding="{TemplateBinding Padding}"
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter>
+
+            <Style Selector="^:pointerover /template/ Border#PART_BackgroundBorder">
+                <Setter Property="Background" Value="{StaticResource SurfaceOverlay}" />
+                <Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="CornerRadius" Value="4" />
+            </Style>
+
+            <Style Selector="^.active /template/ Border#PART_BackgroundBorder">
+                <Setter Property="Background" Value="{StaticResource SurfaceOverlay}" />
+                <Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="CornerRadius" Value="4" />
+            </Style>
+
+            <Style Selector="^.active /template/ Border#PART_SelectionIndicator">
+                <Setter Property="IsVisible" Value="True" />
+            </Style>
+
+            <Style Selector="^.active:pointerover /template/ Border#PART_BackgroundBorder">
+                <Setter Property="Background" Value="{StaticResource SurfaceHighlight}" />
+                <Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="CornerRadius" Value="4" />
+            </Style>
+        </ControlTheme>
+
+        <ControlTheme x:Key="DriveItemContainerTheme" TargetType="ContentPresenter">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </ControlTheme>
+
+        <ControlTheme x:Key="ExpanderHeaderTheme" TargetType="ToggleButton">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Border x:Name="HeaderRoot" Background="Transparent" Padding="{TemplateBinding Padding}">
+                        <Grid RowDefinitions="Auto" ColumnDefinitions="Auto,*, Auto">
+                            <Panel x:Name="ChevronContainer"
+                                   Width="9" Height="9"
+                                   VerticalAlignment="Center">
+                                <Path x:Name="Chevron"
+                                      Data="M 0,0 L 3,3 L 0,6"
+                                      Stroke="{StaticResource ForegroundMuted}"
+                                      StrokeThickness="1.1"
+                                      StrokeLineCap="Round"
+                                      StrokeJoin="Round"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      RenderTransformOrigin="50%,50%"
+                                      RenderTransform="rotate(90deg)">
+                                    <Path.Transitions>
+                                        <Transitions>
+                                            <TransformOperationsTransition Property="RenderTransform"
+                                                                           Duration="0:0:0.15"
+                                                                           Easing="CubicEaseOut" />
+                                        </Transitions>
+                                    </Path.Transitions>
+                                </Path>
+                            </Panel>
+
+                            <ContentPresenter x:Name="PART_ContentPresenter"
+                                              Grid.Column="1"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              HorizontalAlignment="Left"
+                                              VerticalAlignment="Center" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+
+            <Style Selector="^:checked /template/ Path#Chevron">
+                <Setter Property="RenderTransform" Value="rotate(-90deg)" />
+            </Style>
+
+            <Style Selector="^:pointerover /template/ Path#Chevron">
+                <Setter Property="Stroke" Value="White" />
+            </Style>
+
+            <Style Selector="^:disabled">
+                <Setter Property="Opacity" Value="0.5" />
+                <Setter Property="Cursor" Value="Arrow" />
+            </Style>
+        </ControlTheme>
+
+        <ControlTheme x:Key="AsideExpanderHeaderTheme" TargetType="ToggleButton"
+                      BasedOn="{StaticResource ExpanderHeaderTheme}">
+            <Setter Property="Padding" Value="20,5" />
+            <Style Selector="^ /template/ Panel#ChevronContainer">
+                <Setter Property="Grid.Column" Value="2" />
+                <Setter Property="Margin" Value="8,0,0,0" />
+            </Style>
+        </ControlTheme>
+
+        <ControlTheme x:Key="HomeExpanderHeaderTheme" TargetType="ToggleButton"
+                      BasedOn="{StaticResource ExpanderHeaderTheme}">
+            <Setter Property="Padding" Value="0,5" />
+            <Style Selector="^ /template/ Panel#ChevronContainer">
+                <Setter Property="Grid.Column" Value="0" />
+                <Setter Property="Margin" Value="0,0,11,0" />
+            </Style>
+        </ControlTheme>
+
+        <ControlTheme x:Key="BaseExpanderTheme" TargetType="Expander">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </ControlTheme>
+
+        <ControlTheme x:Key="AsideExpanderTheme" TargetType="Expander" BasedOn="{StaticResource BaseExpanderTheme}">
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <StackPanel Orientation="Vertical" Background="Transparent">
+                        <ToggleButton x:Name="PART_toggle"
+                                      Theme="{StaticResource AsideExpanderHeaderTheme}"
+                                      Content="{TemplateBinding Header}"
+                                      ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                      IsEnabled="{TemplateBinding IsEnabled}"
+                                      IsChecked="{TemplateBinding IsExpanded, Mode=TwoWay}" />
+
+                        <Border x:Name="ExpanderContent" ClipToBounds="True">
+                            <ContentPresenter x:Name="PART_ContentPresenter"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              Padding="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                        </Border>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter>
+        </ControlTheme>
+
+        <ControlTheme x:Key="HomeExpanderTheme" TargetType="Expander" BasedOn="{StaticResource BaseExpanderTheme}">
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <StackPanel Orientation="Vertical" Background="Transparent">
+                        <ToggleButton x:Name="PART_toggle"
+                                      Theme="{StaticResource HomeExpanderHeaderTheme}"
+                                      Content="{TemplateBinding Header}"
+                                      ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                      IsEnabled="{TemplateBinding IsEnabled}"
+                                      IsChecked="{TemplateBinding IsExpanded, Mode=TwoWay}" />
+
+                        <Border x:Name="ExpanderContent" ClipToBounds="True" IsVisible="{TemplateBinding IsExpanded}">
+                            <ContentPresenter x:Name="PART_ContentPresenter"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              Padding="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                        </Border>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter>
+        </ControlTheme>
+
+    </Styles.Resources>
+
+    <Style Selector="Button.ghost">
+        <Setter Property="Padding" Value="6" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="CornerRadius" Value="40" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Foreground" Value="{StaticResource ColorWhiteBrush}" />
+    </Style>
+
+    <Style
+        Selector="Button.ghost:pointerover /template/ ContentPresenter, Button.ghost:pressed /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+
+    <Style Selector="TextBlock.SectionTitle">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
+        <Setter Property="Margin" Value="0" />
+    </Style>
+
+    <Style Selector="StackPanel[Tag=False] > Button:not(.active)">
+        <Setter Property="IsVisible" Value="False" />
+    </Style>
+
+    <Style Selector="ItemsControl[Tag=False] > ContentPresenter:not(.active)">
+        <Setter Property="IsVisible" Value="False" />
+    </Style>
+
+</Styles>
