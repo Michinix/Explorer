@@ -12,22 +12,22 @@ namespace Explorer.ViewModels;
 
 public partial class AsideLeftViewModel : ViewModelBase
 {
-    private readonly NavigationService _navigation;
-
-    private readonly string _homePath = NavigationService.HomePath;
     private readonly string _desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
     private readonly string _documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-    private readonly string _picturesPath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 
     private readonly string _downloadsPath = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
 
-    [ObservableProperty] private ICollection<DriveItem> _drives = [];
+    private readonly string _homePath = NavigationService.HomePath;
+    private readonly NavigationService _navigation;
+    private readonly string _picturesPath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsHomeActive), nameof(IsDesktopActive), nameof(IsDownloadsActive),
         nameof(IsDocumentsActive), nameof(IsPicturesActive))]
     private string _currentPath;
+
+    [ObservableProperty] private ICollection<DriveItem> _drives = [];
 
     public AsideLeftViewModel(NavigationService navigation)
     {
@@ -70,7 +70,7 @@ public partial class AsideLeftViewModel : ViewModelBase
     private void UpdateDrivesActive()
     {
         var quickAccessActive = IsHomeActive || IsDesktopActive || IsDownloadsActive || IsDocumentsActive ||
-                                 IsPicturesActive;
+                                IsPicturesActive;
 
         foreach (var drive in Drives)
             drive.IsActive = !quickAccessActive && IsUnder(CurrentPath, drive.FullPath);

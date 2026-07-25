@@ -21,7 +21,8 @@ public partial class HomeContentViewModel : ViewModelBase
         _navigation = navigation;
 
         QuickAccess = BuildQuickAccess();
-        IsActive = string.Equals(navigation.CurrentPath, NavigationService.HomePath, StringComparison.OrdinalIgnoreCase);
+        IsActive = string.Equals(navigation.CurrentPath, NavigationService.HomePath,
+            StringComparison.OrdinalIgnoreCase);
 
         WeakReferenceMessenger.Default.Register<CurrentPathChangedMessage>(this, (_, message) =>
             IsActive = string.Equals(message.NewPath, NavigationService.HomePath, StringComparison.OrdinalIgnoreCase));

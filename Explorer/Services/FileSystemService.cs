@@ -57,9 +57,9 @@ public static class FileSystemService
 
             return new DirectoryInfo(path)
                 .EnumerateFileSystemInfos("*", options)
-                .Where(e => e.Name.StartsWith('.') || 
-                           (!e.Attributes.HasFlag(FileAttributes.Hidden) && 
-                            !e.Attributes.HasFlag(FileAttributes.System)))
+                .Where(e => e.Name.StartsWith('.') ||
+                            (!e.Attributes.HasFlag(FileAttributes.Hidden) &&
+                             !e.Attributes.HasFlag(FileAttributes.System)))
                 .OrderBy(e => e is FileInfo)
                 .ThenBy(e => e.Name, StringComparer.OrdinalIgnoreCase)
                 .Select(MapToEntry)
@@ -80,7 +80,6 @@ public static class FileSystemService
             var result = new List<DriveItem>(drives.Length);
 
             foreach (var drive in drives)
-            {
                 try
                 {
                     if (!drive.IsReady) continue;
@@ -89,10 +88,12 @@ public static class FileSystemService
 
                     var isSystem = drive.Name.StartsWith("C:", StringComparison.OrdinalIgnoreCase) || drive.Name == "/";
                     var rawLetter = drive.Name.TrimEnd('\\', '/');
-                    
-                    var label = !string.IsNullOrWhiteSpace(drive.VolumeLabel) 
-                        ? drive.VolumeLabel 
-                        : (isSystem ? "Disque Système" : "Disque Local");
+
+                    var label = !string.IsNullOrWhiteSpace(drive.VolumeLabel)
+                        ? drive.VolumeLabel
+                        : isSystem
+                            ? "Disque Système"
+                            : "Disque Local";
 
                     var displayName = $"{label} ({rawLetter})";
                     var type = drive.DriveType == DriveType.Removable ? "Amovible" : isSystem ? "Système" : "Données";
@@ -103,7 +104,6 @@ public static class FileSystemService
                 {
                     Debug.WriteLine(ex.Message);
                 }
-            }
 
             return result
                 .OrderBy(item => item.Type == "Système" ? 0 : 1)
@@ -141,7 +141,6 @@ public static class FileSystemService
         return Task.Run(() =>
         {
             foreach (var entry in entries)
-            {
                 try
                 {
                     if (entry.IsDirectory)
@@ -153,7 +152,6 @@ public static class FileSystemService
                 {
                     Debug.WriteLine(ex.Message);
                 }
-            }
         });
     }
 

@@ -23,6 +23,7 @@ public partial class NavigationService : ObservableObject
 
     public bool CanGoBack => _backStack.Count > 0;
     public bool CanGoForward => _forwardStack.Count > 0;
+
     public bool CanGoUp => !string.Equals(CurrentPath, HomePath, StringComparison.OrdinalIgnoreCase) &&
                            Directory.GetParent(CurrentPath) is not null;
 

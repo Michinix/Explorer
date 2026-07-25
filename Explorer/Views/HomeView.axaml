@@ -37,7 +37,7 @@
 
             <controls:AsideRight Grid.Column="2"
                                  Width="220"
-                                 DataContext="{Binding DataGrid}"/>
+                                 DataContext="{Binding DataGrid}" />
         </Grid>
 
         <controls:Footer Grid.Row="2" DataContext="{Binding DataGrid}" />

@@ -50,7 +50,7 @@
                     </Border>
                 </ControlTemplate>
             </Setter>
-            
+
             <Style Selector="^:checked /template/ Path#Chevron">
                 <Setter Property="RenderTransform" Value="rotate(-90deg)" />
             </Style>

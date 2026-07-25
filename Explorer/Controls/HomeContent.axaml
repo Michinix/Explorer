@@ -34,8 +34,6 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Auto"
                   HorizontalScrollBarVisibility="Disabled">
-        <StackPanel Orientation="Vertical" Margin="28,24" Spacing="30">
-
-        </StackPanel>
+        <StackPanel Orientation="Vertical" Margin="28,24" Spacing="30" />
     </ScrollViewer>
 </UserControl>
