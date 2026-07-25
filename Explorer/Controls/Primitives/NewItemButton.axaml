@@ -58,7 +58,7 @@
         <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
             <Svg Path="/Assets/Icons/New.svg" Width="15"
                  Css="path { fill: white }" IsHitTestVisible="False" />
-            <TextBlock Text="Nouveau" FontSize="13" VerticalAlignment="Center" />
+            <TextBlock Text="Nouveau" FontSize="13" FontWeight="Normal" VerticalAlignment="Center" />
         </StackPanel>
     </Button>
 </UserControl>
