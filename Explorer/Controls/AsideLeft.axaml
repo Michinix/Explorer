@@ -55,7 +55,7 @@
                                 Command="{Binding NavigateToDownloadsCommand}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
                                 <Svg Path="/Assets/Icons/Download.svg" Width="15"
-                                     VerticalAlignment="Center" Css="path { fill: white }" />
+                                     VerticalAlignment="Center" Css="path { stroke: white }" />
                                 <TextBlock Text="Téléchargements" FontSize="13" FontWeight="Normal" />
                             </StackPanel>
                         </Button>
@@ -110,7 +110,7 @@
                                         x:CompileBindings="False">
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
                                         <Svg Path="/Assets/Icons/Drive.svg" Width="15" Height="15"
-                                             VerticalAlignment="Center" Css="path { fill: white }" />
+                                             VerticalAlignment="Center" Css="path { stroke: white }" />
 
                                         <TextBlock Text="{Binding DisplayName}" FontSize="13"
                                                    FontWeight="Normal"
