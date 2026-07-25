@@ -34,6 +34,38 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Auto"
                   HorizontalScrollBarVisibility="Disabled">
-        <StackPanel Orientation="Vertical" Margin="28,24" Spacing="30" />
+        <StackPanel Orientation="Vertical" Margin="25,15" Spacing="100">
+            <Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}">
+                <Expander.Header>
+                    <TextBlock Text="Accès rapide" FontSize="12" />
+                </Expander.Header>
+
+
+            </Expander>
+            
+            <Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}">
+                <Expander.Header>
+                    <TextBlock Text="Lecteurs" FontSize="12" />
+                </Expander.Header>
+
+
+            </Expander>
+            
+            <Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}">
+                <Expander.Header>
+                    <TextBlock Text="Réseau" FontSize="12" />
+                </Expander.Header>
+
+
+            </Expander>
+            
+            <Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}">
+                <Expander.Header>
+                    <TextBlock Text="Fichiers récents" FontSize="12" />
+                </Expander.Header>
+
+
+            </Expander>
+        </StackPanel>
     </ScrollViewer>
 </UserControl>
