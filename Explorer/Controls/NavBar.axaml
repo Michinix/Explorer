@@ -16,12 +16,7 @@
             CornerRadius="10,10,0,0"
             ClipToBounds="True">
 
-        <Grid VerticalAlignment="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="220" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="220" />
-            </Grid.ColumnDefinitions>
+        <Grid VerticalAlignment="Center" ColumnDefinitions="220,2*,220">
 
             <UniformGrid Grid.Column="0"
                          Rows="1"
