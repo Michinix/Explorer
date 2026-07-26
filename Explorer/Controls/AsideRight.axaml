@@ -15,11 +15,38 @@
             <Setter Property="Background" Value="{StaticResource AccentPrimary}" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="MinHeight" Value="0" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Padding" Value="8,5" />
+            <Setter Property="FontWeight" Value="Medium" />
         </Style>
 
         <Style Selector="Button:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="{StaticResource AccentPrimary}" />
             <Setter Property="Opacity" Value="0.90" />
+        </Style>
+
+        <Style Selector="StackPanel.DetailField">
+            <Setter Property="Spacing" Value="4" />
+        </Style>
+
+        <Style Selector="StackPanel.DetailField > TextBlock:nth-child(1)">
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{StaticResource ColorWhiteBrush}" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+
+        <Style Selector="StackPanel.DetailField > TextBlock:nth-child(2)">
+            <Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
+            <Setter Property="FontWeight" Value="Regular" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+
+        <Style Selector="Border.Divider">
+            <Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
+            <Setter Property="BorderThickness" Value="0,1,0,0" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Margin" Value="10,0" />
         </Style>
     </UserControl.Styles>
 
@@ -38,6 +65,7 @@
                                Foreground="{StaticResource ColorWhite}" />
                 </Grid>
             </Border>
+
             <Grid Grid.Row="1">
                 <StackPanel IsVisible="{Binding SelectedEntry, Converter={x:Static ObjectConverters.IsNull}}"
                             Orientation="Vertical"
@@ -56,7 +84,6 @@
                                FontSize="13"
                                FontWeight="Normal"
                                Foreground="{StaticResource ForegroundMuted}" />
-
                 </StackPanel>
 
                 <StackPanel IsVisible="{Binding SelectedEntry, Converter={x:Static ObjectConverters.IsNotNull}}"
@@ -79,53 +106,29 @@
                                    Foreground="{StaticResource ColorWhiteBrush}"
                                    FontWeight="Regular" FontSize="14" />
 
-                        <Border BorderBrush="{StaticResource BorderDefault}"
-                                BorderThickness="0,1,0,0"
-                                HorizontalAlignment="Stretch"
-                                Margin="10,0" />
+                        <Border Classes="Divider" />
                     </StackPanel>
 
-                    <StackPanel Spacing="4">
-                        <TextBlock Text="TYPE"
-                                   FontWeight="SemiBold"
-                                   Foreground="{StaticResource ColorWhiteBrush}"
-                                   FontSize="12" />
-                        <TextBlock Text="{Binding SelectedEntry?.TypeLabel}"
-                                   Foreground="{StaticResource ForegroundMuted}"
-                                   FontWeight="Regular" FontSize="12" />
+                    <StackPanel Classes="DetailField">
+                        <TextBlock Text="TYPE" />
+                        <TextBlock Text="{Binding SelectedEntry?.TypeLabel}" />
                     </StackPanel>
 
-                    <StackPanel Spacing="4">
-                        <TextBlock Text="TAILLE"
-                                   FontWeight="SemiBold"
-                                   Foreground="{StaticResource ColorWhiteBrush}"
-                                   FontSize="12" />
-                        <TextBlock Text="{Binding SelectedEntry?.DisplaySize}"
-                                   Foreground="{StaticResource ForegroundMuted}"
-                                   FontWeight="Regular" FontSize="12" />
+                    <StackPanel Classes="DetailField">
+                        <TextBlock Text="TAILLE" />
+                        <TextBlock Text="{Binding SelectedEntry?.DisplaySize}" />
                     </StackPanel>
 
-                    <StackPanel Spacing="4">
-                        <TextBlock Text="MODIFIÉ LE"
-                                   FontWeight="SemiBold"
-                                   Foreground="{StaticResource ColorWhiteBrush}"
-                                   FontSize="12" />
-                        <TextBlock Text="{Binding SelectedEntry?.LastModified}"
-                                   Foreground="{StaticResource ForegroundMuted}"
-                                   FontWeight="Regular" FontSize="12" />
+                    <StackPanel Classes="DetailField">
+                        <TextBlock Text="MODIFIÉ LE" />
+                        <TextBlock Text="{Binding SelectedEntry?.LastModified}" />
                     </StackPanel>
 
                     <StackPanel IsVisible="{Binding !SelectedEntry?.IsDirectory}"
                                 Spacing="15">
-                        <Border BorderBrush="{StaticResource BorderDefault}"
-                                BorderThickness="0,1,0,0"
-                                HorizontalAlignment="Stretch"
-                                Margin="10,0" />
+                        <Border Classes="Divider" />
 
-                        <Button Command="{Binding OpenSelectedFileCommand}"
-                                HorizontalAlignment="Stretch"
-                                FontSize="12" Padding="8,5"
-                                FontWeight="Medium">
+                        <Button Command="{Binding OpenSelectedFileCommand}">
                             Ouvrir
                         </Button>
                     </StackPanel>

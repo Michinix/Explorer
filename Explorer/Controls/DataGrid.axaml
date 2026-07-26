@@ -10,6 +10,55 @@
              x:Class="Explorer.Controls.DataGrid"
              x:DataType="vm:DataGridViewModel">
 
+    <UserControl.Styles>
+        <Style Selector="DataGridColumnHeader:nth-child(1)">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="DataGridCell.colName TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource ColorWhite}" />
+        </Style>
+
+        <Style Selector="DataGridCell.colMeta TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
+        </Style>
+
+        <Style Selector="DataGridCell:nth-child(1)">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="TextBox.RenameInput">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="MinWidth" Value="80" />
+            <Setter Property="Padding" Value="4,0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="{StaticResource AccentPrimary}" />
+            <Setter Property="CornerRadius" Value="3" />
+        </Style>
+
+        <Style Selector="StackPanel.EmptyState">
+            <Setter Property="Orientation" Value="Vertical" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Spacing" Value="12" />
+        </Style>
+
+        <Style Selector="StackPanel.EmptyState > TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource ColorWhiteBrush}" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="Border.LoadingOverlay">
+            <Setter Property="Background" Value="#80000000" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+        </Style>
+    </UserControl.Styles>
+
     <Grid>
         <DataGrid SelectedItem="{Binding SelectedEntry}"
                   DoubleTapped="OnRowDoubleTapped"
@@ -23,27 +72,6 @@
                   VerticalAlignment="Top"
                   BorderThickness="0"
                   IsReadOnly="True">
-
-            <DataGrid.Styles>
-                <Style Selector="DataGridColumnHeader:nth-child(1)">
-                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                </Style>
-
-                <Style Selector="DataGridCell.colName TextBlock">
-                    <Setter Property="Foreground" Value="{StaticResource ColorWhite}" />
-                </Style>
-
-                <Style Selector="DataGridCell.colMeta TextBlock">
-                    <Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
-                </Style>
-
-                <Style Selector="DataGridCell:nth-child(1)">
-                    <Setter Property="Padding" Value="0" />
-                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                </Style>
-
-            </DataGrid.Styles>
 
             <DataGrid.Columns>
                 <DataGridTemplateColumn Width="45" CanUserResize="False" CanUserSort="False"
@@ -73,10 +101,8 @@
                                            HorizontalAlignment="Center"
                                            IsVisible="{Binding !IsEditing}" />
 
-                                <TextBox Text="{Binding EditableName}" VerticalAlignment="Center"
-                                         MinWidth="80" Padding="4,0"
-                                         Background="Transparent" BorderThickness="1"
-                                         BorderBrush="{StaticResource AccentPrimary}" CornerRadius="3"
+                                <TextBox Classes="RenameInput"
+                                         Text="{Binding EditableName}"
                                          IsVisible="{Binding IsEditing}"
                                          Loaded="OnRenameTextBoxLoaded"
                                          LostFocus="OnRenameTextBoxLostFocus">
@@ -112,31 +138,15 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <StackPanel IsVisible="{Binding NoResultsFound}"
-                    Orientation="Vertical"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Spacing="12">
-            <Svg Path="/Assets/Icons/Search.svg"
-                 Width="20"
-                 Height="20"
-                 HorizontalAlignment="Center" />
-            <TextBlock
-                Text="Aucune correspondance trouvée"
-                Foreground="{StaticResource ColorWhiteBrush}"
-                FontSize="14"
-                HorizontalAlignment="Center" />
+        <StackPanel Classes="EmptyState" IsVisible="{Binding NoResultsFound}">
+            <Svg Path="/Assets/Icons/Search.svg" Width="20" Height="20" Css="path { stroke: white }, circle { stroke: white }" HorizontalAlignment="Center" />
+            <TextBlock Text="Aucune correspondance trouvée" />
         </StackPanel>
 
-        <Border IsVisible="{Binding IsLoading}"
-                Background="#80000000"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch">
+        <Border Classes="LoadingOverlay" IsVisible="{Binding IsLoading}">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
                 <ProgressBar IsIndeterminate="True" Width="120" />
-                <TextBlock Text="Chargement..."
-                           Foreground="{StaticResource ColorWhite}"
-                           HorizontalAlignment="Center" />
+                <TextBlock Text="Chargement..." Foreground="{StaticResource ColorWhite}" HorizontalAlignment="Center" />
             </StackPanel>
         </Border>
     </Grid>

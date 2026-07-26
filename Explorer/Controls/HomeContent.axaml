@@ -16,6 +16,10 @@
             <Setter Property="Margin" Value="0,0,0,14" />
         </Style>
 
+        <Style Selector="Expander > TextBlock">
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+
         <Style Selector="Button.tile">
             <Setter Property="Background" Value="{StaticResource SurfaceElevated}" />
             <Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
@@ -37,7 +41,7 @@
         <StackPanel Orientation="Vertical" Margin="25,15" Spacing="100">
             <Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}">
                 <Expander.Header>
-                    <TextBlock Text="Accès rapide" FontSize="12" />
+                    <TextBlock Text="Accès rapide" />
                 </Expander.Header>
 
 
@@ -45,7 +49,7 @@
 
             <Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}">
                 <Expander.Header>
-                    <TextBlock Text="Lecteurs" FontSize="12" />
+                    <TextBlock Text="Lecteurs" />
                 </Expander.Header>
 
 
@@ -53,7 +57,7 @@
 
             <Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}">
                 <Expander.Header>
-                    <TextBlock Text="Réseau" FontSize="12" />
+                    <TextBlock Text="Réseau" />
                 </Expander.Header>
 
 
@@ -61,7 +65,7 @@
 
             <Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}">
                 <Expander.Header>
-                    <TextBlock Text="Fichiers récents" FontSize="12" />
+                    <TextBlock Text="Fichiers récents" />
                 </Expander.Header>
 
 

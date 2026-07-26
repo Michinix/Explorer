@@ -10,6 +10,55 @@
         <Style Selector="StackPanel#TrafficLights:pointerover Button /template/ Path.trafficIcon">
             <Setter Property="Opacity" Value="1" />
         </Style>
+
+        <Style Selector="StackPanel#TrafficLights > Button">
+            <Setter Property="Width" Value="12" />
+            <Setter Property="Height" Value="12" />
+            <Setter Property="MinWidth" Value="12" />
+            <Setter Property="MinHeight" Value="12" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Cursor" Value="Arrow" />
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Border x:Name="PART_Border" CornerRadius="7">
+                        <Path x:Name="PART_Path"
+                              Classes="trafficIcon"
+                              StrokeThickness="1.7"
+                              StrokeLineCap="Round"
+                              StrokeJoin="Round"
+                              Opacity="0"
+                              Stretch="None"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+
+        <Style Selector="Button.Close /template/ Border#PART_Border">
+            <Setter Property="Background" Value="#FF5F57" />
+        </Style>
+        <Style Selector="Button.Close /template/ Path#PART_Path">
+            <Setter Property="Data" Value="M 0,0 L 4.6,4.6 M 4.6,0 L 0,4.6" />
+            <Setter Property="Stroke" Value="#4D0000" />
+        </Style>
+
+        <Style Selector="Button.Minimize /template/ Border#PART_Border">
+            <Setter Property="Background" Value="#FFBD2E" />
+        </Style>
+        <Style Selector="Button.Minimize /template/ Path#PART_Path">
+            <Setter Property="Data" Value="M 0,0 L 5,0" />
+            <Setter Property="Stroke" Value="#985700" />
+        </Style>
+
+        <Style Selector="Button.Maximize /template/ Border#PART_Border">
+            <Setter Property="Background" Value="#28C840" />
+        </Style>
+        <Style Selector="Button.Maximize /template/ Path#PART_Path">
+            <Setter Property="Data" Value="M 0,4.6 L 4.6,0 M 1.1,0 L 4.6,0 L 4.6,3.5 M 4.6,0 L 0,4.6 M 3.5,4.6 L 0,4.6 L 0,1.1" />
+            <Setter Property="Stroke" Value="#006500" />
+            <Setter Property="StrokeThickness" Value="1.5" />
+        </Style>
     </UserControl.Styles>
 
     <Border Background="{StaticResource SurfaceElevated}"
@@ -31,63 +80,10 @@
                         IsHitTestVisible="True"
                         Cursor="Arrow">
 
-                <Button Width="12" Height="12" MinWidth="12" MinHeight="12" Padding="0" Cursor="Arrow"
-                        Click="CloseButton_Click">
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Border Background="#FF5F57" CornerRadius="7">
-                                <Path Classes="trafficIcon"
-                                      Data="M 0,0 L 4.6,4.6 M 4.6,0 L 0,4.6"
-                                      Stroke="#4D0000"
-                                      StrokeThickness="1.7"
-                                      StrokeLineCap="Round"
-                                      Opacity="0"
-                                      Stretch="None"
-                                      HorizontalAlignment="Center"
-                                      VerticalAlignment="Center" />
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
+                <Button Classes="Close" Click="CloseButton_Click" />
+                <Button Classes="Minimize" Click="MinimizeButton_Click" />
+                <Button Classes="Maximize" Click="MaximizeRestoreButton_Click" />
 
-                <Button Width="12" Height="12" MinWidth="12" MinHeight="12" Padding="0" Cursor="Arrow"
-                        Click="MinimizeButton_Click">
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Border Background="#FFBD2E" CornerRadius="7">
-                                <Path Classes="trafficIcon"
-                                      Data="M 0,0 L 5,0"
-                                      Stroke="#985700"
-                                      StrokeThickness="1.7"
-                                      StrokeLineCap="Round"
-                                      Opacity="0"
-                                      Stretch="None"
-                                      HorizontalAlignment="Center"
-                                      VerticalAlignment="Center" />
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-
-                <Button Width="12" Height="12" MinWidth="12" MinHeight="12" Padding="0" Cursor="Arrow"
-                        Click="MaximizeRestoreButton_Click">
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Border Background="#28C840" CornerRadius="7">
-                                <Path Classes="trafficIcon"
-                                      Data="M 0,4.6 L 4.6,0 M 1.1,0 L 4.6,0 L 4.6,3.5 M 4.6,0 L 0,4.6 M 3.5,4.6 L 0,4.6 L 0,1.1"
-                                      Stroke="#006500"
-                                      StrokeThickness="1.5"
-                                      StrokeLineCap="Round"
-                                      StrokeJoin="Round"
-                                      Opacity="0"
-                                      Stretch="None"
-                                      HorizontalAlignment="Center"
-                                      VerticalAlignment="Center" />
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
             </StackPanel>
         </Grid>
     </Border>

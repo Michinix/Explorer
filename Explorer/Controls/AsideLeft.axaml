@@ -9,6 +9,27 @@
              x:Class="Explorer.Controls.AsideLeft"
              x:DataType="vm:AsideLeftViewModel">
 
+    <UserControl.Styles>
+        <Style Selector="Button > StackPanel > Svg">
+            <Setter Property="Width" Value="15" />
+            <Setter Property="Height" Value="15" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Css" Value="path { stroke: white }" />
+        </Style>
+
+        <Style Selector="Button > StackPanel > TextBlock">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="Button > StackPanel">
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Spacing" Value="10" />
+        </Style>
+    </UserControl.Styles>
+
     <Border BorderThickness="0,0,1,0"
             BorderBrush="{StaticResource BorderDefault}">
 
@@ -22,10 +43,9 @@
                     <Button Theme="{StaticResource SidebarButtonTheme}"
                             Classes.active="{Binding IsHomeActive}"
                             Command="{Binding NavigateToHomeCommand}">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
-                            <Svg Path="/Assets/Icons/Home.svg" Width="15" VerticalAlignment="Center"
-                                 Css="path { stroke: white }" />
-                            <TextBlock Text="Accueil" FontSize="13" FontWeight="Normal" />
+                        <StackPanel>
+                            <Svg Path="/Assets/Icons/Home.svg" />
+                            <TextBlock Text="Accueil" />
                         </StackPanel>
                     </Button>
                 </Border>
@@ -43,40 +63,36 @@
                         <Button Theme="{StaticResource SidebarButtonTheme}"
                                 Classes.active="{Binding IsDesktopActive}"
                                 Command="{Binding NavigateToDesktopCommand}">
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
-                                <Svg Path="/Assets/Icons/Desktop.svg" Width="13" VerticalAlignment="Center"
-                                     Css="path { stroke: white }" />
-                                <TextBlock Text="Bureau" FontSize="13" FontWeight="Normal" />
+                            <StackPanel>
+                                <Svg Path="/Assets/Icons/Desktop.svg" />
+                                <TextBlock Text="Bureau" />
                             </StackPanel>
                         </Button>
 
                         <Button Theme="{StaticResource SidebarButtonTheme}"
                                 Classes.active="{Binding IsDownloadsActive}"
                                 Command="{Binding NavigateToDownloadsCommand}">
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
-                                <Svg Path="/Assets/Icons/Download.svg" Width="15"
-                                     VerticalAlignment="Center" Css="path { stroke: white }" />
-                                <TextBlock Text="Téléchargements" FontSize="13" FontWeight="Normal" />
+                            <StackPanel>
+                                <Svg Path="/Assets/Icons/Download.svg" />
+                                <TextBlock Text="Téléchargements" />
                             </StackPanel>
                         </Button>
 
                         <Button Theme="{StaticResource SidebarButtonTheme}"
                                 Classes.active="{Binding IsDocumentsActive}"
                                 Command="{Binding NavigateToDocumentsCommand}">
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
-                                <Svg Path="/Assets/Icons/Document.svg" Width="15"
-                                     VerticalAlignment="Center" Css="path { stroke: white }" />
-                                <TextBlock Text="Documents" FontSize="13" FontWeight="Normal" />
+                            <StackPanel>
+                                <Svg Path="/Assets/Icons/Document.svg" />
+                                <TextBlock Text="Documents" />
                             </StackPanel>
                         </Button>
 
                         <Button Theme="{StaticResource SidebarButtonTheme}"
                                 Classes.active="{Binding IsPicturesActive}"
                                 Command="{Binding NavigateToPicturesCommand}">
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
-                                <Svg Path="/Assets/Icons/Picture.svg" Width="15" VerticalAlignment="Center"
-                                     Css="path { stroke: white }" />
-                                <TextBlock Text="Images" FontSize="13" FontWeight="Normal" />
+                            <StackPanel>
+                                <Svg Path="/Assets/Icons/Picture.svg" />
+                                <TextBlock Text="Images" />
                             </StackPanel>
                         </Button>
                     </StackPanel>
@@ -108,12 +124,9 @@
                                         Command="{Binding #AsideLeftControl.DataContext?.NavigateToDriveCommand}"
                                         CommandParameter="{Binding FullPath}"
                                         x:CompileBindings="False">
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
-                                        <Svg Path="/Assets/Icons/Drive.svg" Width="15" Height="15"
-                                             VerticalAlignment="Center" Css="path { stroke: white }" />
-
-                                        <TextBlock Text="{Binding DisplayName}" FontSize="13"
-                                                   FontWeight="Normal"
+                                    <StackPanel>
+                                        <Svg Path="/Assets/Icons/Drive.svg" />
+                                        <TextBlock Text="{Binding DisplayName}"
                                                    Foreground="{StaticResource ColorWhiteBrush}" />
                                     </StackPanel>
                                 </Button>
