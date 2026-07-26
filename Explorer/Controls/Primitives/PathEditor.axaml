@@ -8,19 +8,28 @@
              x:Name="PathEditorControl"
              x:Class="Explorer.Controls.Primitives.PathEditor">
 
+    <UserControl.Styles>
+        <Style Selector="Svg.white-stroke">
+            <Setter Property="Css" Value="path { stroke: white }" />
+        </Style>
+
+        <Style Selector="Svg.white-fill">
+            <Setter Property="Width" Value="13" />
+            <Setter Property="Css" Value="path { fill: white }" />
+        </Style>
+    </UserControl.Styles>
+
     <Grid VerticalAlignment="Stretch">
         <Border Background="{StaticResource TextBoxBackground}"
                 CornerRadius="3"
                 Padding="12,6"
                 PointerPressed="OnBreadcrumbPressed"
                 IsVisible="{Binding !IsEditing, ElementName=PathEditorControl}"
-                VerticalAlignment="Stretch">
+                Height="28">
             <ScrollViewer HorizontalScrollBarVisibility="Hidden"
                           VerticalScrollBarVisibility="Disabled">
                 <u:Breadcrumb ItemsSource="{Binding Segments, ElementName=PathEditorControl}"
                               Separator="{x:Null}"
-                              FontSize="13"
-                              VerticalAlignment="Center"
                               CommandBinding="{ReflectionBinding NavigateCommand, ElementName=PathEditorControl}"
                               CommandParameterBinding="{ReflectionBinding FullPath}">
 
@@ -39,20 +48,20 @@
                     <u:Breadcrumb.ItemTemplate>
                         <DataTemplate x:DataType="models:PathSegment">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <Svg Path="/Assets/Icons/ChevronRight.svg"
+                                <Svg Classes="white-stroke"
+                                     Path="/Assets/Icons/ChevronRight.svg"
                                      Width="13"
                                      Margin="4,0,8,0"
                                      IsVisible="{Binding !IsFirst}" />
 
-                                <Svg Path="/Assets/Icons/Home.svg"
+                                <Svg Classes="white-stroke"
+                                     Path="/Assets/Icons/Home.svg"
                                      Width="15"
                                      Margin="0,0,4,0"
                                      IsVisible="{Binding IsFirst}" />
 
                                 <TextBlock Text="{Binding Name}"
-                                           FontSize="13"
                                            FontWeight="Normal"
-                                           VerticalAlignment="Center"
                                            IsVisible="{Binding !IsFirst}" />
                             </StackPanel>
                         </DataTemplate>
@@ -61,13 +70,12 @@
             </ScrollViewer>
         </Border>
 
-        <Grid IsVisible="{Binding IsEditing, ElementName=PathEditorControl}">
+        <Grid IsVisible="{Binding IsEditing, ElementName=PathEditorControl}"
+              Height="28">
             <TextBox Name="InputBox"
                      Text="{Binding Text, ElementName=PathEditorControl, Mode=TwoWay}"
-                     FontSize="13"
                      TextWrapping="NoWrap"
                      Padding="12,6,32,6"
-                     VerticalAlignment="Center"
                      VerticalContentAlignment="Center"
                      KeyDown="OnInputKeyDown"
                      LostFocus="OnInputLostFocus" />
@@ -81,9 +89,8 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     IsVisible="{Binding #InputBox.IsFocused}">
-                <Svg Path="/Assets/Icons/Close.svg"
-                     Width="13"
-                     Css="path { fill: white }"
+                <Svg Classes="white-fill"
+                     Path="/Assets/Icons/Close.svg"
                      IsHitTestVisible="False" />
             </Button>
         </Grid>
