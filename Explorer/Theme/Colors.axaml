@@ -1,37 +1,41 @@
 ﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Color x:Key="ColorWhite">#FFFFFF</Color>
-    <Color x:Key="BorderDefaultColor">#333333</Color>
-    <Color x:Key="ForegroundMutedColor">#848484</Color>
-    <Color x:Key="AccentPrimaryColor">#00AAFF</Color>
-    <Color x:Key="AccentPrimaryDarkColor">#0077B8</Color>
-    <Color x:Key="SurfaceElevatedColor">#171717</Color>
-    <Color x:Key="SurfaceBaseColor">#000000</Color>
-    <Color x:Key="ForegroundDisabledColor">#B3B3B3</Color>
-    <Color x:Key="BackgroundDefaultColor">#111111</Color>
-    <Color x:Key="SurfaceDeepColor">#080808</Color>
-    <Color x:Key="ForegroundPrimaryColor">#C2C2C2</Color>
-    <Color x:Key="OverlayDimColor">#BF000000</Color>
-    <Color x:Key="AccentSelectionColor">#2400AAFF</Color>
-    <Color x:Key="SurfaceOverlayColor">#252525</Color>
-    <Color x:Key="SurfaceHighlightColor">#333333</Color>
-    <Color x:Key="TextBoxBackgroundColor">#1C1C1C</Color>
+	<Color x:Key="ColorWhite">#FFFFFF</Color>
+	<Color x:Key="BorderDefaultColor">#333333</Color>
+	<Color x:Key="ForegroundMutedColor">#848484</Color>
+	<Color x:Key="AccentPrimaryColor">#00AAFF</Color>
+	<Color x:Key="AccentPrimaryDarkColor">#0077B8</Color>
+	<Color x:Key="SurfaceElevatedColor">#171717</Color>
+	<Color x:Key="SurfaceBaseColor">#000000</Color>
+	<Color x:Key="ForegroundDisabledColor">#B3B3B3</Color>
+	<Color x:Key="BackgroundDefaultColor">#111111</Color>
+	<Color x:Key="SurfaceDeepColor">#080808</Color>
+	<Color x:Key="ForegroundPrimaryColor">#C2C2C2</Color>
+	<Color x:Key="OverlayDimColor">#BF000000</Color>
+	<Color x:Key="AccentSelectionColor">#2400AAFF</Color>
+	<Color x:Key="SurfaceOverlayColor">#252525</Color>
+	<Color x:Key="SurfaceHighlightColor">#333333</Color>
+	<Color x:Key="TextBoxBackgroundColor">#1C1C1C</Color>
+	<Color x:Key="StatusWarningColor">#F5A623</Color>
+	<Color x:Key="StatusCriticalColor">#FF4D4F</Color>
 
-    <SolidColorBrush x:Key="ColorWhiteBrush" Color="{StaticResource ColorWhite}" />
-    <SolidColorBrush x:Key="BorderDefault" Color="{StaticResource BorderDefaultColor}" />
-    <SolidColorBrush x:Key="ForegroundMuted" Color="{StaticResource ForegroundMutedColor}" />
-    <SolidColorBrush x:Key="AccentPrimary" Color="{StaticResource AccentPrimaryColor}" />
-    <SolidColorBrush x:Key="AccentPrimaryDark" Color="{StaticResource AccentPrimaryDarkColor}" />
-    <SolidColorBrush x:Key="SurfaceElevated" Color="{StaticResource SurfaceElevatedColor}" />
-    <SolidColorBrush x:Key="SurfaceBase" Color="{StaticResource SurfaceBaseColor}" />
-    <SolidColorBrush x:Key="ForegroundDisabled" Color="{StaticResource ForegroundDisabledColor}" />
-    <SolidColorBrush x:Key="BackgroundDefault" Color="{StaticResource BackgroundDefaultColor}" />
-    <SolidColorBrush x:Key="SurfaceDeep" Color="{StaticResource SurfaceDeepColor}" />
-    <SolidColorBrush x:Key="ForegroundPrimary" Color="{StaticResource ForegroundPrimaryColor}" />
-    <SolidColorBrush x:Key="OverlayDim" Color="{StaticResource OverlayDimColor}" />
-    <SolidColorBrush x:Key="AccentSelection" Color="{StaticResource AccentSelectionColor}" />
-    <SolidColorBrush x:Key="SurfaceOverlay" Color="{StaticResource SurfaceOverlayColor}" />
-    <SolidColorBrush x:Key="SurfaceHighlight" Color="{StaticResource SurfaceHighlightColor}" />
-    <SolidColorBrush x:Key="TextBoxBackground" Color="{StaticResource TextBoxBackgroundColor}" />
+	<SolidColorBrush x:Key="ColorWhiteBrush" Color="{StaticResource ColorWhite}" />
+	<SolidColorBrush x:Key="BorderDefault" Color="{StaticResource BorderDefaultColor}" />
+	<SolidColorBrush x:Key="ForegroundMuted" Color="{StaticResource ForegroundMutedColor}" />
+	<SolidColorBrush x:Key="AccentPrimary" Color="{StaticResource AccentPrimaryColor}" />
+	<SolidColorBrush x:Key="AccentPrimaryDark" Color="{StaticResource AccentPrimaryDarkColor}" />
+	<SolidColorBrush x:Key="SurfaceElevated" Color="{StaticResource SurfaceElevatedColor}" />
+	<SolidColorBrush x:Key="SurfaceBase" Color="{StaticResource SurfaceBaseColor}" />
+	<SolidColorBrush x:Key="ForegroundDisabled" Color="{StaticResource ForegroundDisabledColor}" />
+	<SolidColorBrush x:Key="BackgroundDefault" Color="{StaticResource BackgroundDefaultColor}" />
+	<SolidColorBrush x:Key="SurfaceDeep" Color="{StaticResource SurfaceDeepColor}" />
+	<SolidColorBrush x:Key="ForegroundPrimary" Color="{StaticResource ForegroundPrimaryColor}" />
+	<SolidColorBrush x:Key="OverlayDim" Color="{StaticResource OverlayDimColor}" />
+	<SolidColorBrush x:Key="AccentSelection" Color="{StaticResource AccentSelectionColor}" />
+	<SolidColorBrush x:Key="SurfaceOverlay" Color="{StaticResource SurfaceOverlayColor}" />
+	<SolidColorBrush x:Key="SurfaceHighlight" Color="{StaticResource SurfaceHighlightColor}" />
+	<SolidColorBrush x:Key="TextBoxBackground" Color="{StaticResource TextBoxBackgroundColor}" />
+	<SolidColorBrush x:Key="StatusWarning" Color="{StaticResource StatusWarningColor}" />
+	<SolidColorBrush x:Key="StatusCritical" Color="{StaticResource StatusCriticalColor}" />
 </ResourceDictionary>
