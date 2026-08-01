@@ -63,3 +63,4 @@ Les messages de commit suivent le format `PREFIX: description au participe/infin
 
 Tu n'as aucunement le droit de killer le processus de l'application depuis le code, depuis une commande ni de forcer la
 fermeture d'une fenêtre. Toute action de fermeture doit être initiée par l'utilisateur via l'UI.
+Laisses moi tester l'application de mon côté, et ensuite je te dirai ce qu'il ne va pas si jamais.
