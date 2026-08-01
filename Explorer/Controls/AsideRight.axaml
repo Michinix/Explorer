@@ -101,7 +101,8 @@
 
 						<controls:FileIcon Padding="10"
 						                   IsDirectory="False"
-						                   EntryPath="{Binding SelectedEntry?.FullPath}" />
+						                   EntryPath="{Binding SelectedEntry?.FullPath}"
+						                   IsVisible="{Binding SelectedEntry?.IsImage}" />
 
 						<TextBlock Text="{Binding SelectedEntry?.Name}"
 						           MaxWidth="198"
