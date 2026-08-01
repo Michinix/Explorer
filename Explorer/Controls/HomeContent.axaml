@@ -151,14 +151,6 @@
 
 			<Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}">
 				<Expander.Header>
-					<TextBlock Text="Réseau" />
-				</Expander.Header>
-
-
-			</Expander>
-
-			<Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}">
-				<Expander.Header>
 					<TextBlock Text="Fichiers récents" />
 				</Expander.Header>
 
