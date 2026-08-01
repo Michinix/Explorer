@@ -47,9 +47,6 @@
 
 			<primitives:IconButton IconPath="{Binding FileBrowser.ViewToggleIconPath}"
 			                       Command="{Binding FileBrowser.ToggleViewCommand}" />
-
-			<primitives:IconButton IconPath="/Assets/Icons/PanelRight.svg"
-			                       Command="{Binding FileBrowser.ToggleDetailsPaneCommand}" />
 		</StackPanel>
 	</Border>
 </UserControl>
