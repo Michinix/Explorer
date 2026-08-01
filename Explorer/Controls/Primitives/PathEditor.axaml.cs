@@ -145,7 +145,7 @@ public partial class PathEditor : UserControl
 
 		if (string.Equals(Text, NavigationService.HomePath, StringComparison.OrdinalIgnoreCase))
 		{
-			Segments.Add(new PathSegment("Accueil", NavigationService.HomePath, true));
+			Segments.Add(new PathSegment("Accueil", NavigationService.HomePath, true, true));
 			return;
 		}
 

@@ -72,7 +72,14 @@
 									     Width="13"
 									     Height="13"
 									     Margin="0,0,4,1"
-									     IsVisible="{Binding IsFirst}" />
+									     IsVisible="{Binding IsHome}" />
+
+									<Svg Classes="white-stroke"
+									     Path="/Assets/Icons/Drive.svg"
+									     Width="13"
+									     Height="13"
+									     Margin="0,0,4,1"
+									     IsVisible="{Binding IsDriveRoot}" />
 
 									<TextBlock Text="{Binding Name}"
 									           FontWeight="Normal"
