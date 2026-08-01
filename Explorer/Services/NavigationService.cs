@@ -15,7 +15,7 @@ public partial class NavigationService : ObservableObject
 	private readonly Stack<string> _forwardStack = new();
 
 	[ObservableProperty]
-	[NotifyPropertyChangedFor(nameof(CanGoBack), nameof(CanGoForward), nameof(CanGoUp))]
+	[NotifyPropertyChangedFor(nameof(CanGoBack), nameof(CanGoForward), nameof(CanGoUp), nameof(IsHome))]
 	[NotifyCanExecuteChangedFor(nameof(GoBackCommand), nameof(GoForwardCommand), nameof(GoUpCommand))]
 	private string _currentPath = HomePath;
 
@@ -23,6 +23,8 @@ public partial class NavigationService : ObservableObject
 
 	public bool CanGoBack => _backStack.Count > 0;
 	public bool CanGoForward => _forwardStack.Count > 0;
+
+	public bool IsHome => string.Equals(CurrentPath, HomePath, StringComparison.OrdinalIgnoreCase);
 
 	public bool CanGoUp
 	{
