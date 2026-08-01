@@ -14,6 +14,9 @@ public class ActionMenuItem : MenuItem
 	public static readonly StyledProperty<string?> IconPathProperty =
 		AvaloniaProperty.Register<ActionMenuItem, string?>(nameof(IconPath));
 
+	public static readonly StyledProperty<string?> IconCssProperty =
+		AvaloniaProperty.Register<ActionMenuItem, string?>(nameof(IconCss));
+
 	private readonly SvgControl _icon = new(new Uri("avares://Explorer/"))
 	{
 		Width = 14,
@@ -46,6 +49,12 @@ public class ActionMenuItem : MenuItem
 		set => SetValue(IconPathProperty, value);
 	}
 
+	public string? IconCss
+	{
+		get => GetValue(IconCssProperty);
+		set => SetValue(IconCssProperty, value);
+	}
+
 	protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
 	{
 		base.OnPropertyChanged(change);
@@ -54,5 +63,7 @@ public class ActionMenuItem : MenuItem
 			_text.Text = Text;
 		else if (change.Property == IconPathProperty)
 			_icon.Path = IconPath;
+		else if (change.Property == IconCssProperty)
+			_icon.SetValue(SvgControl.CssProperty, IconCss);
 	}
 }

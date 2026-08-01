@@ -76,6 +76,20 @@ public partial class AsideLeftViewModel : ViewModelBase
 				    (bestPinnedMatch is null || pinned.FullPath.Length > bestPinnedMatch.FullPath.Length))
 					bestPinnedMatch = pinned;
 
+		DriveItem? bestCloudMatch = null;
+		foreach (var cloud in CloudStorage)
+			if (IsUnder(CurrentPath, cloud.FullPath) &&
+			    (bestCloudMatch is null || cloud.FullPath.Length > bestCloudMatch.FullPath.Length))
+				bestCloudMatch = cloud;
+
+		if (bestPinnedMatch is not null && bestCloudMatch is not null)
+		{
+			if (bestCloudMatch.FullPath.Length > bestPinnedMatch.FullPath.Length)
+				bestPinnedMatch = null;
+			else
+				bestCloudMatch = null;
+		}
+
 		foreach (var pinned in PinnedItems)
 			pinned.IsActive = pinned == bestPinnedMatch;
 
@@ -84,7 +98,7 @@ public partial class AsideLeftViewModel : ViewModelBase
 		var cloudActive = false;
 		foreach (var cloud in CloudStorage)
 		{
-			cloud.IsActive = !quickAccessActive && IsUnder(CurrentPath, cloud.FullPath);
+			cloud.IsActive = !quickAccessActive && cloud == bestCloudMatch;
 			cloudActive |= cloud.IsActive;
 		}
 

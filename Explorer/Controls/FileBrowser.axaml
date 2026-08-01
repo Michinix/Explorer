@@ -132,6 +132,7 @@
 			<ContextMenu>
 				<primitives:ActionMenuItem Text="Nouveau dossier"
 				                           IconPath="/Assets/Icons/Directory.svg"
+				                           IconCss="path { fill: #00AAFF; stroke: #00AAFF }"
 				                           Command="{Binding FileOps.CreateFolderCommand}" />
 				<primitives:ActionMenuItem Text="Nouveau fichier"
 				                           IconPath="/Assets/Icons/Document.svg"

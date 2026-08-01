@@ -60,6 +60,7 @@ public static class FileSystemService
 				.Where(e => e.Name.StartsWith('.') ||
 				            (!e.Attributes.HasFlag(FileAttributes.Hidden) &&
 				             !e.Attributes.HasFlag(FileAttributes.System)))
+				.Where(e => !string.Equals(e.Name, "Photos Library.jpeg", StringComparison.OrdinalIgnoreCase))
 				.OrderBy(e => e is FileInfo)
 				.ThenBy(e => e.Name, StringComparer.OrdinalIgnoreCase)
 				.Select(MapToEntry)
@@ -123,6 +124,18 @@ public static class FileSystemService
 			var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 			var result = new List<DriveItem>();
 
+			TryAdd("OneDrive", Environment.GetEnvironmentVariable("OneDriveConsumer"));
+			TryAdd("OneDrive", Environment.GetEnvironmentVariable("OneDrive"));
+			TryAdd("OneDrive Entreprise", Environment.GetEnvironmentVariable("OneDriveCommercial"));
+			TryAdd("iCloud Drive", Path.Combine(userProfile, "iCloudDrive"));
+			TryAdd("iCloud Photos",
+				Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "iCloud Photos",
+					"Photos"));
+			TryAdd("Google Drive", Path.Combine(userProfile, "Google Drive"));
+			TryAdd("Dropbox", Path.Combine(userProfile, "Dropbox"));
+
+			return result.ToArray();
+
 			void TryAdd(string displayName, string? path)
 			{
 				try
@@ -136,16 +149,6 @@ public static class FileSystemService
 					Debug.WriteLine(ex.Message);
 				}
 			}
-
-			TryAdd("OneDrive", Environment.GetEnvironmentVariable("OneDriveConsumer"));
-			TryAdd("OneDrive", Environment.GetEnvironmentVariable("OneDrive"));
-			TryAdd("OneDrive Entreprise", Environment.GetEnvironmentVariable("OneDriveCommercial"));
-			TryAdd("iCloud Drive", Path.Combine(userProfile, "iCloudDrive"));
-			TryAdd("iCloud Photos", Path.Combine(userProfile, "iCloudPhotos"));
-			TryAdd("Google Drive", Path.Combine(userProfile, "Google Drive"));
-			TryAdd("Dropbox", Path.Combine(userProfile, "Dropbox"));
-
-			return result.ToArray();
 		});
 	}
 
