@@ -4,8 +4,8 @@ namespace Explorer.Controls;
 
 public partial class AsideLeft : UserControl
 {
-    public AsideLeft()
-    {
-        InitializeComponent();
-    }
+	public AsideLeft()
+	{
+		InitializeComponent();
+	}
 }

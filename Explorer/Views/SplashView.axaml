@@ -5,25 +5,25 @@
              mc:Ignorable="d"
              x:Class="Explorer.Views.SplashView">
 
-    <StackPanel
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"
-        Orientation="Vertical"
-        Spacing="64">
-        <Image MaxWidth="600" MinWidth="300"
-               Source="avares://Explorer/Assets/Banner.png"
-               Stretch="Uniform" />
-        <ProgressBar
-            Width="50"
-            Height="50"
-            IsIndeterminate="True"
-            Theme="{DynamicResource ProgressRing}">
-            <ProgressBar.Foreground>
-                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
-                    <GradientStop Color="#60BDFF" Offset="0" />
-                    <GradientStop Color="#0064AA" Offset="1" />
-                </LinearGradientBrush>
-            </ProgressBar.Foreground>
-        </ProgressBar>
-    </StackPanel>
+	<StackPanel
+		HorizontalAlignment="Center"
+		VerticalAlignment="Center"
+		Orientation="Vertical"
+		Spacing="64">
+		<Image MaxWidth="600" MinWidth="300"
+		       Source="avares://Explorer/Assets/Banner.png"
+		       Stretch="Uniform" />
+		<ProgressBar
+			Width="50"
+			Height="50"
+			IsIndeterminate="True"
+			Theme="{DynamicResource ProgressRing}">
+			<ProgressBar.Foreground>
+				<LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+					<GradientStop Color="#60BDFF" Offset="0" />
+					<GradientStop Color="#0064AA" Offset="1" />
+				</LinearGradientBrush>
+			</ProgressBar.Foreground>
+		</ProgressBar>
+	</StackPanel>
 </UserControl>

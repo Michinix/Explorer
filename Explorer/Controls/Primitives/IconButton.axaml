@@ -6,19 +6,19 @@
              x:Name="IconButtonControl"
              x:Class="Explorer.Controls.Primitives.IconButton">
 
-    <UserControl.Styles>
-        <Style Selector="Svg">
-            <Setter Property="Width" Value="15" />
-            <Setter Property="Height" Value="15" />
-            <Setter Property="IsHitTestVisible" Value="False" />
-        </Style>
+	<UserControl.Styles>
+		<Style Selector="Svg">
+			<Setter Property="Width" Value="15" />
+			<Setter Property="Height" Value="15" />
+			<Setter Property="IsHitTestVisible" Value="False" />
+		</Style>
 
-        <Style Selector="Button:disabled Svg">
-            <Setter Property="Css" Value="path { opacity: 0.35 }" />
-        </Style>
-    </UserControl.Styles>
+		<Style Selector="Button:disabled Svg">
+			<Setter Property="Css" Value="path { opacity: 0.35 }" />
+		</Style>
+	</UserControl.Styles>
 
-    <Button Classes="ghost" Command="{Binding Command, ElementName=IconButtonControl}">
-        <Svg Path="{Binding IconPath, ElementName=IconButtonControl}" />
-    </Button>
+	<Button Classes="ghost" Command="{Binding Command, ElementName=IconButtonControl}">
+		<Svg Path="{Binding IconPath, ElementName=IconButtonControl}" />
+	</Button>
 </UserControl>

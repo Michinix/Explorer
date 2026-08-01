@@ -1,69 +1,69 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style Selector="DataGridColumnHeader">
-        <Setter Property="Background" Value="{StaticResource SurfaceElevated}" />
-        <Setter Property="Foreground" Value="{StaticResource ColorWhite}" />
-        <Setter Property="FontSize" Value="11" />
-        <Setter Property="Padding" Value="10,10" />
-        <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="BorderThickness" Value="0,0,0,1" />
-        <Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
-    </Style>
+	<Style Selector="DataGridColumnHeader">
+		<Setter Property="Background" Value="{StaticResource SurfaceElevated}" />
+		<Setter Property="Foreground" Value="{StaticResource ColorWhite}" />
+		<Setter Property="FontSize" Value="11" />
+		<Setter Property="Padding" Value="10,10" />
+		<Setter Property="HorizontalContentAlignment" Value="Left" />
+		<Setter Property="VerticalContentAlignment" Value="Center" />
+		<Setter Property="BorderThickness" Value="0,0,0,1" />
+		<Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
+	</Style>
 
-    <Style Selector="DataGridColumnHeader /template/ Path#SortIcon">
-        <Setter Property="Opacity" Value="1" />
-    </Style>
+	<Style Selector="DataGridColumnHeader /template/ Path#SortIcon">
+		<Setter Property="Opacity" Value="1" />
+	</Style>
 
-    <Style Selector="DataGridColumnHeader:nth-child(-n+4)">
-        <Setter Property="BorderThickness" Value="0,0,1,1" />
-    </Style>
+	<Style Selector="DataGridColumnHeader:nth-child(-n+4)">
+		<Setter Property="BorderThickness" Value="0,0,1,1" />
+	</Style>
 
-    <Style Selector="DataGridCell">
-        <Setter Property="Padding" Value="10,8" />
-        <Setter Property="FontSize" Value="12" />
-        <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
-        <Setter Property="BorderThickness" Value="0,0,0,1" />
-    </Style>
+	<Style Selector="DataGridCell">
+		<Setter Property="Padding" Value="10,8" />
+		<Setter Property="FontSize" Value="12" />
+		<Setter Property="HorizontalContentAlignment" Value="Left" />
+		<Setter Property="VerticalContentAlignment" Value="Center" />
+		<Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
+		<Setter Property="BorderThickness" Value="0,0,0,1" />
+	</Style>
 
-    <Style Selector="DataGridCell.has-border">
-        <Setter Property="BorderThickness" Value="0,0,1,1" />
-    </Style>
+	<Style Selector="DataGridCell.has-border">
+		<Setter Property="BorderThickness" Value="0,0,1,1" />
+	</Style>
 
-    <Style Selector="DataGridCell TextBlock">
-        <Setter Property="Margin" Value="0" />
-    </Style>
+	<Style Selector="DataGridCell TextBlock">
+		<Setter Property="Margin" Value="0" />
+	</Style>
 
-    <Style Selector="DataGridCell TextBox">
-        <Setter Property="MinHeight" Value="0" />
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="CaretBrush" Value="{StaticResource AccentPrimary}" />
-        <Setter Property="CaretBlinkInterval" Value="0.5" />
-    </Style>
+	<Style Selector="DataGridCell TextBox">
+		<Setter Property="MinHeight" Value="0" />
+		<Setter Property="Padding" Value="0" />
+		<Setter Property="VerticalContentAlignment" Value="Center" />
+		<Setter Property="CaretBrush" Value="{StaticResource AccentPrimary}" />
+		<Setter Property="CaretBlinkInterval" Value="0.5" />
+	</Style>
 
-    <Style Selector="DataGridColumnHeader ContentPresenter">
-        <Setter Property="Margin" Value="0" />
-    </Style>
+	<Style Selector="DataGridColumnHeader ContentPresenter">
+		<Setter Property="Margin" Value="0" />
+	</Style>
 
-    <Style Selector="DataGridCell ContentPresenter">
-        <Setter Property="Margin" Value="0" />
-    </Style>
+	<Style Selector="DataGridCell ContentPresenter">
+		<Setter Property="Margin" Value="0" />
+	</Style>
 
-    <Style Selector="DataGridRow:pointerover">
-        <Setter Property="Background" Value="{StaticResource AccentSelection}" />
-        <Setter Property="Cursor" Value="Hand" />
-    </Style>
+	<Style Selector="DataGridRow:pointerover">
+		<Setter Property="Background" Value="{StaticResource AccentSelection}" />
+		<Setter Property="Cursor" Value="Hand" />
+	</Style>
 
-    <Style Selector="DataGridRow:selected">
-        <Setter Property="Background" Value="{StaticResource AccentSelection}" />
-        <Setter Property="Foreground" Value="{StaticResource AccentPrimary}" />
-    </Style>
+	<Style Selector="DataGridRow:selected">
+		<Setter Property="Background" Value="{StaticResource AccentSelection}" />
+		<Setter Property="Foreground" Value="{StaticResource AccentPrimary}" />
+	</Style>
 
-    <Style Selector="DataGridRowsPresenter">
-        <Setter Property="Margin" Value="0,0,0,25" />
-    </Style>
+	<Style Selector="DataGridRowsPresenter">
+		<Setter Property="Margin" Value="0,0,0,25" />
+	</Style>
 </Styles>

@@ -9,70 +9,70 @@
              IsVisible="{Binding IsOpen, ElementName=FilePreviewModalControl}"
              KeyDown="OnKeyDown">
 
-    <UserControl.Styles>
-        <Style Selector="Button.toolbarButton">
-            <Setter Property="Background" Value="#22FFFFFF" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="CornerRadius" Value="11" />
-            <Setter Property="Width" Value="22" />
-            <Setter Property="Height" Value="22" />
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="MinWidth" Value="0" />
-            <Setter Property="MinHeight" Value="0" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="HorizontalContentAlignment" Value="Center" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-        </Style>
-        <Style Selector="Button.toolbarButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="#3DFFFFFF" />
-        </Style>
+	<UserControl.Styles>
+		<Style Selector="Button.toolbarButton">
+			<Setter Property="Background" Value="#22FFFFFF" />
+			<Setter Property="BorderThickness" Value="0" />
+			<Setter Property="CornerRadius" Value="11" />
+			<Setter Property="Width" Value="22" />
+			<Setter Property="Height" Value="22" />
+			<Setter Property="Padding" Value="0" />
+			<Setter Property="MinWidth" Value="0" />
+			<Setter Property="MinHeight" Value="0" />
+			<Setter Property="Cursor" Value="Hand" />
+			<Setter Property="HorizontalContentAlignment" Value="Center" />
+			<Setter Property="VerticalContentAlignment" Value="Center" />
+		</Style>
+		<Style Selector="Button.toolbarButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="#3DFFFFFF" />
+		</Style>
 
-        <Style Selector="Button.toolbarPill:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="#3DFFFFFF" />
-        </Style>
-    </UserControl.Styles>
+		<Style Selector="Button.toolbarPill:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="#3DFFFFFF" />
+		</Style>
+	</UserControl.Styles>
 
-    <Grid Background="{StaticResource OverlayDim}"
-          PointerPressed="OnOverlayPointerPressed">
+	<Grid Background="{StaticResource OverlayDim}"
+	      PointerPressed="OnOverlayPointerPressed">
 
-        <Border Background="{StaticResource SurfaceOverlay}"
-                BorderBrush="{StaticResource BorderDefault}"
-                BorderThickness="1"
-                CornerRadius="12"
-                MinWidth="450"
-                MaxWidth="650"
-                MaxHeight="700"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                ClipToBounds="True"
-                PointerPressed="OnCardPointerPressed">
+		<Border Background="{StaticResource SurfaceOverlay}"
+		        BorderBrush="{StaticResource BorderDefault}"
+		        BorderThickness="1"
+		        CornerRadius="12"
+		        MinWidth="450"
+		        MaxWidth="650"
+		        MaxHeight="700"
+		        HorizontalAlignment="Center"
+		        VerticalAlignment="Center"
+		        ClipToBounds="True"
+		        PointerPressed="OnCardPointerPressed">
 
-            <Grid RowDefinitions="Auto, Auto, *">
+			<Grid RowDefinitions="Auto, Auto, *">
 
-                <Grid Grid.Row="0" Margin="10,8" MinHeight="26">
-                    <Button Classes="toolbarButton"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Click="OnCloseClicked">
-                        <Path Data="M0,0 L9,9 M9,0 L0,9"
-                              Stroke="{StaticResource ColorWhiteBrush}"
-                              StrokeThickness="1.4"
-                              StrokeLineCap="Round" />
-                    </Button>
-                </Grid>
+				<Grid Grid.Row="0" Margin="10,8" MinHeight="26">
+					<Button Classes="toolbarButton"
+					        HorizontalAlignment="Left"
+					        VerticalAlignment="Center"
+					        Click="OnCloseClicked">
+						<Path Data="M0,0 L9,9 M9,0 L0,9"
+						      Stroke="{StaticResource ColorWhiteBrush}"
+						      StrokeThickness="1.4"
+						      StrokeLineCap="Round" />
+					</Button>
+				</Grid>
 
-                <Border Grid.Row="1"
-                        Height="1"
-                        Background="{StaticResource BorderDefault}" />
+				<Border Grid.Row="1"
+				        Height="1"
+				        Background="{StaticResource BorderDefault}" />
 
-                <Grid Grid.Row="2" Margin="24,20">
-                    <Image Name="PreviewImage"
-                           Stretch="Uniform"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           IsVisible="False" />
-                </Grid>
-            </Grid>
-        </Border>
-    </Grid>
+				<Grid Grid.Row="2" Margin="24,20">
+					<Image Name="PreviewImage"
+					       Stretch="Uniform"
+					       HorizontalAlignment="Center"
+					       VerticalAlignment="Center"
+					       IsVisible="False" />
+				</Grid>
+			</Grid>
+		</Border>
+	</Grid>
 </UserControl>

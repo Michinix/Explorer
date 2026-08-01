@@ -20,64 +20,64 @@
         UseLayoutRounding="True"
         TransparencyLevelHint="Transparent">
 
-    <Window.DataTemplates>
-        <DataTemplate DataType="vm:HomeViewModel">
-            <views:HomeView />
-        </DataTemplate>
-    </Window.DataTemplates>
+	<Window.DataTemplates>
+		<DataTemplate DataType="vm:HomeViewModel">
+			<views:HomeView />
+		</DataTemplate>
+	</Window.DataTemplates>
 
-    <Border Margin="1"
-            Background="{StaticResource BackgroundDefault}"
-            BorderBrush="{StaticResource BorderDefault}"
-            BorderThickness="1"
-            CornerRadius="10"
-            ClipToBounds="True">
+	<Border Margin="1"
+	        Background="{StaticResource BackgroundDefault}"
+	        BorderBrush="{StaticResource BorderDefault}"
+	        BorderThickness="1"
+	        CornerRadius="10"
+	        ClipToBounds="True">
 
-        <Grid>
-            <ContentControl Name="HomeHost"
-                            Content="{Binding HomeContent}"
-                            Classes.revealed="{Binding !IsSplashVisible}">
-                <ContentControl.Transitions>
-                    <Transitions>
-                        <TransformOperationsTransition Property="RenderTransform"
-                                                       Duration="0:0:0.45"
-                                                       Easing="CubicEaseOut" />
-                    </Transitions>
-                </ContentControl.Transitions>
-            </ContentControl>
+		<Grid>
+			<ContentControl Name="HomeHost"
+			                Content="{Binding HomeContent}"
+			                Classes.revealed="{Binding !IsSplashVisible}">
+				<ContentControl.Transitions>
+					<Transitions>
+						<TransformOperationsTransition Property="RenderTransform"
+						                               Duration="0:0:0.45"
+						                               Easing="CubicEaseOut" />
+					</Transitions>
+				</ContentControl.Transitions>
+			</ContentControl>
 
-            <Border Name="SplashHost"
-                    Background="{StaticResource BackgroundDefault}"
-                    IsHitTestVisible="{Binding IsSplashVisible}"
-                    Classes.leaving="{Binding !IsSplashVisible}">
-                <Border.Transitions>
-                    <Transitions>
-                        <DoubleTransition Property="Opacity"
-                                          Duration="0:0:0.35"
-                                          Easing="CubicEaseInOut" />
-                        <TransformOperationsTransition Property="RenderTransform"
-                                                       Duration="0:0:0.45"
-                                                       Easing="CubicEaseOut" />
-                    </Transitions>
-                </Border.Transitions>
-                <views:SplashView />
-            </Border>
+			<Border Name="SplashHost"
+			        Background="{StaticResource BackgroundDefault}"
+			        IsHitTestVisible="{Binding IsSplashVisible}"
+			        Classes.leaving="{Binding !IsSplashVisible}">
+				<Border.Transitions>
+					<Transitions>
+						<DoubleTransition Property="Opacity"
+						                  Duration="0:0:0.35"
+						                  Easing="CubicEaseInOut" />
+						<TransformOperationsTransition Property="RenderTransform"
+						                               Duration="0:0:0.45"
+						                               Easing="CubicEaseOut" />
+					</Transitions>
+				</Border.Transitions>
+				<views:SplashView />
+			</Border>
 
-            <Grid.Styles>
-                <Style Selector="ContentControl#HomeHost">
-                    <Setter Property="RenderTransform" Value="translate(140px, 0px)" />
-                </Style>
-                <Style Selector="ContentControl#HomeHost.revealed">
-                    <Setter Property="RenderTransform" Value="translate(0px, 0px)" />
-                </Style>
+			<Grid.Styles>
+				<Style Selector="ContentControl#HomeHost">
+					<Setter Property="RenderTransform" Value="translate(140px, 0px)" />
+				</Style>
+				<Style Selector="ContentControl#HomeHost.revealed">
+					<Setter Property="RenderTransform" Value="translate(0px, 0px)" />
+				</Style>
 
-                <Style Selector="Border#SplashHost.leaving">
-                    <Setter Property="Opacity" Value="0" />
-                    <Setter Property="RenderTransform" Value="translate(-140px, 0px)" />
-                </Style>
-            </Grid.Styles>
-        </Grid>
+				<Style Selector="Border#SplashHost.leaving">
+					<Setter Property="Opacity" Value="0" />
+					<Setter Property="RenderTransform" Value="translate(-140px, 0px)" />
+				</Style>
+			</Grid.Styles>
+		</Grid>
 
-    </Border>
+	</Border>
 
 </Window>

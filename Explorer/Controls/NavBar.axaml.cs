@@ -4,8 +4,8 @@ namespace Explorer.Controls;
 
 public partial class NavBar : UserControl
 {
-    public NavBar()
-    {
-        InitializeComponent();
-    }
+	public NavBar()
+	{
+		InitializeComponent();
+	}
 }

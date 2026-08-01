@@ -4,8 +4,8 @@ namespace Explorer.Controls;
 
 public partial class Toolbar : UserControl
 {
-    public Toolbar()
-    {
-        InitializeComponent();
-    }
+	public Toolbar()
+	{
+		InitializeComponent();
+	}
 }

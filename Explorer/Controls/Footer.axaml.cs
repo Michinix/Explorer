@@ -4,8 +4,8 @@ namespace Explorer.Controls;
 
 public partial class Footer : UserControl
 {
-    public Footer()
-    {
-        InitializeComponent();
-    }
+	public Footer()
+	{
+		InitializeComponent();
+	}
 }
