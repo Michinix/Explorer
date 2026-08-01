@@ -49,9 +49,5 @@
 		</Grid>
 
 		<controls:Footer Grid.Row="2" DataContext="{Binding FileBrowser}" />
-
-		<primitives:FilePreviewModal Grid.Row="0" Grid.RowSpan="3"
-		                             IsOpen="{Binding FileBrowser.IsPreviewOpen, Mode=TwoWay}"
-		                             Entry="{Binding FileBrowser.SelectedEntry}" />
 	</Grid>
 </UserControl>

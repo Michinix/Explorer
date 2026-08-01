@@ -32,8 +32,6 @@ public partial class FileBrowserViewModel : ViewModelBase
 	[ObservableProperty] [NotifyPropertyChangedFor(nameof(NoResultsFound))]
 	private bool _isLoading;
 
-	[ObservableProperty] private bool _isPreviewOpen;
-
 	[ObservableProperty] [NotifyPropertyChangedFor(nameof(NoResultsFound))]
 	private bool _isSearchResult;
 
@@ -297,21 +295,6 @@ public partial class FileBrowserViewModel : ViewModelBase
 	private async Task OpenInVsCode()
 	{
 		await ExternalToolsService.OpenInVsCodeAsync(_navigation.CurrentPath);
-	}
-
-	[RelayCommand]
-	private void TogglePreview()
-	{
-		if (SelectedEntry is null || SelectedEntry.IsDirectory) return;
-
-		var selectedEntryType = SelectedEntry.FullPath.Split('.').LastOrDefault()?.ToLower();
-
-		ICollection<string> imagesType = ["png", "jpeg", "jpg", "gif", "bmp", "tiff", "webp"];
-
-		if (selectedEntryType is null || !imagesType.Contains(selectedEntryType))
-			return;
-
-		IsPreviewOpen = !IsPreviewOpen;
 	}
 
 	public void AddDraft(bool isDirectory)

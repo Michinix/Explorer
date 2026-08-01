@@ -13,8 +13,6 @@ public partial class FileBrowser : UserControl
 	public FileBrowser()
 	{
 		InitializeComponent();
-
-		TilesListBox.AddHandler(KeyDownEvent, OnEntryKeyDown, RoutingStrategies.Tunnel);
 	}
 
 	private void OnRowDoubleTapped(object? sender, TappedEventArgs e)
@@ -52,15 +50,6 @@ public partial class FileBrowser : UserControl
 			other.IsSelected = false;
 
 		vm.SelectedEntry = entry;
-	}
-
-	private void OnEntryKeyDown(object? sender, KeyEventArgs e)
-	{
-		if (e.Key != Key.Space || e.Source is TextBox) return;
-		if (DataContext is not FileBrowserViewModel vm) return;
-
-		vm.TogglePreviewCommand.Execute(null);
-		e.Handled = true;
 	}
 
 	private void OnRenameTextBoxLoaded(object? sender, RoutedEventArgs e)

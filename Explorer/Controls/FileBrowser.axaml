@@ -150,7 +150,6 @@
 
 		<DataGrid SelectedItem="{Binding SelectedEntry}"
 		          DoubleTapped="OnRowDoubleTapped"
-		          KeyDown="OnEntryKeyDown"
 		          LoadingRow="OnDataGridLoadingRow"
 		          IsVisible="{Binding !IsGridView}"
 		          ItemsSource="{Binding Entries}"
