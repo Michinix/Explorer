@@ -8,91 +8,149 @@
              x:Name="PathEditorControl"
              x:Class="Explorer.Controls.Primitives.PathEditor">
 
-    <UserControl.Styles>
-        <Style Selector="Svg.white-stroke">
-            <Setter Property="Css" Value="path { stroke: white }" />
-        </Style>
+	<UserControl.Styles>
+		<Style Selector="u|BreadcrumbItem">
+			<Setter Property="VerticalAlignment" Value="Center" />
+			<Setter Property="VerticalContentAlignment" Value="Center" />
+		</Style>
 
-        <Style Selector="Svg.white-fill">
-            <Setter Property="Width" Value="13" />
-            <Setter Property="Css" Value="path { fill: white }" />
-        </Style>
-    </UserControl.Styles>
+		<Style Selector="Svg.white-stroke">
+			<Setter Property="Css" Value="path { stroke: white }, circle { stroke: white }" />
+			<Setter Property="VerticalAlignment" Value="Center" />
+		</Style>
 
-    <Grid VerticalAlignment="Stretch">
-        <Border Background="{StaticResource TextBoxBackground}"
-                CornerRadius="3"
-                Padding="12,6"
-                PointerPressed="OnBreadcrumbPressed"
-                IsVisible="{Binding !IsEditing, ElementName=PathEditorControl}"
-                Height="28">
-            <ScrollViewer HorizontalScrollBarVisibility="Hidden"
-                          VerticalScrollBarVisibility="Disabled">
-                <u:Breadcrumb ItemsSource="{Binding Segments, ElementName=PathEditorControl}"
-                              Separator="{x:Null}"
-                              CommandBinding="{ReflectionBinding NavigateCommand, ElementName=PathEditorControl}"
-                              CommandParameterBinding="{ReflectionBinding FullPath}">
+		<Style Selector="Svg.white-fill">
+			<Setter Property="Width" Value="13" />
+			<Setter Property="Height" Value="13" />
+			<Setter Property="Css" Value="path { fill: white }" />
+			<Setter Property="VerticalAlignment" Value="Center" />
+		</Style>
+	</UserControl.Styles>
 
-                    <u:Breadcrumb.Resources>
-                        <StaticResource x:Key="BreadcrumbItemForeground" ResourceKey="ForegroundPrimary" />
-                        <StaticResource x:Key="BreadcrumbItemPointeroverForeground" ResourceKey="ColorWhiteBrush" />
-                        <StaticResource x:Key="BreadcrumbItemLastForeground" ResourceKey="ColorWhiteBrush" />
-                    </u:Breadcrumb.Resources>
+	<Grid VerticalAlignment="Stretch">
+		<Border Background="{StaticResource TextBoxBackground}"
+		        CornerRadius="3"
+		        Padding="12,6"
+		        PointerPressed="OnBreadcrumbPressed"
+		        IsVisible="{Binding !IsEditing, ElementName=PathEditorControl}"
+		        Height="28">
+			<Grid ColumnDefinitions="*,Auto">
+				<ScrollViewer Grid.Column="0"
+				              HorizontalScrollBarVisibility="Hidden"
+				              VerticalScrollBarVisibility="Disabled"
+				              VerticalAlignment="Center">
+					<u:Breadcrumb ItemsSource="{Binding Segments, ElementName=PathEditorControl}"
+					              Separator="{x:Null}"
+					              VerticalAlignment="Center"
+					              CommandBinding="{ReflectionBinding NavigateCommand, ElementName=PathEditorControl}"
+					              CommandParameterBinding="{ReflectionBinding FullPath}">
 
-                    <u:Breadcrumb.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" Spacing="4" />
-                        </ItemsPanelTemplate>
-                    </u:Breadcrumb.ItemsPanel>
+						<u:Breadcrumb.Resources>
+							<StaticResource x:Key="BreadcrumbItemForeground" ResourceKey="ForegroundPrimary" />
+							<StaticResource x:Key="BreadcrumbItemPointeroverForeground" ResourceKey="ColorWhiteBrush" />
+							<StaticResource x:Key="BreadcrumbItemLastForeground" ResourceKey="ColorWhiteBrush" />
+						</u:Breadcrumb.Resources>
 
-                    <u:Breadcrumb.ItemTemplate>
-                        <DataTemplate x:DataType="models:PathSegment">
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <Svg Classes="white-stroke"
-                                     Path="/Assets/Icons/ChevronRight.svg"
-                                     Width="13"
-                                     Margin="4,0,8,0"
-                                     IsVisible="{Binding !IsFirst}" />
+						<u:Breadcrumb.ItemsPanel>
+							<ItemsPanelTemplate>
+								<StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center" />
+							</ItemsPanelTemplate>
+						</u:Breadcrumb.ItemsPanel>
 
-                                <Svg Classes="white-stroke"
-                                     Path="/Assets/Icons/Home.svg"
-                                     Width="15"
-                                     Margin="0,0,4,0"
-                                     IsVisible="{Binding IsFirst}" />
+						<u:Breadcrumb.ItemTemplate>
+							<DataTemplate x:DataType="models:PathSegment">
+								<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+									<Svg Classes="white-stroke"
+									     Path="/Assets/Icons/ChevronRight.svg"
+									     Width="13"
+									     Height="13"
+									     Margin="4,0,8,1"
+									     IsVisible="{Binding !IsFirst}" />
 
-                                <TextBlock Text="{Binding Name}"
-                                           FontWeight="Normal"
-                                           IsVisible="{Binding !IsFirst}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </u:Breadcrumb.ItemTemplate>
-                </u:Breadcrumb>
-            </ScrollViewer>
-        </Border>
+									<Svg Classes="white-stroke"
+									     Path="/Assets/Icons/Home.svg"
+									     Width="13"
+									     Height="13"
+									     Margin="0,0,4,1"
+									     IsVisible="{Binding IsFirst}" />
 
-        <Grid IsVisible="{Binding IsEditing, ElementName=PathEditorControl}"
-              Height="28">
-            <TextBox Name="InputBox"
-                     Text="{Binding Text, ElementName=PathEditorControl, Mode=TwoWay}"
-                     TextWrapping="NoWrap"
-                     Padding="12,6,32,6"
-                     VerticalContentAlignment="Center"
-                     KeyDown="OnInputKeyDown"
-                     LostFocus="OnInputLostFocus" />
+									<TextBlock Text="{Binding Name}"
+									           FontWeight="Normal"
+									           FontSize="12"
+									           VerticalAlignment="Center"
+									           IsVisible="{Binding !IsFirst}" />
+								</StackPanel>
+							</DataTemplate>
+						</u:Breadcrumb.ItemTemplate>
+					</u:Breadcrumb>
+				</ScrollViewer>
 
-            <Button Name="ClearButton"
-                    Classes="ghost"
-                    Click="OnClearClick"
-                    Focusable="False"
-                    Padding="4"
-                    Margin="0,0,8,0"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    IsVisible="{Binding #InputBox.IsFocused}">
-                <Svg Classes="white-fill"
-                     Path="/Assets/Icons/Close.svg"
-                     IsHitTestVisible="False" />
-            </Button>
-        </Grid>
-    </Grid>
+				<Button Name="SearchButton"
+				        Grid.Column="1"
+				        Classes="ghost"
+				        Click="OnSearchClick"
+				        Focusable="False"
+				        Padding="4"
+				        Margin="8,0,0,0"
+				        VerticalAlignment="Center">
+					<Svg Classes="white-stroke"
+					     Path="/Assets/Icons/Search.svg"
+					     Width="14"
+					     Height="14"
+					     IsHitTestVisible="False" />
+				</Button>
+			</Grid>
+		</Border>
+
+		<Grid IsVisible="{Binding IsEditing, ElementName=PathEditorControl}"
+		      Height="28">
+			<TextBox Name="InputBox"
+			         Text="{Binding Text, ElementName=PathEditorControl, Mode=TwoWay}"
+			         TextWrapping="NoWrap"
+			         FontSize="12"
+			         Padding="12,6,32,6"
+			         VerticalContentAlignment="Center"
+			         KeyDown="OnInputKeyDown"
+			         LostFocus="OnInputLostFocus" />
+
+			<Button Name="ClearButton"
+			        Classes="ghost"
+			        Click="OnClearClick"
+			        Focusable="False"
+			        Padding="4"
+			        Margin="0,0,8,0"
+			        HorizontalAlignment="Right"
+			        VerticalAlignment="Center"
+			        IsVisible="{Binding #InputBox.IsFocused}">
+				<Svg Classes="white-fill"
+				     Path="/Assets/Icons/Close.svg"
+				     IsHitTestVisible="False" />
+			</Button>
+		</Grid>
+
+		<Grid IsVisible="{Binding IsSearching, ElementName=PathEditorControl}"
+		      Height="28">
+			<TextBox Name="SearchBox"
+			         Text="{Binding SearchTerm, ElementName=PathEditorControl, Mode=TwoWay}"
+			         PlaceholderText="{Binding SearchPlaceholder, ElementName=PathEditorControl}"
+			         TextWrapping="NoWrap"
+			         FontSize="12"
+			         Padding="12,6,32,6"
+			         VerticalContentAlignment="Center"
+			         KeyDown="OnSearchKeyDown" />
+
+			<Button Name="SearchClearButton"
+			        Classes="ghost"
+			        Click="OnSearchClearClick"
+			        Focusable="False"
+			        Padding="4"
+			        Margin="0,0,8,0"
+			        HorizontalAlignment="Right"
+			        VerticalAlignment="Center">
+				<Svg Classes="white-fill"
+				     Path="/Assets/Icons/Close.svg"
+				     IsHitTestVisible="False" />
+			</Button>
+		</Grid>
+	</Grid>
 </UserControl>

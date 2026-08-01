@@ -19,157 +19,251 @@ namespace Explorer.Controls.Primitives;
 
 public partial class PathEditor : UserControl
 {
-    public static readonly StyledProperty<string?> TextProperty =
-        AvaloniaProperty.Register<PathEditor, string?>(
-            nameof(Text), defaultBindingMode: BindingMode.TwoWay);
+	public static readonly StyledProperty<string?> TextProperty =
+		AvaloniaProperty.Register<PathEditor, string?>(
+			nameof(Text), defaultBindingMode: BindingMode.TwoWay);
 
-    public static readonly StyledProperty<ICommand?> SubmitCommandProperty =
-        AvaloniaProperty.Register<PathEditor, ICommand?>(nameof(SubmitCommand));
+	public static readonly StyledProperty<ICommand?> SubmitCommandProperty =
+		AvaloniaProperty.Register<PathEditor, ICommand?>(nameof(SubmitCommand));
 
-    public static readonly StyledProperty<ICommand?> RevertCommandProperty =
-        AvaloniaProperty.Register<PathEditor, ICommand?>(nameof(RevertCommand));
+	public static readonly StyledProperty<ICommand?> RevertCommandProperty =
+		AvaloniaProperty.Register<PathEditor, ICommand?>(nameof(RevertCommand));
 
-    public static readonly StyledProperty<ICommand?> NavigateCommandProperty =
-        AvaloniaProperty.Register<PathEditor, ICommand?>(nameof(NavigateCommand));
+	public static readonly StyledProperty<ICommand?> NavigateCommandProperty =
+		AvaloniaProperty.Register<PathEditor, ICommand?>(nameof(NavigateCommand));
 
-    public static readonly StyledProperty<bool> IsEditingProperty =
-        AvaloniaProperty.Register<PathEditor, bool>(nameof(IsEditing));
+	public static readonly StyledProperty<bool> IsEditingProperty =
+		AvaloniaProperty.Register<PathEditor, bool>(nameof(IsEditing));
 
-    private bool _pressedOnSegment;
+	public static readonly StyledProperty<string?> SearchTermProperty =
+		AvaloniaProperty.Register<PathEditor, string?>(
+			nameof(SearchTerm), defaultBindingMode: BindingMode.TwoWay);
 
-    public PathEditor()
-    {
-        InitializeComponent();
-        RebuildSegments();
+	public static readonly StyledProperty<string?> SearchPlaceholderProperty =
+		AvaloniaProperty.Register<PathEditor, string?>(nameof(SearchPlaceholder));
 
-        AddHandler(PointerPressedEvent, OnTunnelPointerPressed, RoutingStrategies.Tunnel);
-    }
+	public static readonly StyledProperty<ICommand?> SearchCommandProperty =
+		AvaloniaProperty.Register<PathEditor, ICommand?>(nameof(SearchCommand));
 
-    public ObservableCollection<PathSegment> Segments { get; } = [];
+	public static readonly StyledProperty<ICommand?> ClearSearchCommandProperty =
+		AvaloniaProperty.Register<PathEditor, ICommand?>(nameof(ClearSearchCommand));
 
-    public string? Text
-    {
-        get => GetValue(TextProperty);
-        set => SetValue(TextProperty, value);
-    }
+	public static readonly StyledProperty<bool> IsSearchingProperty =
+		AvaloniaProperty.Register<PathEditor, bool>(nameof(IsSearching));
 
-    public ICommand? SubmitCommand
-    {
-        get => GetValue(SubmitCommandProperty);
-        set => SetValue(SubmitCommandProperty, value);
-    }
+	private bool _pressedOnSearchButton;
 
-    public ICommand? RevertCommand
-    {
-        get => GetValue(RevertCommandProperty);
-        set => SetValue(RevertCommandProperty, value);
-    }
+	private bool _pressedOnSegment;
 
-    public ICommand? NavigateCommand
-    {
-        get => GetValue(NavigateCommandProperty);
-        set => SetValue(NavigateCommandProperty, value);
-    }
+	public PathEditor()
+	{
+		InitializeComponent();
+		RebuildSegments();
 
-    public bool IsEditing
-    {
-        get => GetValue(IsEditingProperty);
-        set => SetValue(IsEditingProperty, value);
-    }
+		AddHandler(PointerPressedEvent, OnTunnelPointerPressed, RoutingStrategies.Tunnel);
+	}
 
-    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
-    {
-        base.OnPropertyChanged(change);
+	public ObservableCollection<PathSegment> Segments { get; } = [];
 
-        if (change.Property == TextProperty)
-            RebuildSegments();
-    }
+	public string? Text
+	{
+		get => GetValue(TextProperty);
+		set => SetValue(TextProperty, value);
+	}
 
-    private void RebuildSegments()
-    {
-        Segments.Clear();
+	public ICommand? SubmitCommand
+	{
+		get => GetValue(SubmitCommandProperty);
+		set => SetValue(SubmitCommandProperty, value);
+	}
 
-        if (string.IsNullOrWhiteSpace(Text))
-            return;
+	public ICommand? RevertCommand
+	{
+		get => GetValue(RevertCommandProperty);
+		set => SetValue(RevertCommandProperty, value);
+	}
 
-        if (string.Equals(Text, NavigationService.HomePath, StringComparison.OrdinalIgnoreCase))
-        {
-            Segments.Add(new PathSegment("Accueil", NavigationService.HomePath, true));
-            return;
-        }
+	public ICommand? NavigateCommand
+	{
+		get => GetValue(NavigateCommandProperty);
+		set => SetValue(NavigateCommandProperty, value);
+	}
 
-        try
-        {
-            var chain = new List<DirectoryInfo>();
-            for (DirectoryInfo? dir = new(Text); dir is not null; dir = dir.Parent)
-                chain.Add(dir);
-            chain.Reverse();
+	public bool IsEditing
+	{
+		get => GetValue(IsEditingProperty);
+		set => SetValue(IsEditingProperty, value);
+	}
 
-            for (var i = 0; i < chain.Count; i++)
-            {
-                var dir = chain[i];
-                var name = string.IsNullOrEmpty(dir.Name) ? dir.FullName : dir.Name;
-                Segments.Add(new PathSegment(name, dir.FullName, i == 0));
-            }
-        }
-        catch
-        {
-        }
-    }
+	public string? SearchTerm
+	{
+		get => GetValue(SearchTermProperty);
+		set => SetValue(SearchTermProperty, value);
+	}
 
-    private void OnTunnelPointerPressed(object? sender, PointerPressedEventArgs e)
-    {
-        _pressedOnSegment = e.Source is Visual source &&
-                            source.GetSelfAndVisualAncestors().Any(v => v is BreadcrumbItem);
-    }
+	public string? SearchPlaceholder
+	{
+		get => GetValue(SearchPlaceholderProperty);
+		set => SetValue(SearchPlaceholderProperty, value);
+	}
 
-    private void OnBreadcrumbPressed(object? sender, PointerPressedEventArgs e)
-    {
-        if (_pressedOnSegment)
-            return;
+	public ICommand? SearchCommand
+	{
+		get => GetValue(SearchCommandProperty);
+		set => SetValue(SearchCommandProperty, value);
+	}
 
-        if (string.Equals(Text, NavigationService.HomePath, StringComparison.OrdinalIgnoreCase))
-            return;
+	public ICommand? ClearSearchCommand
+	{
+		get => GetValue(ClearSearchCommandProperty);
+		set => SetValue(ClearSearchCommandProperty, value);
+	}
 
-        IsEditing = true;
-        Dispatcher.UIThread.Post(() =>
-        {
-            InputBox.Focus();
-            InputBox.SelectAll();
-        });
-    }
+	public bool IsSearching
+	{
+		get => GetValue(IsSearchingProperty);
+		set => SetValue(IsSearchingProperty, value);
+	}
 
-    private void OnClearClick(object? sender, RoutedEventArgs e)
-    {
-        Text = string.Empty;
-        InputBox.Focus();
-    }
+	protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+	{
+		base.OnPropertyChanged(change);
 
-    private void OnInputKeyDown(object? sender, KeyEventArgs e)
-    {
-        switch (e.Key)
-        {
-            case Key.Enter:
-                if (SubmitCommand?.CanExecute(null) == true)
-                    SubmitCommand.Execute(null);
-                IsEditing = false;
-                e.Handled = true;
-                break;
+		if (change.Property == TextProperty)
+		{
+			RebuildSegments();
+			IsSearching = false;
+		}
+	}
 
-            case Key.Escape:
-                if (RevertCommand?.CanExecute(null) == true)
-                    RevertCommand.Execute(null);
-                IsEditing = false;
-                e.Handled = true;
-                break;
-        }
-    }
+	private void RebuildSegments()
+	{
+		Segments.Clear();
 
-    private void OnInputLostFocus(object? sender, RoutedEventArgs e)
-    {
-        if (RevertCommand?.CanExecute(null) == true)
-            RevertCommand.Execute(null);
+		if (string.IsNullOrWhiteSpace(Text))
+			return;
 
-        IsEditing = false;
-    }
+		if (string.Equals(Text, NavigationService.HomePath, StringComparison.OrdinalIgnoreCase))
+		{
+			Segments.Add(new PathSegment("Accueil", NavigationService.HomePath, true));
+			return;
+		}
+
+		try
+		{
+			var chain = new List<DirectoryInfo>();
+			for (DirectoryInfo? dir = new(Text); dir is not null; dir = dir.Parent)
+				chain.Add(dir);
+			chain.Reverse();
+
+			for (var i = 0; i < chain.Count; i++)
+			{
+				var dir = chain[i];
+				var name = string.IsNullOrEmpty(dir.Name) ? dir.FullName : dir.Name;
+				Segments.Add(new PathSegment(name, dir.FullName, i == 0));
+			}
+		}
+		catch
+		{
+		}
+	}
+
+	private void OnTunnelPointerPressed(object? sender, PointerPressedEventArgs e)
+	{
+		_pressedOnSegment = e.Source is Visual source &&
+		                    source.GetSelfAndVisualAncestors().Any(v => v is BreadcrumbItem);
+
+		_pressedOnSearchButton = e.Source is Visual searchSource &&
+		                         searchSource.GetSelfAndVisualAncestors().Any(v => v == SearchButton);
+	}
+
+	private void OnBreadcrumbPressed(object? sender, PointerPressedEventArgs e)
+	{
+		if (_pressedOnSegment || _pressedOnSearchButton)
+			return;
+
+		if (string.Equals(Text, NavigationService.HomePath, StringComparison.OrdinalIgnoreCase))
+			return;
+
+		IsEditing = true;
+		Dispatcher.UIThread.Post(() =>
+		{
+			InputBox.Focus();
+			InputBox.SelectAll();
+		});
+	}
+
+	private void OnSearchClick(object? sender, RoutedEventArgs e)
+	{
+		IsSearching = true;
+		Dispatcher.UIThread.Post(() =>
+		{
+			SearchBox.Focus();
+			SearchBox.SelectAll();
+		});
+	}
+
+	private void OnSearchKeyDown(object? sender, KeyEventArgs e)
+	{
+		switch (e.Key)
+		{
+			case Key.Enter:
+				if (SearchCommand?.CanExecute(null) == true)
+					SearchCommand.Execute(null);
+				e.Handled = true;
+				break;
+
+			case Key.Escape:
+				CloseSearch();
+				e.Handled = true;
+				break;
+		}
+	}
+
+	private void OnSearchClearClick(object? sender, RoutedEventArgs e)
+	{
+		CloseSearch();
+	}
+
+	private void CloseSearch()
+	{
+		if (ClearSearchCommand?.CanExecute(null) == true)
+			ClearSearchCommand.Execute(null);
+
+		IsSearching = false;
+	}
+
+	private void OnClearClick(object? sender, RoutedEventArgs e)
+	{
+		Text = string.Empty;
+		InputBox.Focus();
+	}
+
+	private void OnInputKeyDown(object? sender, KeyEventArgs e)
+	{
+		switch (e.Key)
+		{
+			case Key.Enter:
+				if (SubmitCommand?.CanExecute(null) == true)
+					SubmitCommand.Execute(null);
+				IsEditing = false;
+				e.Handled = true;
+				break;
+
+			case Key.Escape:
+				if (RevertCommand?.CanExecute(null) == true)
+					RevertCommand.Execute(null);
+				IsEditing = false;
+				e.Handled = true;
+				break;
+		}
+	}
+
+	private void OnInputLostFocus(object? sender, RoutedEventArgs e)
+	{
+		if (RevertCommand?.CanExecute(null) == true)
+			RevertCommand.Execute(null);
+
+		IsEditing = false;
+	}
 }
