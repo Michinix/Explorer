@@ -99,12 +99,9 @@
 						                   EntryPath="{Binding SelectedEntry?.FullPath}"
 						                   IsVisible="{Binding !SelectedEntry?.IsImage}" />
 
-						<controls:FileIcon Width="220"
-						                   HorizontalAlignment="Center"
-						                   VerticalAlignment="Top"
+						<controls:FileIcon Padding="10"
 						                   IsDirectory="False"
-						                   EntryPath="{Binding SelectedEntry?.FullPath}"
-						                   IsVisible="{Binding SelectedEntry?.IsImage}" />
+						                   EntryPath="{Binding SelectedEntry?.FullPath}" />
 
 						<TextBlock Text="{Binding SelectedEntry?.Name}"
 						           MaxWidth="198"
