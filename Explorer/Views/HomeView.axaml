@@ -5,46 +5,53 @@
              xmlns:vm="using:Explorer.ViewModels"
              xmlns:controls="using:Explorer.Controls"
              xmlns:primitives="using:Explorer.Controls.Primitives"
+             xmlns:converters="using:Avalonia.Data.Converters"
              mc:Ignorable="d"
              x:Class="Explorer.Views.HomeView"
              x:DataType="vm:HomeViewModel">
 
-    <Grid RowDefinitions="Auto, *, Auto">
+	<Grid RowDefinitions="Auto, *, Auto">
 
-        <StackPanel Grid.Row="0">
-            <primitives:Chrome Height="40" />
-            <controls:NavBar DataContext="{Binding NavBar}" />
-        </StackPanel>
+		<StackPanel Grid.Row="0">
+			<primitives:Chrome Height="40" />
+			<controls:NavBar DataContext="{Binding NavBar}" />
+		</StackPanel>
 
-        <Grid Grid.Row="1" ColumnDefinitions="Auto, 2*, Auto">
+		<Grid Grid.Row="1" ColumnDefinitions="Auto, 2*, Auto">
 
-            <controls:AsideLeft Grid.Column="0"
-                                Width="220"
-                                DataContext="{Binding AsideLeft}" />
+			<controls:AsideLeft Grid.Column="0"
+			                    Width="220"
+			                    DataContext="{Binding AsideLeft}" />
 
-            <Grid Grid.Column="1" RowDefinitions="Auto, *">
-                <controls:Toolbar Grid.Row="0" DataContext="{Binding NavBar}"
-                                  IsVisible="{Binding !IsVisible, ElementName=HomeContentView}" />
+			<Grid Grid.Column="1" RowDefinitions="Auto, *">
+				<controls:Toolbar Grid.Row="0" DataContext="{Binding NavBar}"
+				                  IsVisible="{Binding !IsVisible, ElementName=HomeContentView}" />
 
-                <controls:DataGrid Grid.Row="1" DataContext="{Binding DataGrid}"
-                                   IsVisible="{Binding !IsVisible, ElementName=HomeContentView}" />
+				<controls:FileBrowser Grid.Row="1" DataContext="{Binding FileBrowser}"
+				                      IsVisible="{Binding !IsVisible, ElementName=HomeContentView}" />
 
-                <controls:HomeContent Grid.Row="0" Grid.RowSpan="2"
-                                      x:Name="HomeContentView"
-                                      DataContext="{Binding HomeContent}"
-                                      IsVisible="{Binding IsActive}" />
-            </Grid>
+				<controls:HomeContent Grid.Row="0" Grid.RowSpan="2"
+				                      x:Name="HomeContentView"
+				                      DataContext="{Binding HomeContent}"
+				                      IsVisible="{Binding IsActive}" />
+			</Grid>
 
-            <controls:AsideRight Grid.Column="2"
-                                 Width="220"
-                                 IsVisible="{Binding !IsVisible, ElementName=HomeContentView}"
-                                 DataContext="{Binding DataGrid}" />
-        </Grid>
+			<controls:AsideRight Grid.Column="2"
+			                     Width="220"
+			                     DataContext="{Binding FileBrowser}">
+				<controls:AsideRight.IsVisible>
+					<MultiBinding Converter="{x:Static converters:BoolConverters.And}">
+						<Binding Path="!IsVisible" ElementName="HomeContentView" />
+						<Binding Path="IsDetailsPaneVisible" />
+					</MultiBinding>
+				</controls:AsideRight.IsVisible>
+			</controls:AsideRight>
+		</Grid>
 
-        <controls:Footer Grid.Row="2" DataContext="{Binding DataGrid}" />
+		<controls:Footer Grid.Row="2" DataContext="{Binding FileBrowser}" />
 
-        <primitives:FilePreviewModal Grid.Row="0" Grid.RowSpan="3"
-                                     IsOpen="{Binding DataGrid.IsPreviewOpen, Mode=TwoWay}"
-                                     Entry="{Binding DataGrid.SelectedEntry}" />
-    </Grid>
+		<primitives:FilePreviewModal Grid.Row="0" Grid.RowSpan="3"
+		                             IsOpen="{Binding FileBrowser.IsPreviewOpen, Mode=TwoWay}"
+		                             Entry="{Binding FileBrowser.SelectedEntry}" />
+	</Grid>
 </UserControl>

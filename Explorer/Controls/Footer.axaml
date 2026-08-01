@@ -6,38 +6,38 @@
              mc:Ignorable="d"
              x:Name="FooterControl"
              x:Class="Explorer.Controls.Footer"
-             x:DataType="vm:DataGridViewModel">
+             x:DataType="vm:FileBrowserViewModel">
 
-    <Border Background="Transparent"
-            BorderThickness="0,1,0,0"
-            BorderBrush="{StaticResource BorderDefault}">
+	<Border Background="Transparent"
+	        BorderThickness="0,1,0,0"
+	        BorderBrush="{StaticResource BorderDefault}">
 
-        <Grid ColumnDefinitions="*, Auto" Margin="15, 10">
-            <StackPanel Grid.Column="0"
-                        Orientation="Horizontal"
-                        VerticalAlignment="Center"
-                        Spacing="6">
+		<Grid ColumnDefinitions="*, Auto" Margin="15, 10">
+			<StackPanel Grid.Column="0"
+			            Orientation="Horizontal"
+			            VerticalAlignment="Center"
+			            Spacing="6">
 
-                <StackPanel Orientation="Horizontal" Spacing="6">
-                    <TextBlock FontSize="11"
-                               Text="{Binding ItemCountText}" />
+				<StackPanel Orientation="Horizontal" Spacing="6">
+					<TextBlock FontSize="11"
+					           Text="{Binding ItemCountText}" />
 
-                    <TextBlock FontSize="11" Text="-" VerticalAlignment="Center" />
+					<TextBlock FontSize="11" Text="-" VerticalAlignment="Center" />
 
-                    <TextBlock FontSize="11"
-                               Text="{Binding SelectedItemCountText}" />
-                </StackPanel>
+					<TextBlock FontSize="11"
+					           Text="{Binding SelectedItemCountText}" />
+				</StackPanel>
 
-            </StackPanel>
+			</StackPanel>
 
-            <StackPanel Grid.Column="1"
-                        Orientation="Horizontal"
-                        VerticalAlignment="Center">
+			<StackPanel Grid.Column="1"
+			            Orientation="Horizontal"
+			            VerticalAlignment="Center">
 
-                <TextBlock FontSize="11">
-                    Explorer v1.0.0
-                </TextBlock>
-            </StackPanel>
-        </Grid>
-    </Border>
+				<TextBlock FontSize="11">
+					Explorer v1.0.0
+				</TextBlock>
+			</StackPanel>
+		</Grid>
+	</Border>
 </UserControl>

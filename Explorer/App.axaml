@@ -5,30 +5,31 @@
              x:Class="Explorer.App"
              RequestedThemeVariant="Default">
 
-    <Application.DataTemplates>
-        <local:ViewLocator />
-    </Application.DataTemplates>
+	<Application.DataTemplates>
+		<local:ViewLocator />
+	</Application.DataTemplates>
 
-    <Application.Resources>
-        <ResourceDictionary>
-            <FontFamily x:Key="DmSansFont">avares://Explorer/Assets/Fonts/#DM Sans</FontFamily>
-            <StaticResource x:Key="DefaultFontFamily" ResourceKey="DmSansFont" />
+	<Application.Resources>
+		<ResourceDictionary>
+			<FontFamily x:Key="DmSansFont">avares://Explorer/Assets/Fonts/#DM Sans</FontFamily>
+			<StaticResource x:Key="DefaultFontFamily" ResourceKey="DmSansFont" />
 
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="avares://Explorer/Theme/Colors.axaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Application.Resources>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceInclude Source="avares://Explorer/Theme/Colors.axaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Application.Resources>
 
-    <Application.Styles>
-        <semi:SemiTheme Locale="fr-FR" />
-        <semi:UrsaSemiTheme Locale="fr-FR" />
+	<Application.Styles>
+		<semi:SemiTheme Locale="fr-FR" />
+		<semi:UrsaSemiTheme Locale="fr-FR" />
 
-        <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Simple.xaml" />
-        <StyleInclude Source="avares://Explorer/Theme/DataGrid.axaml" />
-        <StyleInclude Source="avares://Explorer/Theme/Checkbox.axaml" />
-        <StyleInclude Source="avares://Explorer/Theme/Button.axaml" />
-        <StyleInclude Source="avares://Explorer/Theme/TextBox.axaml" />
-        <StyleInclude Source="avares://Explorer/Theme/Expander.axaml" />
-    </Application.Styles>
+		<StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Simple.xaml" />
+		<StyleInclude Source="avares://Explorer/Theme/DataGrid.axaml" />
+		<StyleInclude Source="avares://Explorer/Theme/Checkbox.axaml" />
+		<StyleInclude Source="avares://Explorer/Theme/Button.axaml" />
+		<StyleInclude Source="avares://Explorer/Theme/TextBox.axaml" />
+		<StyleInclude Source="avares://Explorer/Theme/Expander.axaml" />
+		<StyleInclude Source="avares://Explorer/Theme/ContextMenu.axaml" />
+	</Application.Styles>
 </Application>

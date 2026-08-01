@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -11,43 +13,71 @@ namespace Explorer.ViewModels;
 
 public partial class HomeContentViewModel : ViewModelBase
 {
-    private readonly NavigationService _navigation;
+	private readonly NavigationService _navigation;
+	private readonly SettingsService _settings;
 
-    [ObservableProperty] private bool _isActive;
-    [ObservableProperty] private IReadOnlyList<QuickAccessItem> _quickAccess = [];
+	[ObservableProperty] [NotifyPropertyChangedFor(nameof(HasCloudStorage))]
+	private IReadOnlyList<DriveItem> _cloudStorage = [];
 
-    public HomeContentViewModel(NavigationService navigation)
-    {
-        _navigation = navigation;
+	[ObservableProperty] private IReadOnlyList<DriveItem> _drives = [];
 
-        QuickAccess = BuildQuickAccess();
-        IsActive = string.Equals(navigation.CurrentPath, NavigationService.HomePath,
-            StringComparison.OrdinalIgnoreCase);
+	[ObservableProperty] private bool _isActive;
 
-        WeakReferenceMessenger.Default.Register<CurrentPathChangedMessage>(this, (_, message) =>
-            IsActive = string.Equals(message.NewPath, NavigationService.HomePath, StringComparison.OrdinalIgnoreCase));
-    }
+	public HomeContentViewModel(NavigationService navigation, SettingsService settings)
+	{
+		_navigation = navigation;
+		_settings = settings;
 
-    private static IReadOnlyList<QuickAccessItem> BuildQuickAccess()
-    {
-        var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+		RecentFiles.CollectionChanged += (_, _) => OnPropertyChanged(nameof(HasRecentFiles));
 
-        return
-        [
-            new QuickAccessItem("Bureau", "/Assets/Icons/Desktop.svg", "path { stroke: white }",
-                Environment.GetFolderPath(Environment.SpecialFolder.Desktop)),
-            new QuickAccessItem("Téléchargements", "/Assets/Icons/Download.svg", "path { fill: white }",
-                Path.Combine(userProfile, "Downloads")),
-            new QuickAccessItem("Documents", "/Assets/Icons/Document.svg", "path { stroke: white }",
-                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)),
-            new QuickAccessItem("Images", "/Assets/Icons/Picture.svg", "path { stroke: white }",
-                Environment.GetFolderPath(Environment.SpecialFolder.MyPictures))
-        ];
-    }
+		_ = LoadDrivesAsync();
+		_ = LoadCloudStorageAsync();
+		IsActive = string.Equals(navigation.CurrentPath, NavigationService.HomePath,
+			StringComparison.OrdinalIgnoreCase);
 
-    [RelayCommand]
-    private void OpenQuickAccess(string path)
-    {
-        _navigation.NavigateTo(path);
-    }
+		WeakReferenceMessenger.Default.Register<CurrentPathChangedMessage>(this, (_, message) =>
+			IsActive = string.Equals(message.NewPath, NavigationService.HomePath, StringComparison.OrdinalIgnoreCase));
+	}
+
+	public bool HasCloudStorage => CloudStorage.Count > 0;
+
+	public ObservableCollection<PinnedItem> PinnedItems => _settings.PinnedItems;
+	public ObservableCollection<RecentFile> RecentFiles => _settings.RecentFiles;
+
+	public bool HasRecentFiles => RecentFiles.Count > 0;
+
+	private async Task LoadDrivesAsync()
+	{
+		Drives = await FileSystemService.GetDrivesAsync();
+	}
+
+	private async Task LoadCloudStorageAsync()
+	{
+		CloudStorage = await FileSystemService.GetCloudStorageAsync();
+	}
+
+	[RelayCommand]
+	private void OpenQuickAccess(string path)
+	{
+		_navigation.NavigateTo(path);
+	}
+
+	[RelayCommand]
+	private void RemovePinned(string path)
+	{
+		_settings.RemovePinned(path);
+	}
+
+	[RelayCommand]
+	private async Task OpenRecent(string path)
+	{
+		try
+		{
+			await FileSystemService.LaunchFileAsync(path);
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine(ex.Message);
+		}
+	}
 }

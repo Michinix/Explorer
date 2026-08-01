@@ -1,0 +1,134 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Name="HomeCardControl"
+             x:Class="Explorer.Controls.Primitives.HomeCard">
+
+	<UserControl.Styles>
+		<Style Selector="Button.card">
+			<Setter Property="Background" Value="{StaticResource SurfaceElevated}" />
+			<Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
+			<Setter Property="BorderThickness" Value="1" />
+			<Setter Property="CornerRadius" Value="4" />
+			<Setter Property="Padding" Value="14" />
+			<Setter Property="Width" Value="245" />
+			<Setter Property="Height" Value="90" />
+			<Setter Property="Cursor" Value="Hand" />
+			<Setter Property="Foreground" Value="{StaticResource ColorWhiteBrush}" />
+			<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+			<Setter Property="VerticalContentAlignment" Value="Stretch" />
+		</Style>
+
+		<Style Selector="Button.card:pointerover /template/ ContentPresenter">
+			<Setter Property="Background" Value="{StaticResource SurfaceOverlay}" />
+			<Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
+			<Setter Property="CornerRadius" Value="4" />
+		</Style>
+
+		<Style Selector="Button.card Svg">
+			<Setter Property="Width" Value="22" />
+			<Setter Property="Height" Value="22" />
+			<Setter Property="HorizontalAlignment" Value="Center" />
+			<Setter Property="IsHitTestVisible" Value="False" />
+		</Style>
+
+		<Style Selector="Button.card TextBlock">
+			<Setter Property="FontSize" Value="12" />
+			<Setter Property="FontWeight" Value="Normal" />
+			<Setter Property="HorizontalAlignment" Value="Center" />
+			<Setter Property="TextAlignment" Value="Center" />
+			<Setter Property="TextTrimming" Value="CharacterEllipsis" />
+		</Style>
+
+		<Style Selector="Button.card.drive">
+			<Setter Property="Width" Value="NaN" />
+			<Setter Property="MinWidth" Value="245" />
+			<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+			<Setter Property="VerticalContentAlignment" Value="Center" />
+			<Setter Property="Padding" Value="18" />
+		</Style>
+
+		<Style Selector="Button.card.drive Svg">
+			<Setter Property="Width" Value="16" />
+			<Setter Property="Height" Value="16" />
+			<Setter Property="HorizontalAlignment" Value="Left" />
+			<Setter Property="VerticalAlignment" Value="Center" />
+		</Style>
+
+		<Style Selector="Button.card.drive TextBlock">
+			<Setter Property="FontSize" Value="13" />
+			<Setter Property="HorizontalAlignment" Value="Left" />
+			<Setter Property="TextAlignment" Value="Left" />
+		</Style>
+
+		<Style Selector="Button.card.drive TextBlock.detail">
+			<Setter Property="FontSize" Value="11" />
+		</Style>
+
+		<Style Selector="Button.card.drive ProgressBar">
+			<Setter Property="Height" Value="1" />
+			<Setter Property="CornerRadius" Value="1" />
+			<Setter Property="Background" Value="{StaticResource SurfaceHighlight}" />
+			<Setter Property="Foreground" Value="{StaticResource AccentPrimary}" />
+			<Setter Property="IsHitTestVisible" Value="False" />
+		</Style>
+
+		<Style Selector="Button.card.drive ProgressBar.warning">
+			<Setter Property="Foreground" Value="{StaticResource StatusWarning}" />
+		</Style>
+
+		<Style Selector="Button.card.drive ProgressBar.critical">
+			<Setter Property="Foreground" Value="{StaticResource StatusCritical}" />
+		</Style>
+	</UserControl.Styles>
+
+	<Button Classes="card"
+	        Classes.drive="{Binding IsDrive, ElementName=HomeCardControl}"
+	        Command="{Binding Command, ElementName=HomeCardControl}"
+	        CommandParameter="{Binding CommandParameter, ElementName=HomeCardControl}">
+		<Panel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+			<StackPanel Orientation="Vertical"
+			            Spacing="10"
+			            HorizontalAlignment="Center"
+			            VerticalAlignment="Center"
+			            IsVisible="{Binding !IsDrive, ElementName=HomeCardControl}">
+				<Svg Path="{Binding IconPath, ElementName=HomeCardControl}"
+				     Css="{Binding IconCss, ElementName=HomeCardControl}" />
+				<TextBlock Text="{Binding Text, ElementName=HomeCardControl}" />
+			</StackPanel>
+
+			<Grid ColumnDefinitions="Auto,*"
+			      VerticalAlignment="Center"
+			      ColumnSpacing="12"
+			      IsVisible="{Binding IsDrive, ElementName=HomeCardControl}">
+				<Svg Grid.Column="0" Path="{Binding IconPath, ElementName=HomeCardControl}"
+				     Css="{Binding IconCss, ElementName=HomeCardControl}" />
+
+				<StackPanel Grid.Column="1"
+				            Orientation="Vertical"
+				            Spacing="8"
+				            Margin="12,0,0,0"
+				            VerticalAlignment="Center">
+					<TextBlock Text="{Binding Text, ElementName=HomeCardControl}" />
+					<ProgressBar Minimum="0"
+					             Maximum="100"
+					             Value="{Binding Progress, ElementName=HomeCardControl}"
+					             Classes.warning="{Binding IsProgressWarning, ElementName=HomeCardControl}"
+					             Classes.critical="{Binding IsProgressCritical, ElementName=HomeCardControl}" />
+					<TextBlock Classes="detail"
+					           Text="{Binding Detail, ElementName=HomeCardControl}" />
+				</StackPanel>
+			</Grid>
+
+			<Svg Path="/Assets/Icons/Pin.svg"
+			     Width="13" Height="13"
+			     Opacity="0.6"
+			     HorizontalAlignment="Right"
+			     VerticalAlignment="Top"
+			     Css="path { stroke: white }"
+			     IsVisible="{Binding IsPinned, ElementName=HomeCardControl}" />
+		</Panel>
+	</Button>
+</UserControl>

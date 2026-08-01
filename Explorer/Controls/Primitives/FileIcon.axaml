@@ -4,20 +4,27 @@
              x:Name="FileIconControl"
              x:Class="Explorer.Controls.Primitives.FileIcon">
 
-    <Viewbox Stretch="Uniform">
-        <Grid Width="16" Height="18">
+	<Grid>
+		<Viewbox Stretch="Uniform"
+		         IsVisible="{Binding !HasOsIcon, RelativeSource={RelativeSource AncestorType={x:Type local:FileIcon}}}">
+			<Grid Width="16" Height="18">
+				<Svg Path="/Assets/Icons/Directory.svg"
+				     Width="16"
+				     Stretch="Uniform"
+				     Css="path { fill: #00AAFF}"
+				     IsVisible="{Binding IsDirectory, RelativeSource={RelativeSource AncestorType={x:Type local:FileIcon}}}" />
 
-            <Svg Path="/Assets/Icons/Directory.svg"
-                 Width="16"
-                 Stretch="Uniform"
-                 Css="path { fill: #00AAFF}"
-                 IsVisible="{Binding IsDirectory, RelativeSource={RelativeSource AncestorType={x:Type local:FileIcon}}}" />
+				<Svg Path="/Assets/Icons/File.svg"
+				     Width="14"
+				     Stretch="Uniform"
+				     Css="path { stroke: white }"
+				     IsVisible="{Binding !IsDirectory, RelativeSource={RelativeSource AncestorType={x:Type local:FileIcon}}}" />
+			</Grid>
+		</Viewbox>
 
-            <Svg Path="/Assets/Icons/File.svg"
-                 Width="14"
-                 Stretch="Uniform"
-                 Css="path { stroke: white }"
-                 IsVisible="{Binding !IsDirectory, RelativeSource={RelativeSource AncestorType={x:Type local:FileIcon}}}" />
-        </Grid>
-    </Viewbox>
+		<Image Source="{Binding OsIcon, RelativeSource={RelativeSource AncestorType={x:Type local:FileIcon}}}"
+		       IsVisible="{Binding HasOsIcon, RelativeSource={RelativeSource AncestorType={x:Type local:FileIcon}}}"
+		       Stretch="Uniform"
+		       RenderOptions.BitmapInterpolationMode="HighQuality" />
+	</Grid>
 </UserControl>

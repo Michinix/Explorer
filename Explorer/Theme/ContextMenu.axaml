@@ -1,0 +1,29 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+	<Style Selector="ContextMenu">
+		<Setter Property="Background" Value="{StaticResource SurfaceElevated}" />
+		<Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="CornerRadius" Value="6" />
+		<Setter Property="Padding" Value="4" />
+		<Setter Property="MinWidth" Value="190" />
+		<Setter Property="Foreground" Value="{StaticResource ColorWhiteBrush}" />
+	</Style>
+
+	<Style Selector="ContextMenu MenuItem">
+		<Setter Property="Foreground" Value="{StaticResource ColorWhiteBrush}" />
+		<Setter Property="CornerRadius" Value="4" />
+		<Setter Property="Padding" Value="10,7" />
+		<Setter Property="FontSize" Value="13" />
+	</Style>
+
+	<Style Selector="ContextMenu MenuItem:pointerover /template/ Border#PART_LayoutRoot">
+		<Setter Property="Background" Value="{StaticResource SurfaceOverlay}" />
+	</Style>
+
+	<Style Selector="ContextMenu MenuItem:disabled">
+		<Setter Property="Opacity" Value="0.5" />
+	</Style>
+
+</Styles>

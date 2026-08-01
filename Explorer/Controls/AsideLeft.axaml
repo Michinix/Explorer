@@ -4,138 +4,180 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Explorer.ViewModels"
              xmlns:models="using:Explorer.Models"
+             xmlns:primitives="using:Explorer.Controls.Primitives"
              mc:Ignorable="d"
              x:Name="AsideLeftControl"
              x:Class="Explorer.Controls.AsideLeft"
              x:DataType="vm:AsideLeftViewModel">
 
-    <UserControl.Styles>
-        <Style Selector="Button > StackPanel > Svg">
-            <Setter Property="Width" Value="15" />
-            <Setter Property="Height" Value="15" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Css" Value="path { stroke: white }" />
-        </Style>
+	<UserControl.Styles>
+		<Style Selector="Button > StackPanel > Svg">
+			<Setter Property="Width" Value="15" />
+			<Setter Property="Height" Value="15" />
+			<Setter Property="VerticalAlignment" Value="Center" />
+			<Setter Property="Css" Value="path { stroke: white }" />
+		</Style>
 
-        <Style Selector="Button > StackPanel > TextBlock">
-            <Setter Property="FontSize" Value="13" />
-            <Setter Property="FontWeight" Value="Normal" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-        </Style>
+		<Style Selector="Button > StackPanel > TextBlock">
+			<Setter Property="FontSize" Value="13" />
+			<Setter Property="FontWeight" Value="Normal" />
+			<Setter Property="VerticalAlignment" Value="Center" />
+		</Style>
 
-        <Style Selector="Button > StackPanel">
-            <Setter Property="Orientation" Value="Horizontal" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Spacing" Value="10" />
-        </Style>
-    </UserControl.Styles>
+		<Style Selector="Button > StackPanel">
+			<Setter Property="Orientation" Value="Horizontal" />
+			<Setter Property="VerticalAlignment" Value="Center" />
+			<Setter Property="Spacing" Value="10" />
+		</Style>
+	</UserControl.Styles>
 
-    <Border BorderThickness="0,0,1,0"
-            BorderBrush="{StaticResource BorderDefault}">
+	<Border BorderThickness="0,0,1,0"
+	        BorderBrush="{StaticResource BorderDefault}">
 
-        <ScrollViewer VerticalScrollBarVisibility="Hidden"
-                      HorizontalScrollBarVisibility="Disabled"
-                      AllowAutoHide="True">
+		<ScrollViewer VerticalScrollBarVisibility="Hidden"
+		              HorizontalScrollBarVisibility="Disabled"
+		              AllowAutoHide="True">
 
-            <StackPanel Orientation="Vertical" Spacing="15" Margin="0,15,0,10">
+			<StackPanel Orientation="Vertical" Spacing="15" Margin="0,15,0,10">
 
-                <Border Margin="13,0,13,0">
-                    <Button Theme="{StaticResource SidebarButtonTheme}"
-                            Classes.active="{Binding IsHomeActive}"
-                            Command="{Binding NavigateToHomeCommand}">
-                        <StackPanel>
-                            <Svg Path="/Assets/Icons/Home.svg" />
-                            <TextBlock Text="Accueil" />
-                        </StackPanel>
-                    </Button>
-                </Border>
+				<Border Margin="13,0,13,0">
+					<Button Theme="{StaticResource SidebarButtonTheme}"
+					        Classes.active="{Binding IsHomeActive}"
+					        Command="{Binding NavigateToHomeCommand}">
+						<StackPanel>
+							<Svg Path="/Assets/Icons/Home.svg" />
+							<TextBlock Text="Accueil" />
+						</StackPanel>
+					</Button>
+				</Border>
 
-                <Expander x:Name="PinnedExpander" IsExpanded="True" Theme="{StaticResource AsideExpanderTheme}">
-                    <Expander.Header>
-                        <TextBlock Classes="SectionTitle" Text="Épinglé" />
-                    </Expander.Header>
+				<Expander x:Name="PinnedExpander" IsExpanded="True" Theme="{StaticResource AsideExpanderTheme}">
+					<Expander.Header>
+						<TextBlock Classes="SectionTitle" Text="Épinglé" />
+					</Expander.Header>
 
-                    <StackPanel Orientation="Vertical"
-                                Spacing="5"
-                                Margin="13,4,13,10"
-                                Tag="{Binding #PinnedExpander.IsExpanded}">
+					<ItemsControl ItemsSource="{Binding PinnedItems}"
+					              Margin="13,4,13,10"
+					              Tag="{Binding #PinnedExpander.IsExpanded}"
+					              ItemContainerTheme="{StaticResource DriveItemContainerTheme}">
+						<ItemsControl.Styles>
+							<Style Selector="ContentPresenter" x:DataType="models:PinnedItem">
+								<Setter Property="Classes.active" Value="{Binding IsActive}" />
+							</Style>
+						</ItemsControl.Styles>
+						<ItemsControl.ItemsPanel>
+							<ItemsPanelTemplate>
+								<StackPanel Orientation="Vertical" Spacing="5" />
+							</ItemsPanelTemplate>
+						</ItemsControl.ItemsPanel>
+						<ItemsControl.ItemTemplate>
+							<DataTemplate x:DataType="models:PinnedItem">
+								<Button Theme="{StaticResource SidebarButtonTheme}"
+								        Classes.active="{Binding IsActive}"
+								        Command="{Binding #AsideLeftControl.DataContext?.NavigateToDriveCommand}"
+								        CommandParameter="{Binding FullPath}"
+								        HorizontalContentAlignment="Stretch"
+								        x:CompileBindings="False">
+									<Grid ColumnDefinitions="Auto,*,Auto" VerticalAlignment="Center">
+										<Svg Grid.Column="0" Path="{Binding IconPath}" Css="{Binding IconCss}"
+										     Width="15" Height="15" VerticalAlignment="Center" />
+										<TextBlock Grid.Column="1" Text="{Binding DisplayName}"
+										           FontSize="13" VerticalAlignment="Center" Margin="10,0,0,0" />
+										<Svg Grid.Column="2" Path="/Assets/Icons/Pin.svg" Css="path { stroke: white }"
+										     Width="12" Height="12" Opacity="0.6" VerticalAlignment="Center"
+										     Margin="8,0,0,0" />
+									</Grid>
+									<Button.ContextMenu>
+										<ContextMenu>
+											<primitives:ActionMenuItem Text="Retirer des épinglés"
+											                           IconPath="/Assets/Icons/PinOff.svg"
+											                           Command="{Binding #AsideLeftControl.DataContext?.RemovePinnedCommand}"
+											                           CommandParameter="{Binding FullPath}"
+											                           x:CompileBindings="False" />
+										</ContextMenu>
+									</Button.ContextMenu>
+								</Button>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+				</Expander>
 
-                        <Button Theme="{StaticResource SidebarButtonTheme}"
-                                Classes.active="{Binding IsDesktopActive}"
-                                Command="{Binding NavigateToDesktopCommand}">
-                            <StackPanel>
-                                <Svg Path="/Assets/Icons/Desktop.svg" />
-                                <TextBlock Text="Bureau" />
-                            </StackPanel>
-                        </Button>
+				<Expander x:Name="DrivesExpander" IsExpanded="True" Theme="{StaticResource AsideExpanderTheme}">
+					<Expander.Header>
+						<TextBlock Classes="SectionTitle" Text="Lecteurs" />
+					</Expander.Header>
 
-                        <Button Theme="{StaticResource SidebarButtonTheme}"
-                                Classes.active="{Binding IsDownloadsActive}"
-                                Command="{Binding NavigateToDownloadsCommand}">
-                            <StackPanel>
-                                <Svg Path="/Assets/Icons/Download.svg" />
-                                <TextBlock Text="Téléchargements" />
-                            </StackPanel>
-                        </Button>
+					<ItemsControl ItemsSource="{Binding Drives}"
+					              Margin="13,4,13,10"
+					              Tag="{Binding #DrivesExpander.IsExpanded}"
+					              ItemContainerTheme="{StaticResource DriveItemContainerTheme}">
+						<ItemsControl.Styles>
+							<Style Selector="ContentPresenter" x:DataType="models:DriveItem">
+								<Setter Property="Classes.active" Value="{Binding IsActive}" />
+							</Style>
+						</ItemsControl.Styles>
+						<ItemsControl.ItemsPanel>
+							<ItemsPanelTemplate>
+								<StackPanel Orientation="Vertical" Spacing="5" />
+							</ItemsPanelTemplate>
+						</ItemsControl.ItemsPanel>
+						<ItemsControl.ItemTemplate>
+							<DataTemplate x:DataType="models:DriveItem">
+								<Button Theme="{StaticResource SidebarButtonTheme}"
+								        Classes.active="{Binding IsActive}"
+								        Command="{Binding #AsideLeftControl.DataContext?.NavigateToDriveCommand}"
+								        CommandParameter="{Binding FullPath}"
+								        x:CompileBindings="False">
+									<StackPanel>
+										<Svg Path="/Assets/Icons/Drive.svg" />
+										<TextBlock Text="{Binding DisplayName}"
+										           Foreground="{StaticResource ColorWhiteBrush}" />
+									</StackPanel>
+								</Button>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+				</Expander>
 
-                        <Button Theme="{StaticResource SidebarButtonTheme}"
-                                Classes.active="{Binding IsDocumentsActive}"
-                                Command="{Binding NavigateToDocumentsCommand}">
-                            <StackPanel>
-                                <Svg Path="/Assets/Icons/Document.svg" />
-                                <TextBlock Text="Documents" />
-                            </StackPanel>
-                        </Button>
+				<Expander x:Name="CloudExpander" IsExpanded="True" Theme="{StaticResource AsideExpanderTheme}"
+				          IsVisible="{Binding HasCloudStorage}">
+					<Expander.Header>
+						<TextBlock Classes="SectionTitle" Text="Cloud" />
+					</Expander.Header>
 
-                        <Button Theme="{StaticResource SidebarButtonTheme}"
-                                Classes.active="{Binding IsPicturesActive}"
-                                Command="{Binding NavigateToPicturesCommand}">
-                            <StackPanel>
-                                <Svg Path="/Assets/Icons/Picture.svg" />
-                                <TextBlock Text="Images" />
-                            </StackPanel>
-                        </Button>
-                    </StackPanel>
-                </Expander>
+					<ItemsControl ItemsSource="{Binding CloudStorage}"
+					              Margin="13,4,13,10"
+					              Tag="{Binding #CloudExpander.IsExpanded}"
+					              ItemContainerTheme="{StaticResource DriveItemContainerTheme}">
+						<ItemsControl.Styles>
+							<Style Selector="ContentPresenter" x:DataType="models:DriveItem">
+								<Setter Property="Classes.active" Value="{Binding IsActive}" />
+							</Style>
+						</ItemsControl.Styles>
+						<ItemsControl.ItemsPanel>
+							<ItemsPanelTemplate>
+								<StackPanel Orientation="Vertical" Spacing="5" />
+							</ItemsPanelTemplate>
+						</ItemsControl.ItemsPanel>
+						<ItemsControl.ItemTemplate>
+							<DataTemplate x:DataType="models:DriveItem">
+								<Button Theme="{StaticResource SidebarButtonTheme}"
+								        Classes.active="{Binding IsActive}"
+								        Command="{Binding #AsideLeftControl.DataContext?.NavigateToDriveCommand}"
+								        CommandParameter="{Binding FullPath}"
+								        x:CompileBindings="False">
+									<StackPanel>
+										<Svg Path="/Assets/Icons/Cloud.svg" />
+										<TextBlock Text="{Binding DisplayName}"
+										           Foreground="{StaticResource ColorWhiteBrush}" />
+									</StackPanel>
+								</Button>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+				</Expander>
 
-                <Expander x:Name="DrivesExpander" IsExpanded="True" Theme="{StaticResource AsideExpanderTheme}">
-                    <Expander.Header>
-                        <TextBlock Classes="SectionTitle" Text="Lecteurs" />
-                    </Expander.Header>
-
-                    <ItemsControl ItemsSource="{Binding Drives}"
-                                  Margin="13,4,13,10"
-                                  Tag="{Binding #DrivesExpander.IsExpanded}"
-                                  ItemContainerTheme="{StaticResource DriveItemContainerTheme}">
-                        <ItemsControl.Styles>
-                            <Style Selector="ContentPresenter" x:DataType="models:DriveItem">
-                                <Setter Property="Classes.active" Value="{Binding IsActive}" />
-                            </Style>
-                        </ItemsControl.Styles>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Vertical" Spacing="5" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate x:DataType="models:DriveItem">
-                                <Button Theme="{StaticResource SidebarButtonTheme}"
-                                        Classes.active="{Binding IsActive}"
-                                        Command="{Binding #AsideLeftControl.DataContext?.NavigateToDriveCommand}"
-                                        CommandParameter="{Binding FullPath}"
-                                        x:CompileBindings="False">
-                                    <StackPanel>
-                                        <Svg Path="/Assets/Icons/Drive.svg" />
-                                        <TextBlock Text="{Binding DisplayName}"
-                                                   Foreground="{StaticResource ColorWhiteBrush}" />
-                                    </StackPanel>
-                                </Button>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </Expander>
-
-            </StackPanel>
-        </ScrollViewer>
-    </Border>
+			</StackPanel>
+		</ScrollViewer>
+	</Border>
 </UserControl>

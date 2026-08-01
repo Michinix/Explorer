@@ -7,133 +7,147 @@
              mc:Ignorable="d"
              x:Name="AsideRightControl"
              x:Class="Explorer.Controls.AsideRight"
-             x:DataType="vm:DataGridViewModel">
+             x:DataType="vm:FileBrowserViewModel">
 
-    <UserControl.Styles>
-        <Style Selector="Button">
-            <Setter Property="Foreground" Value="{StaticResource ColorWhiteBrush}" />
-            <Setter Property="Background" Value="{StaticResource AccentPrimary}" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="MinHeight" Value="0" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="Padding" Value="8,5" />
-            <Setter Property="FontWeight" Value="Medium" />
-        </Style>
+	<UserControl.Styles>
+		<Style Selector="Button">
+			<Setter Property="Foreground" Value="{StaticResource ColorWhiteBrush}" />
+			<Setter Property="Background" Value="{StaticResource AccentPrimary}" />
+			<Setter Property="BorderThickness" Value="0" />
+			<Setter Property="MinHeight" Value="0" />
+			<Setter Property="HorizontalAlignment" Value="Stretch" />
+			<Setter Property="FontSize" Value="12" />
+			<Setter Property="Padding" Value="8,5" />
+			<Setter Property="FontWeight" Value="Medium" />
+		</Style>
 
-        <Style Selector="Button:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="{StaticResource AccentPrimary}" />
-            <Setter Property="Opacity" Value="0.90" />
-        </Style>
+		<Style Selector="Button:pointerover /template/ ContentPresenter">
+			<Setter Property="Background" Value="{StaticResource AccentPrimary}" />
+			<Setter Property="Opacity" Value="0.90" />
+		</Style>
 
-        <Style Selector="StackPanel.DetailField">
-            <Setter Property="Spacing" Value="4" />
-        </Style>
+		<Style Selector="StackPanel.DetailField">
+			<Setter Property="Spacing" Value="4" />
+		</Style>
 
-        <Style Selector="StackPanel.DetailField > TextBlock:nth-child(1)">
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="Foreground" Value="{StaticResource ColorWhiteBrush}" />
-            <Setter Property="FontSize" Value="12" />
-        </Style>
+		<Style Selector="StackPanel.DetailField > TextBlock:nth-child(1)">
+			<Setter Property="FontWeight" Value="SemiBold" />
+			<Setter Property="Foreground" Value="{StaticResource ColorWhiteBrush}" />
+			<Setter Property="FontSize" Value="12" />
+		</Style>
 
-        <Style Selector="StackPanel.DetailField > TextBlock:nth-child(2)">
-            <Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
-            <Setter Property="FontWeight" Value="Regular" />
-            <Setter Property="FontSize" Value="12" />
-        </Style>
+		<Style Selector="StackPanel.DetailField > TextBlock:nth-child(2)">
+			<Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
+			<Setter Property="FontWeight" Value="Regular" />
+			<Setter Property="FontSize" Value="12" />
+		</Style>
 
-        <Style Selector="Border.Divider">
-            <Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
-            <Setter Property="BorderThickness" Value="0,1,0,0" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="Margin" Value="10,0" />
-        </Style>
-    </UserControl.Styles>
+		<Style Selector="Border.Divider">
+			<Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
+			<Setter Property="BorderThickness" Value="0,1,0,0" />
+			<Setter Property="HorizontalAlignment" Value="Stretch" />
+			<Setter Property="Margin" Value="10,0" />
+		</Style>
+	</UserControl.Styles>
 
-    <Border BorderThickness="1,0,0,0"
-            BorderBrush="{StaticResource BorderDefault}">
+	<Border BorderThickness="1,0,0,0"
+	        BorderBrush="{StaticResource BorderDefault}">
 
-        <Grid RowDefinitions="45,*">
-            <Border Grid.Row="0"
-                    BorderThickness="0,0,0,1"
-                    BorderBrush="{StaticResource BorderDefault}">
+		<Grid RowDefinitions="45,*">
+			<Border Grid.Row="0"
+			        BorderThickness="0,0,0,1"
+			        BorderBrush="{StaticResource BorderDefault}">
 
-                <Grid VerticalAlignment="Center" Margin="13,0">
-                    <TextBlock Text="APERÇU"
-                               FontWeight="Medium"
-                               FontSize="14"
-                               Foreground="{StaticResource ColorWhite}" />
-                </Grid>
-            </Border>
+				<Grid VerticalAlignment="Center" Margin="13,0">
+					<TextBlock Text="APERÇU"
+					           FontWeight="Medium"
+					           FontSize="14"
+					           Foreground="{StaticResource ColorWhite}" />
+				</Grid>
+			</Border>
 
-            <Grid Grid.Row="1">
-                <StackPanel IsVisible="{Binding SelectedEntry, Converter={x:Static ObjectConverters.IsNull}}"
-                            Orientation="Vertical"
-                            Spacing="10"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center">
+			<Grid Grid.Row="1">
+				<StackPanel IsVisible="{Binding SelectedEntry, Converter={x:Static ObjectConverters.IsNull}}"
+				            Orientation="Vertical"
+				            Spacing="10"
+				            VerticalAlignment="Center"
+				            HorizontalAlignment="Center">
 
-                    <Svg Path="/Assets/Icons/Element.svg"
-                         Width="19"
-                         Height="19"
-                         HorizontalAlignment="Center"
-                         Css="path { stroke: #848484 }" />
+					<Svg Path="/Assets/Icons/Element.svg"
+					     Width="19"
+					     Height="19"
+					     HorizontalAlignment="Center"
+					     Css="path { stroke: #848484 }" />
 
-                    <TextBlock Text="Sélectionner un élément"
-                               HorizontalAlignment="Center"
-                               FontSize="13"
-                               FontWeight="Normal"
-                               Foreground="{StaticResource ForegroundMuted}" />
-                </StackPanel>
+					<TextBlock Text="Sélectionner un élément"
+					           HorizontalAlignment="Center"
+					           FontSize="13"
+					           FontWeight="Normal"
+					           Foreground="{StaticResource ForegroundMuted}" />
+				</StackPanel>
 
-                <StackPanel IsVisible="{Binding SelectedEntry, Converter={x:Static ObjectConverters.IsNotNull}}"
-                            Orientation="Vertical"
-                            Spacing="15"
-                            Margin="10,10,10,0"
-                            HorizontalAlignment="Stretch">
+				<StackPanel IsVisible="{Binding SelectedEntry, Converter={x:Static ObjectConverters.IsNotNull}}"
+				            Orientation="Vertical"
+				            Spacing="15"
+				            Margin="10,10,10,0"
+				            HorizontalAlignment="Stretch">
 
-                    <StackPanel Spacing="15">
-                        <controls:FileIcon Width="58" Height="60"
-                                           HorizontalAlignment="Center"
-                                           IsDirectory="{Binding SelectedEntry?.IsDirectory}" />
+					<StackPanel Spacing="15">
+						<controls:FileIcon Width="50"
+						                   HorizontalAlignment="Center"
+						                   IsDirectory="{Binding SelectedEntry?.IsDirectory}"
+						                   EntryPath="{Binding SelectedEntry?.FullPath}"
+						                   IsVisible="{Binding !SelectedEntry?.IsImage}" />
 
-                        <TextBlock Text="{Binding SelectedEntry?.Name}"
-                                   MaxWidth="198"
-                                   HorizontalAlignment="Stretch"
-                                   TextAlignment="Center"
-                                   TextTrimming="CharacterEllipsis"
-                                   TextWrapping="NoWrap"
-                                   Foreground="{StaticResource ColorWhiteBrush}"
-                                   FontWeight="Regular" FontSize="14" />
+						<controls:FileIcon Width="220"
+						                   HorizontalAlignment="Center"
+						                   VerticalAlignment="Top"
+						                   IsDirectory="False"
+						                   EntryPath="{Binding SelectedEntry?.FullPath}"
+						                   IsVisible="{Binding SelectedEntry?.IsImage}" />
 
-                        <Border Classes="Divider" />
-                    </StackPanel>
+						<TextBlock Text="{Binding SelectedEntry?.Name}"
+						           MaxWidth="198"
+						           HorizontalAlignment="Stretch"
+						           TextAlignment="Center"
+						           TextTrimming="CharacterEllipsis"
+						           TextWrapping="NoWrap"
+						           Foreground="{StaticResource ColorWhiteBrush}"
+						           FontWeight="Regular" FontSize="14" />
 
-                    <StackPanel Classes="DetailField">
-                        <TextBlock Text="TYPE" />
-                        <TextBlock Text="{Binding SelectedEntry?.TypeLabel}" />
-                    </StackPanel>
+						<Border Classes="Divider" />
+					</StackPanel>
 
-                    <StackPanel Classes="DetailField">
-                        <TextBlock Text="TAILLE" />
-                        <TextBlock Text="{Binding SelectedEntry?.DisplaySize}" />
-                    </StackPanel>
+					<StackPanel Classes="DetailField">
+						<TextBlock Text="TYPE" />
+						<TextBlock Text="{Binding SelectedEntry?.TypeLabel}" />
+					</StackPanel>
 
-                    <StackPanel Classes="DetailField">
-                        <TextBlock Text="MODIFIÉ LE" />
-                        <TextBlock Text="{Binding SelectedEntry?.LastModified}" />
-                    </StackPanel>
+					<StackPanel Classes="DetailField">
+						<TextBlock Text="TAILLE" />
+						<TextBlock Text="{Binding SelectedEntry?.DisplaySize}" />
+					</StackPanel>
 
-                    <StackPanel IsVisible="{Binding !SelectedEntry?.IsDirectory}"
-                                Spacing="15">
-                        <Border Classes="Divider" />
+					<StackPanel Classes="DetailField">
+						<TextBlock Text="MODIFIÉ LE" />
+						<TextBlock Text="{Binding SelectedEntry?.LastModified}" />
+					</StackPanel>
 
-                        <Button Command="{Binding OpenSelectedFileCommand}">
-                            Ouvrir
-                        </Button>
-                    </StackPanel>
-                </StackPanel>
-            </Grid>
-        </Grid>
-    </Border>
+					<StackPanel Classes="DetailField">
+						<TextBlock Text="DERNIER ACCÈS" />
+						<TextBlock Text="{Binding SelectedEntry?.LastAccessed}" />
+					</StackPanel>
+
+					<StackPanel IsVisible="{Binding !SelectedEntry?.IsDirectory}"
+					            Spacing="15">
+						<Border Classes="Divider" />
+
+						<Button Command="{Binding OpenSelectedFileCommand}">
+							Ouvrir
+						</Button>
+					</StackPanel>
+				</StackPanel>
+			</Grid>
+		</Grid>
+	</Border>
 </UserControl>

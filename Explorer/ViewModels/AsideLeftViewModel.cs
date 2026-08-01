@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -12,109 +13,112 @@ namespace Explorer.ViewModels;
 
 public partial class AsideLeftViewModel : ViewModelBase
 {
-    private readonly string _desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-    private readonly string _documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+	private readonly string _homePath = NavigationService.HomePath;
+	private readonly NavigationService _navigation;
+	private readonly SettingsService _settings;
 
-    private readonly string _downloadsPath = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+	[ObservableProperty] [NotifyPropertyChangedFor(nameof(HasCloudStorage))]
+	private ICollection<DriveItem> _cloudStorage = [];
 
-    private readonly string _homePath = NavigationService.HomePath;
-    private readonly NavigationService _navigation;
-    private readonly string _picturesPath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+	[ObservableProperty] [NotifyPropertyChangedFor(nameof(IsHomeActive))]
+	private string _currentPath;
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsHomeActive), nameof(IsDesktopActive), nameof(IsDownloadsActive),
-        nameof(IsDocumentsActive), nameof(IsPicturesActive))]
-    private string _currentPath;
+	[ObservableProperty] private ICollection<DriveItem> _drives = [];
 
-    [ObservableProperty] private ICollection<DriveItem> _drives = [];
+	public AsideLeftViewModel(NavigationService navigation, SettingsService settings)
+	{
+		_navigation = navigation;
+		_settings = settings;
+		_currentPath = navigation.CurrentPath;
 
-    public AsideLeftViewModel(NavigationService navigation)
-    {
-        _navigation = navigation;
-        _currentPath = navigation.CurrentPath;
+		WeakReferenceMessenger.Default.Register<CurrentPathChangedMessage>(this, (_, message) =>
+			CurrentPath = message.NewPath);
 
-        WeakReferenceMessenger.Default.Register<CurrentPathChangedMessage>(this, (_, message) =>
-            CurrentPath = message.NewPath);
+		PinnedItems.CollectionChanged += (_, _) => UpdateActiveStates();
 
-        _ = LoadDrivesAsync();
-    }
+		_ = LoadDrivesAsync();
+		_ = LoadCloudStorageAsync();
+	}
 
-    public bool IsHomeActive => string.Equals(CurrentPath, _homePath, StringComparison.OrdinalIgnoreCase);
-    public bool IsDesktopActive => IsUnder(CurrentPath, _desktopPath);
-    public bool IsDownloadsActive => IsUnder(CurrentPath, _downloadsPath);
-    public bool IsDocumentsActive => IsUnder(CurrentPath, _documentsPath);
-    public bool IsPicturesActive => IsUnder(CurrentPath, _picturesPath);
+	public bool HasCloudStorage => CloudStorage.Count > 0;
 
-    private static bool IsUnder(string current, string basePath)
-    {
-        if (string.IsNullOrEmpty(current) || string.IsNullOrEmpty(basePath))
-            return false;
+	public ObservableCollection<PinnedItem> PinnedItems => _settings.PinnedItems;
 
-        var separators = new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar };
-        var normalizedCurrent = current.TrimEnd(separators);
-        var normalizedBase = basePath.TrimEnd(separators);
+	public bool IsHomeActive => string.Equals(CurrentPath, _homePath, StringComparison.OrdinalIgnoreCase);
 
-        if (string.Equals(normalizedCurrent, normalizedBase, StringComparison.OrdinalIgnoreCase))
-            return true;
+	private static bool IsUnder(string current, string basePath)
+	{
+		if (string.IsNullOrEmpty(current) || string.IsNullOrEmpty(basePath))
+			return false;
 
-        return normalizedCurrent.StartsWith(normalizedBase + Path.DirectorySeparatorChar,
-            StringComparison.OrdinalIgnoreCase);
-    }
+		var separators = new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar };
+		var normalizedCurrent = current.TrimEnd(separators);
+		var normalizedBase = basePath.TrimEnd(separators);
 
-    partial void OnCurrentPathChanged(string value)
-    {
-        UpdateDrivesActive();
-    }
+		if (string.Equals(normalizedCurrent, normalizedBase, StringComparison.OrdinalIgnoreCase))
+			return true;
 
-    private void UpdateDrivesActive()
-    {
-        var quickAccessActive = IsHomeActive || IsDesktopActive || IsDownloadsActive || IsDocumentsActive ||
-                                IsPicturesActive;
+		return normalizedCurrent.StartsWith(normalizedBase + Path.DirectorySeparatorChar,
+			StringComparison.OrdinalIgnoreCase);
+	}
 
-        foreach (var drive in Drives)
-            drive.IsActive = !quickAccessActive && IsUnder(CurrentPath, drive.FullPath);
-    }
+	partial void OnCurrentPathChanged(string value)
+	{
+		UpdateActiveStates();
+	}
 
-    private async Task LoadDrivesAsync()
-    {
-        Drives = await FileSystemService.GetDrivesAsync();
-        UpdateDrivesActive();
-    }
+	private void UpdateActiveStates()
+	{
+		PinnedItem? bestPinnedMatch = null;
+		if (!IsHomeActive)
+			foreach (var pinned in PinnedItems)
+				if (IsUnder(CurrentPath, pinned.FullPath) &&
+				    (bestPinnedMatch is null || pinned.FullPath.Length > bestPinnedMatch.FullPath.Length))
+					bestPinnedMatch = pinned;
 
-    [RelayCommand]
-    private void NavigateToDrive(string path)
-    {
-        _navigation.NavigateTo(path);
-    }
+		foreach (var pinned in PinnedItems)
+			pinned.IsActive = pinned == bestPinnedMatch;
 
-    [RelayCommand]
-    private void NavigateToHome()
-    {
-        _navigation.NavigateTo(_homePath);
-    }
+		var quickAccessActive = IsHomeActive || bestPinnedMatch is not null;
 
-    [RelayCommand]
-    private void NavigateToDesktop()
-    {
-        _navigation.NavigateTo(_desktopPath);
-    }
+		var cloudActive = false;
+		foreach (var cloud in CloudStorage)
+		{
+			cloud.IsActive = !quickAccessActive && IsUnder(CurrentPath, cloud.FullPath);
+			cloudActive |= cloud.IsActive;
+		}
 
-    [RelayCommand]
-    private void NavigateToDocuments()
-    {
-        _navigation.NavigateTo(_documentsPath);
-    }
+		foreach (var drive in Drives)
+			drive.IsActive = !quickAccessActive && !cloudActive && IsUnder(CurrentPath, drive.FullPath);
+	}
 
-    [RelayCommand]
-    private void NavigateToPictures()
-    {
-        _navigation.NavigateTo(_picturesPath);
-    }
+	private async Task LoadDrivesAsync()
+	{
+		Drives = await FileSystemService.GetDrivesAsync();
+		UpdateActiveStates();
+	}
 
-    [RelayCommand]
-    private void NavigateToDownloads()
-    {
-        _navigation.NavigateTo(_downloadsPath);
-    }
+	private async Task LoadCloudStorageAsync()
+	{
+		CloudStorage = await FileSystemService.GetCloudStorageAsync();
+		UpdateActiveStates();
+	}
+
+	[RelayCommand]
+	private void NavigateToDrive(string path)
+	{
+		_navigation.NavigateTo(path);
+	}
+
+	[RelayCommand]
+	private void NavigateToHome()
+	{
+		_navigation.NavigateTo(_homePath);
+	}
+
+	[RelayCommand]
+	private void RemovePinned(string path)
+	{
+		_settings.RemovePinned(path);
+	}
 }

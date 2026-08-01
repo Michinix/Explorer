@@ -5,20 +5,20 @@ namespace Explorer.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    [ObservableProperty] private HomeViewModel? _homeContent;
-    [ObservableProperty] private bool _isSplashVisible = true;
+	[ObservableProperty] private HomeViewModel? _homeContent;
+	[ObservableProperty] private bool _isSplashVisible = true;
 
-    public MainWindowViewModel(HomeViewModel homeViewModel)
-    {
-        HomeContent = homeViewModel;
+	public MainWindowViewModel(HomeViewModel homeViewModel)
+	{
+		HomeContent = homeViewModel;
 
-        Task.Run(async () =>
-        {
-            await HomeContent.DataGrid.LoadEntriesAsync();
+		Task.Run(async () =>
+		{
+			await HomeContent.FileBrowser.LoadEntriesAsync();
 
-            await Task.Delay(2500);
+			await Task.Delay(2500);
 
-            IsSplashVisible = false;
-        });
-    }
+			IsSplashVisible = false;
+		});
+	}
 }

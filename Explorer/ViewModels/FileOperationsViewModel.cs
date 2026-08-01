@@ -9,139 +9,153 @@ using Explorer.Services;
 namespace Explorer.ViewModels;
 
 public partial class FileOperationsViewModel(
-    NavigationService navigation,
-    ClipboardService clipboard,
-    DataGridViewModel dataGrid) : ViewModelBase
+	NavigationService navigation,
+	ClipboardService clipboard,
+	FileBrowserViewModel fileBrowser,
+	SettingsService settings) : ViewModelBase
 {
-    public ClipboardService Clipboard { get; } = clipboard;
+	public ClipboardService Clipboard { get; } = clipboard;
 
-    public bool CanModifySelection => dataGrid.HasSelectionTargets;
-    public bool CanRenameSelection => dataGrid.SelectionTargets.Count == 1;
+	public bool CanModifySelection => fileBrowser.HasSelectionTargets;
+	public bool CanRenameSelection => fileBrowser.SelectionTargets.Count == 1;
 
-    public void NotifySelectionChanged()
-    {
-        RenameCommand.NotifyCanExecuteChanged();
-        CopyCommand.NotifyCanExecuteChanged();
-        CutCommand.NotifyCanExecuteChanged();
-        DeleteSelectedCommand.NotifyCanExecuteChanged();
-    }
+	public void NotifySelectionChanged()
+	{
+		RenameCommand.NotifyCanExecuteChanged();
+		CopyCommand.NotifyCanExecuteChanged();
+		CutCommand.NotifyCanExecuteChanged();
+		DeleteSelectedCommand.NotifyCanExecuteChanged();
+	}
 
-    [RelayCommand]
-    private void CreateFile()
-    {
-        dataGrid.AddDraft(false);
-    }
+	[RelayCommand]
+	private void CreateFile()
+	{
+		fileBrowser.AddDraft(false);
+	}
 
-    [RelayCommand]
-    private void CreateFolder()
-    {
-        dataGrid.AddDraft(true);
-    }
+	[RelayCommand]
+	private void CreateFolder()
+	{
+		fileBrowser.AddDraft(true);
+	}
 
-    [RelayCommand(CanExecute = nameof(CanRenameSelection))]
-    private void Rename()
-    {
-        if (dataGrid.SelectionTargets is not [{ } entry]) return;
+	[RelayCommand(CanExecute = nameof(CanRenameSelection))]
+	private void Rename()
+	{
+		if (fileBrowser.SelectionTargets is not [{ } entry]) return;
 
-        entry.EditableName = entry.Name;
-        entry.IsEditing = true;
-    }
+		entry.EditableName = entry.Name;
+		entry.IsEditing = true;
+	}
 
-    [RelayCommand]
-    private async Task CommitRename(FileSystemEntry entry)
-    {
-        entry.IsEditing = false;
-        var name = entry.EditableName.Trim();
+	[RelayCommand]
+	private async Task CommitRename(FileSystemEntry entry)
+	{
+		entry.IsEditing = false;
+		var name = entry.EditableName.Trim();
 
-        if (entry.IsNew)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                dataGrid.Remove(entry);
-                return;
-            }
+		if (entry.IsNew)
+		{
+			if (string.IsNullOrWhiteSpace(name))
+			{
+				fileBrowser.Remove(entry);
+				return;
+			}
 
-            try
-            {
-                var path = Path.Combine(navigation.CurrentPath, name);
+			try
+			{
+				var path = Path.Combine(navigation.CurrentPath, name);
 
-                if (entry.IsDirectory)
-                    await FileSystemService.CreateDirectoryAsync(path);
-                else
-                    await FileSystemService.CreateFileAsync(path);
+				if (entry.IsDirectory)
+					await FileSystemService.CreateDirectoryAsync(path);
+				else
+					await FileSystemService.CreateFileAsync(path);
 
-                await dataGrid.LoadEntriesAsync();
-            }
-            catch (Exception)
-            {
-                dataGrid.Remove(entry);
-            }
+				await fileBrowser.LoadEntriesAsync();
+			}
+			catch (Exception)
+			{
+				fileBrowser.Remove(entry);
+			}
 
-            return;
-        }
+			return;
+		}
 
-        if (string.IsNullOrWhiteSpace(name) || name == entry.Name) return;
+		if (string.IsNullOrWhiteSpace(name)) return;
 
-        try
-        {
-            await FileSystemService.RenameAsync(entry, name);
-            await dataGrid.LoadEntriesAsync();
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(ex.Message);
-        }
-    }
+		if (!entry.IsDirectory && !name.Contains('.'))
+			name += Path.GetExtension(entry.Name);
 
-    [RelayCommand]
-    private void CancelRename(FileSystemEntry entry)
-    {
-        entry.IsEditing = false;
+		if (name == entry.Name) return;
 
-        if (entry.IsNew)
-            dataGrid.Remove(entry);
-    }
+		try
+		{
+			await FileSystemService.RenameAsync(entry, name);
+			await fileBrowser.LoadEntriesAsync();
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine(ex.Message);
+		}
+	}
 
-    [RelayCommand(CanExecute = nameof(CanModifySelection))]
-    private void Copy()
-    {
-        Clipboard.Copy(dataGrid.SelectionTargets);
-    }
+	[RelayCommand]
+	private void CancelRename(FileSystemEntry entry)
+	{
+		entry.IsEditing = false;
 
-    [RelayCommand(CanExecute = nameof(CanModifySelection))]
-    private void Cut()
-    {
-        Clipboard.Cut(dataGrid.SelectionTargets);
-    }
+		if (entry.IsNew)
+			fileBrowser.Remove(entry);
+	}
 
-    [RelayCommand]
-    private async Task Paste()
-    {
-        try
-        {
-            await Clipboard.PasteAsync(navigation.CurrentPath);
-            await dataGrid.LoadEntriesAsync();
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(ex.Message);
-        }
-    }
+	[RelayCommand(CanExecute = nameof(CanModifySelection))]
+	private void Copy()
+	{
+		Clipboard.Copy(fileBrowser.SelectionTargets);
+	}
 
-    [RelayCommand(CanExecute = nameof(CanModifySelection))]
-    private async Task DeleteSelected()
-    {
-        var targets = dataGrid.SelectionTargets;
-        if (targets.Count == 0) return;
+	[RelayCommand(CanExecute = nameof(CanModifySelection))]
+	private void Cut()
+	{
+		Clipboard.Cut(fileBrowser.SelectionTargets);
+	}
 
-        try
-        {
-            await FileSystemService.DeleteEntriesAsync(targets);
-            await dataGrid.LoadEntriesAsync();
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(ex.Message);
-        }
-    }
+	[RelayCommand]
+	private async Task Paste()
+	{
+		try
+		{
+			await Clipboard.PasteAsync(navigation.CurrentPath);
+			await fileBrowser.LoadEntriesAsync();
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine(ex.Message);
+		}
+	}
+
+	[RelayCommand]
+	private void PinFolder(FileSystemEntry entry)
+	{
+		if (!entry.IsDirectory) return;
+
+		settings.TogglePinned(entry.Name, entry.FullPath);
+	}
+
+	[RelayCommand(CanExecute = nameof(CanModifySelection))]
+	private async Task DeleteSelected()
+	{
+		var targets = fileBrowser.SelectionTargets;
+		if (targets.Count == 0) return;
+
+		try
+		{
+			await FileSystemService.DeleteEntriesAsync(targets);
+			await fileBrowser.LoadEntriesAsync();
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine(ex.Message);
+		}
+	}
 }

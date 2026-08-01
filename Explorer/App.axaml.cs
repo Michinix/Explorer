@@ -10,29 +10,30 @@ namespace Explorer;
 
 public class App : Application
 {
-    public override void Initialize()
-    {
-        AvaloniaXamlLoader.Load(this);
-    }
+	public override void Initialize()
+	{
+		AvaloniaXamlLoader.Load(this);
+	}
 
-    public override void OnFrameworkInitializationCompleted()
-    {
-        var services = new ServiceCollection();
+	public override void OnFrameworkInitializationCompleted()
+	{
+		var services = new ServiceCollection();
 
-        services.AddSingleton<NavigationService>();
-        services.AddSingleton<ClipboardService>();
-        services.AddSingleton<FileOperationsViewModel>();
-        services.AddTransient<HomeViewModel>();
-        services.AddTransient<MainWindowViewModel>();
+		services.AddSingleton<NavigationService>();
+		services.AddSingleton<ClipboardService>();
+		services.AddSingleton<SettingsService>();
+		services.AddSingleton<FileOperationsViewModel>();
+		services.AddTransient<HomeViewModel>();
+		services.AddTransient<MainWindowViewModel>();
 
-        var provider = services.BuildServiceProvider();
+		var provider = services.BuildServiceProvider();
 
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-            desktop.MainWindow = new MainWindow
-            {
-                DataContext = provider.GetRequiredService<MainWindowViewModel>()
-            };
+		if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+			desktop.MainWindow = new MainWindow
+			{
+				DataContext = provider.GetRequiredService<MainWindowViewModel>()
+			};
 
-        base.OnFrameworkInitializationCompleted();
-    }
+		base.OnFrameworkInitializationCompleted();
+	}
 }

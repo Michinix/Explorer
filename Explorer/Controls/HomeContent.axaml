@@ -3,73 +3,216 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Explorer.ViewModels"
+             xmlns:models="using:Explorer.Models"
+             xmlns:primitives="using:Explorer.Controls.Primitives"
              mc:Ignorable="d"
              x:Name="HomeContentControl"
              x:Class="Explorer.Controls.HomeContent"
              x:DataType="vm:HomeContentViewModel">
 
-    <UserControl.Styles>
-        <Style Selector="TextBlock.SectionTitle">
-            <Setter Property="FontWeight" Value="Medium" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
-            <Setter Property="Margin" Value="0,0,0,14" />
-        </Style>
+	<UserControl.Styles>
+		<Style Selector="TextBlock.SectionTitle">
+			<Setter Property="FontWeight" Value="Medium" />
+			<Setter Property="FontSize" Value="14" />
+			<Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
+			<Setter Property="Margin" Value="0,0,0,14" />
+		</Style>
 
-        <Style Selector="Expander > TextBlock">
-            <Setter Property="FontSize" Value="12" />
-        </Style>
+		<Style Selector="Expander > TextBlock">
+			<Setter Property="FontSize" Value="12" />
+		</Style>
 
-        <Style Selector="Button.tile">
-            <Setter Property="Background" Value="{StaticResource SurfaceElevated}" />
-            <Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="8" />
-            <Setter Property="Padding" Value="14,12" />
-            <Setter Property="Width" Value="170" />
-            <Setter Property="HorizontalContentAlignment" Value="Left" />
-        </Style>
+		<Style Selector="Button.recentFileRow">
+			<Setter Property="Background" Value="Transparent" />
+			<Setter Property="BorderThickness" Value="0" />
+			<Setter Property="HorizontalAlignment" Value="Stretch" />
+			<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+			<Setter Property="Padding" Value="10,8" />
+			<Setter Property="CornerRadius" Value="4" />
+			<Setter Property="Cursor" Value="Hand" />
+			<Setter Property="Foreground" Value="{StaticResource ColorWhiteBrush}" />
+		</Style>
 
-        <Style Selector="Button.tile:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="{StaticResource SurfaceOverlay}" />
-            <Setter Property="BorderBrush" Value="{StaticResource AccentPrimary}" />
-        </Style>
-    </UserControl.Styles>
+		<Style Selector="Button.recentFileRow:pointerover /template/ ContentPresenter">
+			<Setter Property="Background" Value="{StaticResource SurfaceOverlay}" />
+		</Style>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto"
-                  HorizontalScrollBarVisibility="Disabled">
-        <StackPanel Orientation="Vertical" Margin="25,15" Spacing="100">
-            <Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}">
-                <Expander.Header>
-                    <TextBlock Text="Accès rapide" />
-                </Expander.Header>
+		<Style Selector="Button.recentFileRow TextBlock">
+			<Setter Property="FontSize" Value="13" />
+			<Setter Property="VerticalAlignment" Value="Center" />
+			<Setter Property="TextTrimming" Value="CharacterEllipsis" />
+		</Style>
+
+		<Style Selector="TextBlock.recentFileHeader">
+			<Setter Property="FontSize" Value="11" />
+			<Setter Property="FontWeight" Value="Medium" />
+			<Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
+		</Style>
+
+		<Style Selector="Button.recentFileRow TextBlock.recentFileDate">
+			<Setter Property="FontSize" Value="12" />
+			<Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
+			<Setter Property="TextTrimming" Value="None" />
+		</Style>
+
+		<Style Selector="TextBlock.EmptyStateText">
+			<Setter Property="FontSize" Value="13" />
+			<Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
+			<Setter Property="Margin" Value="0,14,0,0" />
+		</Style>
+	</UserControl.Styles>
+
+	<ScrollViewer VerticalScrollBarVisibility="Hidden"
+	              HorizontalScrollBarVisibility="Disabled">
+		<StackPanel Orientation="Vertical" Margin="25,15" Spacing="30">
+			<Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}">
+				<Expander.Header>
+					<TextBlock Text="Épinglé" />
+				</Expander.Header>
+
+				<ItemsControl ItemsSource="{Binding PinnedItems}" Margin="0,14,0,0">
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<WrapPanel Orientation="Horizontal" ItemSpacing="12" LineSpacing="12" />
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
+					<ItemsControl.ItemTemplate>
+						<DataTemplate x:DataType="models:PinnedItem">
+							<primitives:HomeCard IconPath="{Binding IconPath}"
+							                     IconCss="{Binding IconCss}"
+							                     Text="{Binding DisplayName}"
+							                     IsPinned="True"
+							                     Command="{Binding #HomeContentControl.DataContext?.OpenQuickAccessCommand}"
+							                     CommandParameter="{Binding FullPath}"
+							                     x:CompileBindings="False">
+								<primitives:HomeCard.ContextMenu>
+									<ContextMenu>
+										<primitives:ActionMenuItem Text="Retirer des épinglés"
+										                           IconPath="/Assets/Icons/PinOff.svg"
+										                           Command="{Binding #HomeContentControl.DataContext?.RemovePinnedCommand}"
+										                           CommandParameter="{Binding FullPath}"
+										                           x:CompileBindings="False" />
+									</ContextMenu>
+								</primitives:HomeCard.ContextMenu>
+							</primitives:HomeCard>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</Expander>
+
+			<Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}">
+				<Expander.Header>
+					<TextBlock Text="Lecteurs" />
+				</Expander.Header>
+
+				<ItemsControl ItemsSource="{Binding Drives}" Margin="0,14,0,0">
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<WrapPanel Orientation="Horizontal" ItemSpacing="12" LineSpacing="12" />
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
+					<ItemsControl.ItemTemplate>
+						<DataTemplate x:DataType="models:DriveItem">
+							<primitives:HomeCard Variant="Drive"
+							                     IconPath="/Assets/Icons/Drive.svg"
+							                     Text="{Binding DisplayName}"
+							                     Detail="{Binding SizeText}"
+							                     Progress="{Binding UsedPercent}"
+							                     Command="{Binding #HomeContentControl.DataContext?.OpenQuickAccessCommand}"
+							                     CommandParameter="{Binding FullPath}"
+							                     x:CompileBindings="False" />
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</Expander>
+
+			<Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}" IsVisible="{Binding HasCloudStorage}">
+				<Expander.Header>
+					<TextBlock Text="Cloud" />
+				</Expander.Header>
+
+				<ItemsControl ItemsSource="{Binding CloudStorage}" Margin="0,14,0,0">
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<WrapPanel Orientation="Horizontal" ItemSpacing="12" LineSpacing="12" />
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
+					<ItemsControl.ItemTemplate>
+						<DataTemplate x:DataType="models:DriveItem">
+							<primitives:HomeCard IconPath="/Assets/Icons/Cloud.svg"
+							                     Text="{Binding DisplayName}"
+							                     Command="{Binding #HomeContentControl.DataContext?.OpenQuickAccessCommand}"
+							                     CommandParameter="{Binding FullPath}"
+							                     x:CompileBindings="False" />
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</Expander>
+
+			<Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}">
+				<Expander.Header>
+					<TextBlock Text="Réseau" />
+				</Expander.Header>
 
 
-            </Expander>
+			</Expander>
 
-            <Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}">
-                <Expander.Header>
-                    <TextBlock Text="Lecteurs" />
-                </Expander.Header>
+			<Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}">
+				<Expander.Header>
+					<TextBlock Text="Fichiers récents" />
+				</Expander.Header>
 
+				<StackPanel Orientation="Vertical" Grid.IsSharedSizeScope="True">
+					<Grid Margin="10,14,10,6" HorizontalAlignment="Stretch" IsVisible="{Binding HasRecentFiles}">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" SharedSizeGroup="RecentIconColumn" />
+							<ColumnDefinition Width="Auto" MinWidth="420" SharedSizeGroup="RecentNameColumn" />
+							<ColumnDefinition Width="Auto" SharedSizeGroup="RecentDateColumn" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
 
-            </Expander>
+						<TextBlock Grid.Column="1" Classes="recentFileHeader" Text="NOM" Margin="10,0,10,0" />
+						<TextBlock Grid.Column="2" Classes="recentFileHeader" Text="OUVERT LE" />
+					</Grid>
 
-            <Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}">
-                <Expander.Header>
-                    <TextBlock Text="Réseau" />
-                </Expander.Header>
+					<ItemsControl ItemsSource="{Binding RecentFiles}"
+					              IsVisible="{Binding HasRecentFiles}">
+						<ItemsControl.ItemsPanel>
+							<ItemsPanelTemplate>
+								<StackPanel Orientation="Vertical" Spacing="2" />
+							</ItemsPanelTemplate>
+						</ItemsControl.ItemsPanel>
+						<ItemsControl.ItemTemplate>
+							<DataTemplate x:DataType="models:RecentFile">
+								<Button Classes="recentFileRow"
+								        Command="{Binding #HomeContentControl.DataContext?.OpenRecentCommand}"
+								        CommandParameter="{Binding FullPath}"
+								        x:CompileBindings="False">
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="Auto" SharedSizeGroup="RecentIconColumn" />
+											<ColumnDefinition Width="Auto" MinWidth="420" SharedSizeGroup="RecentNameColumn" />
+											<ColumnDefinition Width="Auto" SharedSizeGroup="RecentDateColumn" />
+											<ColumnDefinition Width="*" />
+										</Grid.ColumnDefinitions>
 
+										<primitives:FileIcon Grid.Column="0" Width="16" Height="16"
+										                     IsDirectory="False"
+										                     EntryPath="{Binding FullPath}" />
+										<TextBlock Grid.Column="1" Text="{Binding DisplayName}"
+										           FontWeight="Normal" MaxWidth="420" Margin="10,0,10,0" />
+										<TextBlock Grid.Column="2" Classes="recentFileDate"
+										           Text="{Binding OpenedAt}" />
+									</Grid>
+								</Button>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
 
-            </Expander>
-
-            <Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}">
-                <Expander.Header>
-                    <TextBlock Text="Fichiers récents" />
-                </Expander.Header>
-
-
-            </Expander>
-        </StackPanel>
-    </ScrollViewer>
+					<TextBlock Classes="EmptyStateText" Text="Aucun fichier récent"
+					           IsVisible="{Binding !HasRecentFiles}" />
+				</StackPanel>
+			</Expander>
+		</StackPanel>
+	</ScrollViewer>
 </UserControl>
