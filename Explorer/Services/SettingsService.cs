@@ -27,11 +27,13 @@ public sealed class SettingsService
 		PinnedItems = new ObservableCollection<PinnedItem>(settings.PinnedItems);
 		RecentFiles = new ObservableCollection<RecentFile>(settings.RecentFiles);
 		IsGridView = settings.IsGridView;
+		IsDetailsPaneVisible = settings.IsDetailsPaneVisible;
 	}
 
 	public ObservableCollection<PinnedItem> PinnedItems { get; }
 	public ObservableCollection<RecentFile> RecentFiles { get; }
 	public bool IsGridView { get; private set; }
+	public bool IsDetailsPaneVisible { get; private set; }
 
 	public bool IsPinned(string path)
 	{
@@ -65,6 +67,12 @@ public sealed class SettingsService
 	public void SetGridView(bool isGridView)
 	{
 		IsGridView = isGridView;
+		Save();
+	}
+
+	public void SetDetailsPaneVisible(bool isVisible)
+	{
+		IsDetailsPaneVisible = isVisible;
 		Save();
 	}
 
@@ -132,7 +140,8 @@ public sealed class SettingsService
 			{
 				PinnedItems = [.. PinnedItems],
 				RecentFiles = [.. RecentFiles],
-				IsGridView = IsGridView
+				IsGridView = IsGridView,
+				IsDetailsPaneVisible = IsDetailsPaneVisible
 			};
 
 			File.WriteAllText(SettingsPath, JsonSerializer.Serialize(settings, JsonOptions));

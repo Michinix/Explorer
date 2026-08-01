@@ -24,7 +24,7 @@ public partial class FileBrowserViewModel : ViewModelBase
 	[ObservableProperty] [NotifyPropertyChangedFor(nameof(NoResultsFound))]
 	private ObservableCollection<FileSystemEntry> _entries = [];
 
-	[ObservableProperty] private bool _isDetailsPaneVisible = true;
+	[ObservableProperty] private bool _isDetailsPaneVisible;
 
 	[ObservableProperty] [NotifyPropertyChangedFor(nameof(ViewToggleIconPath))]
 	private bool _isGridView;
@@ -43,6 +43,7 @@ public partial class FileBrowserViewModel : ViewModelBase
 		_navigation = navigation;
 		_settings = settings;
 		_isGridView = settings.IsGridView;
+		_isDetailsPaneVisible = settings.IsDetailsPaneVisible;
 
 		WeakReferenceMessenger.Default.Register<CurrentPathChangedMessage>(this, (r, m) =>
 		{
@@ -283,6 +284,7 @@ public partial class FileBrowserViewModel : ViewModelBase
 	private void ToggleDetailsPane()
 	{
 		IsDetailsPaneVisible = !IsDetailsPaneVisible;
+		_settings.SetDetailsPaneVisible(IsDetailsPaneVisible);
 	}
 
 	[RelayCommand]
