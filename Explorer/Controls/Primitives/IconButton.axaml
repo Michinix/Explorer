@@ -14,7 +14,7 @@
 		</Style>
 
 		<Style Selector="Button:disabled Svg">
-			<Setter Property="Css" Value="path { opacity: 0.35 }" />
+			<Setter Property="Css" Value="* { opacity: 0.35 }" />
 		</Style>
 	</UserControl.Styles>
 
