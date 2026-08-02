@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="using:Explorer.Controls.Primitives"
              mc:Ignorable="d"
              x:Name="IconButtonControl"
              x:Class="Explorer.Controls.Primitives.IconButton">
@@ -13,15 +14,20 @@
 			<Setter Property="IsHitTestVisible" Value="False" />
 		</Style>
 
-		<Style Selector="Button:disabled">
-			<Setter Property="Opacity" Value="0.35" />
+		<Style Selector="local|IconButton.active Svg">
+			<Setter Property="Css" Value="path { stroke: #00AAFF }" />
+		</Style>
+
+		<Style Selector="Button:disabled Svg">
+			<Setter Property="Css" Value="* { opacity: 0.35 }" />
+		</Style>
+
+		<Style Selector="local|IconButton:disabled Svg">
+			<Setter Property="Css" Value="* { opacity: 0.35 }" />
 		</Style>
 	</UserControl.Styles>
 
-	<Button Classes="ghost"
-	        IsEnabled="{Binding IsEnabled, ElementName=IconButtonControl}"
-	        Command="{Binding Command, ElementName=IconButtonControl}">
-		<Svg Path="{Binding IconPath, ElementName=IconButtonControl}"
-		     Css="{Binding IconCss, ElementName=IconButtonControl}" />
+	<Button Classes="ghost" Command="{Binding Command, ElementName=IconButtonControl}">
+		<Svg Path="{Binding IconPath, ElementName=IconButtonControl}" />
 	</Button>
 </UserControl>

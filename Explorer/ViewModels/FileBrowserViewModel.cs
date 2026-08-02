@@ -40,9 +40,7 @@ public partial class FileBrowserViewModel : ViewModelBase
 	[ObservableProperty] [NotifyPropertyChangedFor(nameof(NoResultsFound))]
 	private bool _isLoading;
 
-	[ObservableProperty]
-	[NotifyPropertyChangedFor(nameof(SearchPlaceholder))]
-	[NotifyPropertyChangedFor(nameof(OcrIconCss))]
+	[ObservableProperty] [NotifyPropertyChangedFor(nameof(SearchPlaceholder))]
 	private bool _isOcrMode;
 
 	[ObservableProperty] [NotifyPropertyChangedFor(nameof(NoResultsFound))]
@@ -94,8 +92,6 @@ public partial class FileBrowserViewModel : ViewModelBase
 	public string SearchPlaceholder => IsOcrMode
 		? "Rechercher du texte dans les images..."
 		: $"Rechercher dans : {GetFolderDisplayName(_navigation.CurrentPath)}";
-
-	public string OcrIconCss => IsOcrMode ? "path { stroke: #00AAFF }" : "path { stroke: white }";
 
 	public string OcrProgressText => $"Analyse OCR : {OcrDone}/{OcrTotal}";
 
