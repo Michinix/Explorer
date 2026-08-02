@@ -67,7 +67,7 @@
 		<StackPanel Orientation="Vertical" Margin="25,15" Spacing="30">
 			<Expander IsExpanded="True" Theme="{StaticResource HomeExpanderTheme}">
 				<Expander.Header>
-					<TextBlock Text="Épinglé" />
+					<TextBlock Text="Accès rapide" />
 				</Expander.Header>
 
 				<ItemsControl ItemsSource="{Binding PinnedItems}" Margin="0,14,0,0">
