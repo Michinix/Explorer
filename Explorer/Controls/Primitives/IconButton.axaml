@@ -18,7 +18,9 @@
 		</Style>
 	</UserControl.Styles>
 
-	<Button Classes="ghost" Command="{Binding Command, ElementName=IconButtonControl}">
+	<Button Classes="ghost"
+	        IsEnabled="{Binding IsEnabled, ElementName=IconButtonControl}"
+	        Command="{Binding Command, ElementName=IconButtonControl}">
 		<Svg Path="{Binding IconPath, ElementName=IconButtonControl}"
 		     Css="{Binding IconCss, ElementName=IconButtonControl}" />
 	</Button>
