@@ -189,6 +189,7 @@
 										</Grid.ColumnDefinitions>
 
 										<primitives:FileIcon Grid.Column="0" Width="16" Height="16"
+										                     UseThumbnail="False"
 										                     IsDirectory="False"
 										                     EntryPath="{Binding FullPath}" />
 										<TextBlock Grid.Column="1" Text="{Binding DisplayName}"

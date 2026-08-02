@@ -14,6 +14,9 @@ public partial class FileIcon : UserControl
 	public static readonly StyledProperty<string?> EntryPathProperty =
 		AvaloniaProperty.Register<FileIcon, string?>(nameof(EntryPath));
 
+	public static readonly StyledProperty<bool> UseThumbnailProperty =
+		AvaloniaProperty.Register<FileIcon, bool>(nameof(UseThumbnail), true);
+
 	public static readonly DirectProperty<FileIcon, Bitmap?> OsIconProperty =
 		AvaloniaProperty.RegisterDirect<FileIcon, Bitmap?>(nameof(OsIcon), o => o.OsIcon);
 
@@ -42,6 +45,12 @@ public partial class FileIcon : UserControl
 		set => SetValue(EntryPathProperty, value);
 	}
 
+	public bool UseThumbnail
+	{
+		get => GetValue(UseThumbnailProperty);
+		set => SetValue(UseThumbnailProperty, value);
+	}
+
 	public Bitmap? OsIcon
 	{
 		get => _osIcon;
@@ -58,7 +67,8 @@ public partial class FileIcon : UserControl
 	{
 		base.OnPropertyChanged(change);
 
-		if (change.Property == EntryPathProperty || change.Property == IsDirectoryProperty)
+		if (change.Property == EntryPathProperty || change.Property == IsDirectoryProperty ||
+		    change.Property == UseThumbnailProperty)
 			_ = LoadIconAsync();
 	}
 
@@ -74,7 +84,7 @@ public partial class FileIcon : UserControl
 			return;
 		}
 
-		var bitmap = await IconService.GetIconAsync(path);
+		var bitmap = await IconService.GetIconAsync(path, UseThumbnail);
 
 		if (token != _loadToken) return;
 

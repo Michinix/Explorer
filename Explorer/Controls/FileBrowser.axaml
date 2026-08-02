@@ -191,6 +191,7 @@
 							<StackPanel Orientation="Horizontal" Spacing="9" VerticalAlignment="Center"
 							            HorizontalAlignment="Center">
 								<primitives:FileIcon Width="18" Height="20"
+								                     UseThumbnail="False"
 								                     IsDirectory="{Binding IsDirectory}"
 								                     EntryPath="{Binding FullPath}" />
 
@@ -311,6 +312,7 @@
 						<StackPanel Width="96" Spacing="8">
 							<Panel HorizontalAlignment="Center">
 								<primitives:FileIcon Width="42" Height="46"
+								                     UseThumbnail="False"
 								                     IsDirectory="{Binding IsDirectory}"
 								                     EntryPath="{Binding FullPath}" />
 

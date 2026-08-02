@@ -45,9 +45,9 @@ public static class IconService
 			work();
 	}
 
-	public static Task<Bitmap?> GetIconAsync(string path)
+	public static Task<Bitmap?> GetIconAsync(string path, bool allowThumbnail = true)
 	{
-		if (Array.IndexOf(ImageExtensions, Path.GetExtension(path).ToLowerInvariant()) >= 0)
+		if (allowThumbnail && Array.IndexOf(ImageExtensions, Path.GetExtension(path).ToLowerInvariant()) >= 0)
 			return GetThumbnailAsync(path);
 
 		if (!OperatingSystem.IsWindows())
