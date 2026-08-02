@@ -347,6 +347,7 @@ public partial class FileBrowserViewModel : ViewModelBase
 		OcrDone = 0;
 		OcrTotal = 0;
 		IsOcrScanning = true;
+		_ocrPublishedPaths.Clear();
 
 		var results = Entries;
 		var root = _navigation.CurrentPath;
@@ -402,7 +403,7 @@ public partial class FileBrowserViewModel : ViewModelBase
 		if (!ReferenceEquals(Entries, target))
 			return;
 
-		if (match is not null)
+		if (match is not null && _ocrPublishedPaths.Add(match.FullPath))
 		{
 			AttachEntry(match);
 			target.Add(match);

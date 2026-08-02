@@ -26,21 +26,25 @@ public static class FileSystemService
 		};
 	}
 
+	private static EnumerationOptions CreateRecursiveOptions()
+	{
+		return new EnumerationOptions
+		{
+			RecurseSubdirectories = true,
+			IgnoreInaccessible = true,
+			AttributesToSkip = FileAttributes.Hidden | FileAttributes.System | FileAttributes.ReparsePoint
+		};
+	}
+
 	public static Task<FileSystemEntry[]> SearchEntriesAsync(string path, string searchTerm)
 	{
 		return Task.Run(() =>
 		{
-			var options = new EnumerationOptions
-			{
-				RecurseSubdirectories = true,
-				IgnoreInaccessible = true,
-				AttributesToSkip = FileAttributes.Hidden | FileAttributes.System
-			};
-
 			return new DirectoryInfo(path)
-				.EnumerateFileSystemInfos("*", options)
+				.EnumerateFileSystemInfos("*", CreateRecursiveOptions())
 				.Where(e => e.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
 				.Select(MapToEntry)
+				.DistinctBy(e => e.FullPath, StringComparer.OrdinalIgnoreCase)
 				.ToArray();
 		});
 	}
@@ -49,17 +53,11 @@ public static class FileSystemService
 	{
 		return Task.Run(() =>
 		{
-			var options = new EnumerationOptions
-			{
-				RecurseSubdirectories = true,
-				IgnoreInaccessible = true,
-				AttributesToSkip = FileAttributes.Hidden | FileAttributes.System
-			};
-
 			return new DirectoryInfo(path)
-				.EnumerateFiles("*", options)
+				.EnumerateFiles("*", CreateRecursiveOptions())
 				.Select(MapToEntry)
 				.Where(e => e.IsImage)
+				.DistinctBy(e => e.FullPath, StringComparer.OrdinalIgnoreCase)
 				.OrderBy(e => e.FullPath, StringComparer.OrdinalIgnoreCase)
 				.ToArray();
 		});
