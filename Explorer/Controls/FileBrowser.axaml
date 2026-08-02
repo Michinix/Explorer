@@ -131,6 +131,11 @@
 	<Grid Background="Transparent">
 		<Grid.ContextMenu>
 			<ContextMenu>
+				<primitives:ActionMenuItem Text="Coller"
+				                           IconPath="/Assets/Icons/Paste.svg"
+				                           Command="{Binding FileOps.PasteCommand}"
+				                           IsEnabled="{Binding FileOps.Clipboard.CanPaste}" />
+				<Separator />
 				<primitives:ActionMenuItem Text="Nouveau dossier"
 				                           IconPath="/Assets/Icons/Directory.svg"
 				                           IconCss="path { fill: #00AAFF; stroke: #00AAFF }"
