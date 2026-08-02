@@ -15,46 +15,54 @@
 	        BorderThickness="0,0,0,1"
 	        Height="40">
 
-		<StackPanel Orientation="Horizontal"
-		            Spacing="11"
-		            Margin="9,0,0,0"
-		            VerticalAlignment="Center">
+		<Grid ColumnDefinitions="*, Auto">
+			<StackPanel Grid.Column="0"
+			            Orientation="Horizontal"
+			            Spacing="11"
+			            Margin="9,0,0,0"
+			            VerticalAlignment="Center">
 
-			<primitives:NewItemButton CreateFolderCommand="{Binding FileOperations.CreateFolderCommand}"
-			                          CreateFileCommand="{Binding FileOperations.CreateFileCommand}" />
+				<primitives:NewItemButton CreateFolderCommand="{Binding FileOperations.CreateFolderCommand}"
+				                          CreateFileCommand="{Binding FileOperations.CreateFileCommand}" />
 
-			<Border Classes="DividerVertical" Height="30" />
+				<Border Classes="DividerVertical" Height="30" />
 
-			<StackPanel Orientation="Horizontal" Spacing="18">
-				<primitives:IconButton IconPath="/Assets/Icons/Cut.svg"
-				                       Command="{Binding FileOperations.CutCommand}"
-				                       IsEnabled="{Binding FileBrowser.HasSelectionTargets}" />
-				<primitives:IconButton IconPath="/Assets/Icons/Copy.svg"
-				                       Command="{Binding FileOperations.CopyCommand}"
-				                       IsEnabled="{Binding FileBrowser.HasSelectionTargets}" />
-				<primitives:IconButton IconPath="/Assets/Icons/Paste.svg"
-				                       Command="{Binding FileOperations.PasteCommand}"
-				                       IsEnabled="{Binding FileOperations.Clipboard.CanPaste}" />
-				<primitives:IconButton IconPath="/Assets/Icons/Rename.svg"
-				                       Command="{Binding FileOperations.RenameCommand}"
-				                       IsEnabled="{Binding FileBrowser.SelectedEntry, Converter={x:Static converters:ObjectConverters.IsNotNull}}" />
-				<primitives:IconButton IconPath="/Assets/Icons/Trash.svg"
-				                       Command="{Binding FileOperations.DeleteSelectedCommand}"
-				                       IsEnabled="{Binding FileBrowser.HasSelectionTargets}" />
+				<StackPanel Orientation="Horizontal" Spacing="18">
+					<primitives:IconButton IconPath="/Assets/Icons/Cut.svg"
+					                       Command="{Binding FileOperations.CutCommand}"
+					                       IsEnabled="{Binding FileBrowser.HasSelectionTargets}" />
+					<primitives:IconButton IconPath="/Assets/Icons/Copy.svg"
+					                       Command="{Binding FileOperations.CopyCommand}"
+					                       IsEnabled="{Binding FileBrowser.HasSelectionTargets}" />
+					<primitives:IconButton IconPath="/Assets/Icons/Paste.svg"
+					                       Command="{Binding FileOperations.PasteCommand}"
+					                       IsEnabled="{Binding FileOperations.Clipboard.CanPaste}" />
+					<primitives:IconButton IconPath="/Assets/Icons/Rename.svg"
+					                       Command="{Binding FileOperations.RenameCommand}"
+					                       IsEnabled="{Binding FileBrowser.SelectedEntry, Converter={x:Static converters:ObjectConverters.IsNotNull}}" />
+					<primitives:IconButton IconPath="/Assets/Icons/Trash.svg"
+					                       Command="{Binding FileOperations.DeleteSelectedCommand}"
+					                       IsEnabled="{Binding FileBrowser.HasSelectionTargets}" />
+				</StackPanel>
+
+				<Border Classes="DividerVertical" Height="30" />
+
+				<primitives:IconButton IconPath="/Assets/Icons/Ocr.svg"
+				                       Classes.active="{Binding FileBrowser.IsOcrMode}"
+				                       Command="{Binding FileBrowser.ToggleOcrModeCommand}"
+				                       ToolTip.Tip="Rechercher du texte dans les images" />
+
+				<Border Classes="DividerVertical" Height="30" />
+
+				<primitives:IconButton IconPath="{Binding FileBrowser.ViewToggleIconPath}"
+				                       Command="{Binding FileBrowser.ToggleViewCommand}" />
 			</StackPanel>
 
-			<Border Classes="DividerVertical" Height="30" />
-
-			<primitives:IconButton IconPath="/Assets/Icons/Ocr.svg"
-			                       IconCss="{Binding FileBrowser.OcrIconCss}"
-			                       Command="{Binding FileBrowser.ToggleOcrModeCommand}"
-			                       IsEnabled="{Binding !Navigation.IsHome}"
-			                       ToolTip.Tip="Rechercher du texte dans les images" />
-
-			<Border Classes="DividerVertical" Height="30" />
-
-			<primitives:IconButton IconPath="{Binding FileBrowser.ViewToggleIconPath}"
-			                       Command="{Binding FileBrowser.ToggleViewCommand}" />
-		</StackPanel>
+			<primitives:IconButton Grid.Column="1"
+			                       IconPath="/Assets/Icons/PanelRight.svg"
+			                       Command="{Binding FileBrowser.ToggleDetailsPaneCommand}"
+			                       VerticalAlignment="Center"
+			                       Margin="0,0,9,0" />
+		</Grid>
 	</Border>
 </UserControl>

@@ -16,7 +16,7 @@
 	        CornerRadius="10,10,0,0"
 	        ClipToBounds="True">
 
-		<Grid VerticalAlignment="Center" ColumnDefinitions="220,*,Auto">
+		<Grid VerticalAlignment="Center" ColumnDefinitions="220,*">
 
 			<UniformGrid Grid.Column="0"
 			             Rows="1"
@@ -52,13 +52,7 @@
 			                       ClearSearchCommand="{Binding FileBrowser.ClearSearchCommand}"
 			                       IsSearching="{Binding FileBrowser.IsSearchBarOpen, Mode=TwoWay}"
 			                       VerticalAlignment="Center"
-			                       Margin="3,0,3,0" />
-
-			<primitives:IconButton Grid.Column="2"
-			                       IconPath="/Assets/Icons/PanelRight.svg"
-			                       Command="{Binding FileBrowser.ToggleDetailsPaneCommand}"
-			                       IsEnabled="{Binding !Navigation.IsHome}"
-			                       Margin="0,0,9,0" />
+			                       Margin="3,0,9,0" />
 		</Grid>
 	</Border>
 </UserControl>
