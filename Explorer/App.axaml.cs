@@ -22,6 +22,7 @@ public class App : Application
 		services.AddSingleton<NavigationService>();
 		services.AddSingleton<ClipboardService>();
 		services.AddSingleton<SettingsService>();
+		services.AddSingleton<OcrCacheStore>();
 		services.AddSingleton<OcrService>();
 		services.AddSingleton<FileOperationsViewModel>();
 		services.AddTransient<HomeViewModel>();
@@ -30,10 +31,14 @@ public class App : Application
 		var provider = services.BuildServiceProvider();
 
 		if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+		{
 			desktop.MainWindow = new MainWindow
 			{
 				DataContext = provider.GetRequiredService<MainWindowViewModel>()
 			};
+
+			desktop.Exit += (_, _) => provider.Dispose();
+		}
 
 		base.OnFrameworkInitializationCompleted();
 	}

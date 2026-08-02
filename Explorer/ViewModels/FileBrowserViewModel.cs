@@ -360,7 +360,6 @@ public partial class FileBrowserViewModel : ViewModelBase
 		finally
 		{
 			IsOcrScanning = false;
-			_ocr.SaveCache();
 
 			if (ReferenceEquals(_ocrCts, cts))
 				_ocrCts = null;

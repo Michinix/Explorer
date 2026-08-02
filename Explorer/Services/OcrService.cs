@@ -3,11 +3,8 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Explorer.Models;
 using RapidOcrNet;
 
 namespace Explorer.Services;
@@ -19,29 +16,15 @@ public sealed class OcrService
 
 	public static readonly int Degree = Math.Clamp(Environment.ProcessorCount / 2, 1, 4);
 
-	private static readonly string CachePath = Path.Combine(
-		Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Explorer", "ocr-cache.json");
-
 	private static readonly string ModelsDirectory = Path.Combine(AppContext.BaseDirectory, "models", "v5");
-
-	private static readonly JsonSerializerOptions JsonOptions = new()
-	{
-		PropertyNameCaseInsensitive = true,
-		WriteIndented = true
-	};
-
-	private readonly ConcurrentDictionary<string, OcrCacheEntry> _cache =
-		new(StringComparer.OrdinalIgnoreCase);
 
 	private readonly ConcurrentBag<RapidOcr> _engines = [];
 	private readonly SemaphoreSlim _gate = new(Degree, Degree);
+	private readonly OcrCacheStore _store;
 
-	private int _pendingWrites;
-
-	public OcrService()
+	public OcrService(OcrCacheStore store)
 	{
-		foreach (var entry in LoadCache())
-			_cache[entry.FullPath] = entry;
+		_store = store;
 	}
 
 	public async Task<string> ExtractTextAsync(string filePath, CancellationToken token)
@@ -52,8 +35,12 @@ public sealed class OcrService
 		try
 		{
 			var info = new FileInfo(filePath);
+
 			if (!info.Exists)
+			{
+				_store.Remove(filePath);
 				return string.Empty;
+			}
 
 			length = info.Length;
 			ticks = info.LastWriteTimeUtc.Ticks;
@@ -64,33 +51,18 @@ public sealed class OcrService
 			return string.Empty;
 		}
 
-		if (_cache.TryGetValue(filePath, out var cached) &&
+		var cached = _store.TryGet(filePath);
+
+		if (cached is not null &&
 		    cached.Length == length &&
 		    cached.LastWriteTicks == ticks)
 			return cached.Text;
 
 		var text = await RecognizeAsync(filePath, token);
 
-		_cache[filePath] = new OcrCacheEntry(filePath, length, ticks, text);
-		Interlocked.Increment(ref _pendingWrites);
+		_store.Set(filePath, length, ticks, text);
 
 		return text;
-	}
-
-	public void SaveCache()
-	{
-		if (Interlocked.Exchange(ref _pendingWrites, 0) == 0)
-			return;
-
-		try
-		{
-			Directory.CreateDirectory(Path.GetDirectoryName(CachePath)!);
-			File.WriteAllText(CachePath, JsonSerializer.Serialize(_cache.Values.ToArray(), JsonOptions));
-		}
-		catch (Exception ex)
-		{
-			Debug.WriteLine(ex.Message);
-		}
 	}
 
 	public static bool Matches(string text, string term, out string snippet)
@@ -173,21 +145,5 @@ public sealed class OcrService
 		var suffix = end < text.Length ? " …" : string.Empty;
 
 		return $"{prefix}{window}{suffix}";
-	}
-
-	private static OcrCacheEntry[] LoadCache()
-	{
-		try
-		{
-			if (!File.Exists(CachePath))
-				return [];
-
-			return JsonSerializer.Deserialize<OcrCacheEntry[]>(File.ReadAllText(CachePath), JsonOptions) ?? [];
-		}
-		catch (Exception ex)
-		{
-			Debug.WriteLine(ex.Message);
-			return [];
-		}
 	}
 }
