@@ -1,0 +1,21 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+	<Style Selector="ToolTip">
+		<Setter Property="Background" Value="{StaticResource SurfaceElevated}" />
+		<Setter Property="BorderBrush" Value="{StaticResource BorderDefault}" />
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="CornerRadius" Value="6" />
+		<Setter Property="Padding" Value="8,5" />
+		<Setter Property="FontSize" Value="11" />
+		<Setter Property="MaxWidth" Value="320" />
+		<Setter Property="Foreground" Value="{StaticResource ColorWhiteBrush}" />
+	</Style>
+
+	<Style Selector="ToolTip TextBlock">
+		<Setter Property="FontSize" Value="11" />
+		<Setter Property="TextWrapping" Value="Wrap" />
+		<Setter Property="Foreground" Value="{StaticResource ColorWhiteBrush}" />
+	</Style>
+
+</Styles>
