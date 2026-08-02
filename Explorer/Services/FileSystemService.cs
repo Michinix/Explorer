@@ -196,21 +196,7 @@ public static class FileSystemService
 
 	public static Task DeleteEntriesAsync(IEnumerable<FileSystemEntry> entries)
 	{
-		return Task.Run(() =>
-		{
-			foreach (var entry in entries)
-				try
-				{
-					if (entry.IsDirectory)
-						Directory.Delete(entry.FullPath, true);
-					else
-						File.Delete(entry.FullPath);
-				}
-				catch (Exception ex)
-				{
-					Debug.WriteLine(ex.Message);
-				}
-		});
+		return RecycleBinService.DeleteAsync(entries.Select(e => e.FullPath));
 	}
 
 	private static FileSystemEntry MapToEntry(FileSystemInfo e)
