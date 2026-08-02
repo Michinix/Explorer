@@ -40,17 +40,23 @@ public partial class FileBrowserViewModel : ViewModelBase
 	[ObservableProperty] [NotifyPropertyChangedFor(nameof(NoResultsFound))]
 	private bool _isLoading;
 
-	[ObservableProperty] [NotifyPropertyChangedFor(nameof(SearchPlaceholder))]
+	[ObservableProperty]
+	[NotifyPropertyChangedFor(nameof(SearchPlaceholder))]
 	[NotifyPropertyChangedFor(nameof(OcrIconCss))]
 	private bool _isOcrMode;
 
 	[ObservableProperty] [NotifyPropertyChangedFor(nameof(NoResultsFound))]
 	private bool _isOcrScanning;
 
+	[ObservableProperty] [NotifyPropertyChangedFor(nameof(IsDetailsTab))]
+	private bool _isPreviewTab;
+
 	[ObservableProperty] private bool _isSearchBarOpen;
 
 	[ObservableProperty] [NotifyPropertyChangedFor(nameof(NoResultsFound))]
 	private bool _isSearchResult;
+
+	private CancellationTokenSource? _ocrCts;
 
 	[ObservableProperty] [NotifyPropertyChangedFor(nameof(OcrProgressText))]
 	private int _ocrDone;
@@ -92,6 +98,8 @@ public partial class FileBrowserViewModel : ViewModelBase
 	public string OcrIconCss => IsOcrMode ? "path { stroke: #00AAFF }" : "path { stroke: white }";
 
 	public string OcrProgressText => $"Analyse OCR : {OcrDone}/{OcrTotal}";
+
+	public bool IsDetailsTab => !IsPreviewTab;
 
 	public bool NoResultsFound => IsSearchResult && !IsLoading && !IsOcrScanning && Entries.Count == 0;
 
@@ -273,6 +281,18 @@ public partial class FileBrowserViewModel : ViewModelBase
 
 		IsOcrMode = true;
 		IsSearchBarOpen = true;
+	}
+
+	[RelayCommand]
+	private void ShowDetailsTab()
+	{
+		IsPreviewTab = false;
+	}
+
+	[RelayCommand]
+	private void ShowPreviewTab()
+	{
+		IsPreviewTab = true;
 	}
 
 	[RelayCommand]
