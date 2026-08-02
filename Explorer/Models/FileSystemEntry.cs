@@ -18,6 +18,21 @@ public partial class FileSystemEntry(
 		{ "PNG", "JPG", "JPEG", "BMP", "GIF", "WEBP", "ICO", "TIF", "TIFF" };
 
 	[ObservableProperty] private string _editableName = name;
+
+	[ObservableProperty]
+	[NotifyPropertyChangedFor(nameof(ClipboardOpacity))]
+	[NotifyPropertyChangedFor(nameof(IsClipboardStaged))]
+	[NotifyPropertyChangedFor(nameof(ClipboardIconPath))]
+	[NotifyPropertyChangedFor(nameof(ClipboardIconCss))]
+	private bool _isCopied;
+
+	[ObservableProperty]
+	[NotifyPropertyChangedFor(nameof(ClipboardOpacity))]
+	[NotifyPropertyChangedFor(nameof(IsClipboardStaged))]
+	[NotifyPropertyChangedFor(nameof(ClipboardIconPath))]
+	[NotifyPropertyChangedFor(nameof(ClipboardIconCss))]
+	private bool _isCut;
+
 	[ObservableProperty] private bool _isEditing;
 	[ObservableProperty] private bool _isNew;
 	[ObservableProperty] private bool _isPinned;
@@ -42,6 +57,11 @@ public partial class FileSystemEntry(
 	public bool HasOcrSnippet => !string.IsNullOrEmpty(OcrSnippet);
 	public bool ShowPinAction => IsDirectory && !IsPinned;
 	public bool ShowUnpinAction => IsDirectory && IsPinned;
+
+	public bool IsClipboardStaged => IsCut || IsCopied;
+	public double ClipboardOpacity => IsCut ? 0.4 : 1;
+	public string ClipboardIconPath => IsCut ? "/Assets/Icons/Cut.svg" : "/Assets/Icons/Copy.svg";
+	public string ClipboardIconCss => IsCut ? "path { fill: #F5A623 }" : "path { fill: #00AAFF }";
 
 	partial void OnIsPinnedChanged(bool value)
 	{

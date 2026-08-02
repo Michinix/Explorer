@@ -92,6 +92,7 @@
 		</Style>
 
 		<Style Selector="DataGridRow" x:DataType="models:FileSystemEntry">
+			<Setter Property="Opacity" Value="{Binding ClipboardOpacity}" />
 			<Setter Property="ContextMenu">
 				<ContextMenu>
 					<primitives:ActionMenuItem Text="Épingler ce dossier"
@@ -188,6 +189,12 @@
 								                     IsDirectory="{Binding IsDirectory}"
 								                     EntryPath="{Binding FullPath}" />
 
+								<Svg Width="12" Height="12"
+								     VerticalAlignment="Center"
+								     Path="{Binding ClipboardIconPath}"
+								     Css="{Binding ClipboardIconCss}"
+								     IsVisible="{Binding IsClipboardStaged}" />
+
 								<TextBlock Text="{Binding Name}" VerticalAlignment="Center"
 								           HorizontalAlignment="Center"
 								           IsVisible="{Binding !IsEditing}" />
@@ -261,7 +268,8 @@
 
 			<ListBox.ItemTemplate>
 				<DataTemplate x:DataType="models:FileSystemEntry">
-					<Border Background="Transparent" Padding="8" ContextRequested="OnEntryContextRequested">
+					<Border Background="Transparent" Padding="8" ContextRequested="OnEntryContextRequested"
+					        Opacity="{Binding ClipboardOpacity}">
 						<Border.ContextMenu>
 							<ContextMenu>
 								<primitives:ActionMenuItem Text="Épingler ce dossier"
@@ -296,10 +304,18 @@
 						</Border.ContextMenu>
 
 						<StackPanel Width="96" Spacing="8">
-							<primitives:FileIcon Width="42" Height="46"
-							                     HorizontalAlignment="Center"
-							                     IsDirectory="{Binding IsDirectory}"
-							                     EntryPath="{Binding FullPath}" />
+							<Panel HorizontalAlignment="Center">
+								<primitives:FileIcon Width="42" Height="46"
+								                     IsDirectory="{Binding IsDirectory}"
+								                     EntryPath="{Binding FullPath}" />
+
+								<Svg Width="14" Height="14"
+								     HorizontalAlignment="Right"
+								     VerticalAlignment="Bottom"
+								     Path="{Binding ClipboardIconPath}"
+								     Css="{Binding ClipboardIconCss}"
+								     IsVisible="{Binding IsClipboardStaged}" />
+							</Panel>
 
 							<TextBlock Text="{Binding Name}" IsVisible="{Binding !IsEditing}" />
 

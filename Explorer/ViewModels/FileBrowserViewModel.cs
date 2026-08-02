@@ -18,15 +18,16 @@ namespace Explorer.ViewModels;
 
 public partial class FileBrowserViewModel : ViewModelBase
 {
+	private readonly ClipboardService _clipboard;
 	private readonly NavigationService _navigation;
 	private readonly OcrService _ocr;
+
+	private readonly HashSet<string> _ocrPublishedPaths = new(StringComparer.OrdinalIgnoreCase);
 	private readonly SettingsService _settings;
 
 	private bool _activeSearchIsOcr;
 
 	private string _activeSearchTerm = string.Empty;
-
-	private CancellationTokenSource? _ocrCts;
 
 	[ObservableProperty] [NotifyPropertyChangedFor(nameof(NoResultsFound))]
 	private ObservableCollection<FileSystemEntry> _entries = [];
@@ -60,11 +61,13 @@ public partial class FileBrowserViewModel : ViewModelBase
 	[ObservableProperty] private string _searchTerm = string.Empty;
 	[ObservableProperty] private FileSystemEntry? _selectedEntry;
 
-	public FileBrowserViewModel(NavigationService navigation, SettingsService settings, OcrService ocr)
+	public FileBrowserViewModel(NavigationService navigation, SettingsService settings, OcrService ocr,
+		ClipboardService clipboard)
 	{
 		_navigation = navigation;
 		_settings = settings;
 		_ocr = ocr;
+		_clipboard = clipboard;
 		_isGridView = settings.IsGridView;
 		_isDetailsPaneVisible = settings.IsDetailsPaneVisible;
 
@@ -79,6 +82,7 @@ public partial class FileBrowserViewModel : ViewModelBase
 		});
 
 		_settings.PinnedItems.CollectionChanged += (_, _) => UpdatePinnedStates();
+		_clipboard.StagedChanged += UpdateClipboardStates;
 	}
 
 	public string SearchPlaceholder => IsOcrMode
@@ -143,6 +147,20 @@ public partial class FileBrowserViewModel : ViewModelBase
 			entry.IsPinned = entry.IsDirectory && _settings.IsPinned(entry.FullPath);
 	}
 
+	private void UpdateClipboardStates()
+	{
+		foreach (var entry in Entries)
+			ApplyClipboardState(entry);
+	}
+
+	private void ApplyClipboardState(FileSystemEntry entry)
+	{
+		var staged = !entry.IsNew && _clipboard.IsStaged(entry.FullPath);
+
+		entry.IsCut = staged && _clipboard.Operation == ClipboardOperation.Cut;
+		entry.IsCopied = staged && _clipboard.Operation == ClipboardOperation.Copy;
+	}
+
 	partial void OnEntriesChanged(
 		ObservableCollection<FileSystemEntry>? oldValue,
 		ObservableCollection<FileSystemEntry> newValue
@@ -162,6 +180,7 @@ public partial class FileBrowserViewModel : ViewModelBase
 	{
 		entry.IsSelected = false;
 		entry.IsPinned = entry.IsDirectory && _settings.IsPinned(entry.FullPath);
+		ApplyClipboardState(entry);
 		entry.PropertyChanged += OnEntryPropertyChanged;
 	}
 

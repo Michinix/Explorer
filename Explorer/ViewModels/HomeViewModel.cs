@@ -7,7 +7,7 @@ public class HomeViewModel : ViewModelBase
 	public HomeViewModel(NavigationService navigationService, ClipboardService clipboardService,
 		SettingsService settingsService, OcrService ocrService)
 	{
-		FileBrowser = new FileBrowserViewModel(navigationService, settingsService, ocrService);
+		FileBrowser = new FileBrowserViewModel(navigationService, settingsService, ocrService, clipboardService);
 		FileOperations = new FileOperationsViewModel(navigationService, clipboardService, FileBrowser, settingsService);
 		FileBrowser.FileOps = FileOperations;
 		NavBar = new NavBarViewModel(navigationService, FileBrowser, FileOperations);

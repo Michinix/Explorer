@@ -17,12 +17,20 @@ public enum ClipboardOperation
 
 public partial class ClipboardService : ObservableObject
 {
+	private readonly HashSet<string> _stagedPaths = new(StringComparer.OrdinalIgnoreCase);
 	private FileSystemEntry[] _entries = [];
 
 	[ObservableProperty] [NotifyPropertyChangedFor(nameof(CanPaste))]
 	private ClipboardOperation _operation = ClipboardOperation.None;
 
 	public bool CanPaste => Operation != ClipboardOperation.None && _entries.Length > 0;
+
+	public event Action? StagedChanged;
+
+	public bool IsStaged(string path)
+	{
+		return _stagedPaths.Contains(path);
+	}
 
 	public void Copy(IEnumerable<FileSystemEntry> entries)
 	{
@@ -37,7 +45,9 @@ public partial class ClipboardService : ObservableObject
 	private void Clear()
 	{
 		_entries = [];
+		_stagedPaths.Clear();
 		Operation = ClipboardOperation.None;
+		StagedChanged?.Invoke();
 	}
 
 	public async Task PasteAsync(string destinationDirectory)
@@ -74,6 +84,13 @@ public partial class ClipboardService : ObservableObject
 	{
 		_entries = entries.Where(e => !e.IsNew).ToArray();
 		Operation = _entries.Length > 0 ? operation : ClipboardOperation.None;
+
+		_stagedPaths.Clear();
+
+		foreach (var entry in _entries)
+			_stagedPaths.Add(entry.FullPath);
+
+		StagedChanged?.Invoke();
 	}
 
 	private static string UniqueDestination(string destinationDirectory, FileSystemEntry entry)
