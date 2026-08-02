@@ -22,9 +22,15 @@
 			</Grid>
 		</Viewbox>
 
-		<Image Source="{Binding OsIcon, RelativeSource={RelativeSource AncestorType={x:Type local:FileIcon}}}"
-		       IsVisible="{Binding HasOsIcon, RelativeSource={RelativeSource AncestorType={x:Type local:FileIcon}}}"
-		       Stretch="Uniform"
-		       RenderOptions.BitmapInterpolationMode="HighQuality" />
+		<Border ClipToBounds="True"
+		        HorizontalAlignment="Center"
+		        VerticalAlignment="Center"
+		        CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType={x:Type local:FileIcon}}}"
+		        IsVisible="{Binding HasOsIcon, RelativeSource={RelativeSource AncestorType={x:Type local:FileIcon}}}">
+
+			<Image Source="{Binding OsIcon, RelativeSource={RelativeSource AncestorType={x:Type local:FileIcon}}}"
+			       Stretch="Uniform"
+			       RenderOptions.BitmapInterpolationMode="HighQuality" />
+		</Border>
 	</Grid>
 </UserControl>
