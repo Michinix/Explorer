@@ -23,7 +23,7 @@
 			<primitives:NewItemButton CreateFolderCommand="{Binding FileOperations.CreateFolderCommand}"
 			                          CreateFileCommand="{Binding FileOperations.CreateFileCommand}" />
 
-			<Border Width="1" Height="30" Background="{StaticResource BorderDefault}" />
+			<Border Classes="DividerVertical" Height="30" />
 
 			<StackPanel Orientation="Horizontal" Spacing="18">
 				<primitives:IconButton IconPath="/Assets/Icons/Cut.svg"
@@ -43,7 +43,7 @@
 				                       IsEnabled="{Binding FileBrowser.HasSelectionTargets}" />
 			</StackPanel>
 
-			<Border Width="1" Height="30" Background="{StaticResource BorderDefault}" />
+			<Border Classes="DividerVertical" Height="30" />
 
 			<primitives:IconButton IconPath="/Assets/Icons/Ocr.svg"
 			                       IconCss="{Binding FileBrowser.OcrIconCss}"
@@ -51,7 +51,7 @@
 			                       IsEnabled="{Binding !Navigation.IsHome}"
 			                       ToolTip.Tip="Rechercher du texte dans les images" />
 
-			<Border Width="1" Height="30" Background="{StaticResource BorderDefault}" />
+			<Border Classes="DividerVertical" Height="30" />
 
 			<primitives:IconButton IconPath="{Binding FileBrowser.ViewToggleIconPath}"
 			                       Command="{Binding FileBrowser.ToggleViewCommand}" />
