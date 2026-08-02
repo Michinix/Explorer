@@ -8,50 +8,69 @@
              x:Class="Explorer.Controls.Footer"
              x:DataType="vm:FileBrowserViewModel">
 
+	<UserControl.Styles>
+		<Style Selector="ProgressBar.ocr">
+			<Setter Property="MinWidth" Value="0" />
+			<Setter Property="MinHeight" Value="0" />
+		</Style>
+
+		<Style Selector="Button.ghost">
+			<Setter Property="MinWidth" Value="0" />
+			<Setter Property="MinHeight" Value="0" />
+		</Style>
+	</UserControl.Styles>
+
 	<Border Background="Transparent"
 	        BorderThickness="0,1,0,0"
 	        BorderBrush="{StaticResource BorderDefault}">
 
-		<Grid ColumnDefinitions="*, Auto" Margin="15, 10">
+		<Grid ColumnDefinitions="*, Auto" Margin="15, 10" Height="16">
 			<StackPanel Grid.Column="0"
 			            Orientation="Horizontal"
 			            VerticalAlignment="Center"
 			            Spacing="6">
 
-				<StackPanel Orientation="Horizontal" Spacing="6">
-					<TextBlock FontSize="11"
-					           Text="{Binding ItemCountText}" />
+				<TextBlock FontSize="11"
+				           VerticalAlignment="Center"
+				           Text="{Binding ItemCountText}" />
 
-					<TextBlock FontSize="11" Text="-" VerticalAlignment="Center" />
+				<TextBlock FontSize="11"
+				           VerticalAlignment="Center"
+				           Text="-" />
 
-					<TextBlock FontSize="11"
-					           Text="{Binding SelectedItemCountText}" />
-				</StackPanel>
+				<TextBlock FontSize="11"
+				           VerticalAlignment="Center"
+				           Text="{Binding SelectedItemCountText}" />
 
-				<StackPanel Orientation="Horizontal"
-				            Spacing="8"
-				            VerticalAlignment="Center"
-				            IsVisible="{Binding IsOcrScanning}">
+				<Border Classes="DividerVertical"
+				        Height="12"
+				        Margin="2,0"
+				        IsVisible="{Binding IsOcrScanning}" />
 
-					<Border Width="1" Height="12" Background="{StaticResource BorderDefault}" />
+				<TextBlock FontSize="11"
+				           VerticalAlignment="Center"
+				           IsVisible="{Binding IsOcrScanning}"
+				           Text="{Binding OcrProgressText}" />
 
+				<ProgressBar Classes="ocr"
+				             Width="90"
+				             Height="4"
+				             Minimum="0"
+				             VerticalAlignment="Center"
+				             IsVisible="{Binding IsOcrScanning}"
+				             Maximum="{Binding OcrTotal}"
+				             Value="{Binding OcrDone}" />
+
+				<Button Classes="ghost"
+				        Padding="4,0"
+				        VerticalAlignment="Center"
+				        IsVisible="{Binding IsOcrScanning}"
+				        Command="{Binding CancelOcrCommand}">
 					<TextBlock FontSize="11"
 					           VerticalAlignment="Center"
-					           Text="{Binding OcrProgressText}" />
-
-					<ProgressBar Width="90"
-					             Height="4"
-					             Minimum="0"
-					             VerticalAlignment="Center"
-					             Maximum="{Binding OcrTotal}"
-					             Value="{Binding OcrDone}" />
-
-					<Button Classes="ghost"
-					        Padding="4,0"
-					        Command="{Binding CancelOcrCommand}">
-						<TextBlock FontSize="11" Foreground="{StaticResource AccentPrimary}" Text="Annuler" />
-					</Button>
-				</StackPanel>
+					           Foreground="{StaticResource AccentPrimary}"
+					           Text="Annuler" />
+				</Button>
 
 			</StackPanel>
 
@@ -59,9 +78,9 @@
 			            Orientation="Horizontal"
 			            VerticalAlignment="Center">
 
-				<TextBlock FontSize="11">
-					Explorer v1.0.0
-				</TextBlock>
+				<TextBlock FontSize="11"
+				           VerticalAlignment="Center"
+				           Text="Explorer v1.0.0" />
 			</StackPanel>
 		</Grid>
 	</Border>
