@@ -262,9 +262,16 @@ public partial class FileBrowserViewModel : ViewModelBase
 	}
 
 	[RelayCommand]
-	private void ToggleOcrMode()
+	private async Task ToggleOcrMode()
 	{
-		IsOcrMode = !IsOcrMode;
+		if (IsOcrMode)
+		{
+			await ClearSearch();
+			IsSearchBarOpen = false;
+			return;
+		}
+
+		IsOcrMode = true;
 		IsSearchBarOpen = true;
 	}
 
@@ -284,6 +291,9 @@ public partial class FileBrowserViewModel : ViewModelBase
 	[RelayCommand]
 	private async Task Search()
 	{
+		if (_navigation.IsHome)
+			return;
+
 		if (string.IsNullOrWhiteSpace(SearchTerm))
 		{
 			if (IsSearchResult)
