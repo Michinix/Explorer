@@ -25,11 +25,13 @@
 		<semi:UrsaSemiTheme Locale="fr-FR" />
 
 		<StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Simple.xaml" />
-		<StyleInclude Source="avares://Explorer/Theme/DataGrid.axaml" />
-		<StyleInclude Source="avares://Explorer/Theme/Checkbox.axaml" />
-		<StyleInclude Source="avares://Explorer/Theme/Button.axaml" />
-		<StyleInclude Source="avares://Explorer/Theme/TextBox.axaml" />
-		<StyleInclude Source="avares://Explorer/Theme/Expander.axaml" />
-		<StyleInclude Source="avares://Explorer/Theme/ContextMenu.axaml" />
+		<StyleInclude Source="avares://Explorer/Theme/Controls/DataGrid.axaml" />
+		<StyleInclude Source="avares://Explorer/Theme/Controls/Checkbox.axaml" />
+		<StyleInclude Source="avares://Explorer/Theme/Controls/Button.axaml" />
+		<StyleInclude Source="avares://Explorer/Theme/Controls/TextBox.axaml" />
+		<StyleInclude Source="avares://Explorer/Theme/Controls/Expander.axaml" />
+		<StyleInclude Source="avares://Explorer/Theme/Controls/ContextMenu.axaml" />
+		<StyleInclude Source="avares://Explorer/Theme/Controls/ToolTip.axaml" />
+		<StyleInclude Source="avares://Explorer/Theme/Controls/Divider.axaml" />
 	</Application.Styles>
 </Application>
