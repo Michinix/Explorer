@@ -28,6 +28,31 @@
 					           Text="{Binding SelectedItemCountText}" />
 				</StackPanel>
 
+				<StackPanel Orientation="Horizontal"
+				            Spacing="8"
+				            VerticalAlignment="Center"
+				            IsVisible="{Binding IsOcrScanning}">
+
+					<Border Width="1" Height="12" Background="{StaticResource BorderDefault}" />
+
+					<TextBlock FontSize="11"
+					           VerticalAlignment="Center"
+					           Text="{Binding OcrProgressText}" />
+
+					<ProgressBar Width="90"
+					             Height="4"
+					             Minimum="0"
+					             VerticalAlignment="Center"
+					             Maximum="{Binding OcrTotal}"
+					             Value="{Binding OcrDone}" />
+
+					<Button Classes="ghost"
+					        Padding="4,0"
+					        Command="{Binding CancelOcrCommand}">
+						<TextBlock FontSize="11" Foreground="{StaticResource AccentPrimary}" Text="Annuler" />
+					</Button>
+				</StackPanel>
+
 			</StackPanel>
 
 			<StackPanel Grid.Column="1"

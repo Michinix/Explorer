@@ -22,6 +22,12 @@ public partial class FileSystemEntry(
 	[ObservableProperty] private bool _isNew;
 	[ObservableProperty] private bool _isPinned;
 	[ObservableProperty] private bool _isSelected;
+
+	[ObservableProperty] [NotifyPropertyChangedFor(nameof(HasOcrSnippet))]
+	private string? _ocrSnippet;
+
+	[ObservableProperty] private string? _relativeFolder;
+
 	public string Name { get; } = name;
 	public string FullPath { get; } = fullPath;
 	public string Type { get; } = type;
@@ -33,6 +39,7 @@ public partial class FileSystemEntry(
 	public string DisplayType => IsDirectory ? "DOSSIER" : $"Fichier {Type}";
 	public string TypeLabel => IsDirectory ? "DOSSIER" : Type;
 	public bool IsImage => !IsDirectory && ImageTypes.Contains(Type);
+	public bool HasOcrSnippet => !string.IsNullOrEmpty(OcrSnippet);
 	public bool ShowPinAction => IsDirectory && !IsPinned;
 	public bool ShowUnpinAction => IsDirectory && IsPinned;
 

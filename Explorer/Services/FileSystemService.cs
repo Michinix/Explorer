@@ -45,6 +45,26 @@ public static class FileSystemService
 		});
 	}
 
+	public static Task<FileSystemEntry[]> ListImagesRecursiveAsync(string path)
+	{
+		return Task.Run(() =>
+		{
+			var options = new EnumerationOptions
+			{
+				RecurseSubdirectories = true,
+				IgnoreInaccessible = true,
+				AttributesToSkip = FileAttributes.Hidden | FileAttributes.System
+			};
+
+			return new DirectoryInfo(path)
+				.EnumerateFiles("*", options)
+				.Select(MapToEntry)
+				.Where(e => e.IsImage)
+				.OrderBy(e => e.FullPath, StringComparer.OrdinalIgnoreCase)
+				.ToArray();
+		});
+	}
+
 	public static Task<FileSystemEntry[]> ListEntriesAsync(string path)
 	{
 		return Task.Run(() =>

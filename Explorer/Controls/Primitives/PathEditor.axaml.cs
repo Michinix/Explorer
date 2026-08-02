@@ -49,7 +49,8 @@ public partial class PathEditor : UserControl
 		AvaloniaProperty.Register<PathEditor, ICommand?>(nameof(ClearSearchCommand));
 
 	public static readonly StyledProperty<bool> IsSearchingProperty =
-		AvaloniaProperty.Register<PathEditor, bool>(nameof(IsSearching));
+		AvaloniaProperty.Register<PathEditor, bool>(
+			nameof(IsSearching), defaultBindingMode: BindingMode.TwoWay);
 
 	private bool _pressedOnSearchButton;
 
@@ -134,6 +135,13 @@ public partial class PathEditor : UserControl
 			RebuildSegments();
 			IsSearching = false;
 		}
+
+		if (change.Property == IsSearchingProperty && change.GetNewValue<bool>())
+			Dispatcher.UIThread.Post(() =>
+			{
+				SearchBox.Focus();
+				SearchBox.SelectAll();
+			});
 	}
 
 	private void RebuildSegments()
@@ -196,11 +204,6 @@ public partial class PathEditor : UserControl
 	private void OnSearchClick(object? sender, RoutedEventArgs e)
 	{
 		IsSearching = true;
-		Dispatcher.UIThread.Post(() =>
-		{
-			SearchBox.Focus();
-			SearchBox.SelectAll();
-		});
 	}
 
 	private void OnSearchKeyDown(object? sender, KeyEventArgs e)

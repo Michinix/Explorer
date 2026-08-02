@@ -5,7 +5,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -17,9 +19,14 @@ namespace Explorer.ViewModels;
 public partial class FileBrowserViewModel : ViewModelBase
 {
 	private readonly NavigationService _navigation;
+	private readonly OcrService _ocr;
 	private readonly SettingsService _settings;
 
+	private bool _activeSearchIsOcr;
+
 	private string _activeSearchTerm = string.Empty;
+
+	private CancellationTokenSource? _ocrCts;
 
 	[ObservableProperty] [NotifyPropertyChangedFor(nameof(NoResultsFound))]
 	private ObservableCollection<FileSystemEntry> _entries = [];
@@ -32,21 +39,40 @@ public partial class FileBrowserViewModel : ViewModelBase
 	[ObservableProperty] [NotifyPropertyChangedFor(nameof(NoResultsFound))]
 	private bool _isLoading;
 
+	[ObservableProperty] [NotifyPropertyChangedFor(nameof(SearchPlaceholder))]
+	[NotifyPropertyChangedFor(nameof(OcrIconCss))]
+	private bool _isOcrMode;
+
+	[ObservableProperty] [NotifyPropertyChangedFor(nameof(NoResultsFound))]
+	private bool _isOcrScanning;
+
+	[ObservableProperty] private bool _isSearchBarOpen;
+
 	[ObservableProperty] [NotifyPropertyChangedFor(nameof(NoResultsFound))]
 	private bool _isSearchResult;
+
+	[ObservableProperty] [NotifyPropertyChangedFor(nameof(OcrProgressText))]
+	private int _ocrDone;
+
+	[ObservableProperty] [NotifyPropertyChangedFor(nameof(OcrProgressText))]
+	private int _ocrTotal;
 
 	[ObservableProperty] private string _searchTerm = string.Empty;
 	[ObservableProperty] private FileSystemEntry? _selectedEntry;
 
-	public FileBrowserViewModel(NavigationService navigation, SettingsService settings)
+	public FileBrowserViewModel(NavigationService navigation, SettingsService settings, OcrService ocr)
 	{
 		_navigation = navigation;
 		_settings = settings;
+		_ocr = ocr;
 		_isGridView = settings.IsGridView;
 		_isDetailsPaneVisible = settings.IsDetailsPaneVisible;
 
 		WeakReferenceMessenger.Default.Register<CurrentPathChangedMessage>(this, (r, m) =>
 		{
+			CancelOcr();
+			IsOcrMode = false;
+			IsSearchBarOpen = false;
 			SearchTerm = string.Empty;
 			OnPropertyChanged(nameof(SearchPlaceholder));
 			_ = LoadEntriesAsync();
@@ -55,9 +81,15 @@ public partial class FileBrowserViewModel : ViewModelBase
 		_settings.PinnedItems.CollectionChanged += (_, _) => UpdatePinnedStates();
 	}
 
-	public string SearchPlaceholder => $"Rechercher dans : {GetFolderDisplayName(_navigation.CurrentPath)}";
+	public string SearchPlaceholder => IsOcrMode
+		? "Rechercher du texte dans les images..."
+		: $"Rechercher dans : {GetFolderDisplayName(_navigation.CurrentPath)}";
 
-	public bool NoResultsFound => IsSearchResult && !IsLoading && Entries.Count == 0;
+	public string OcrIconCss => IsOcrMode ? "path { stroke: #00AAFF }" : "path { stroke: white }";
+
+	public string OcrProgressText => $"Analyse OCR : {OcrDone}/{OcrTotal}";
+
+	public bool NoResultsFound => IsSearchResult && !IsLoading && !IsOcrScanning && Entries.Count == 0;
 
 	public string ViewToggleIconPath => IsGridView ? "/Assets/Icons/List.svg" : "/Assets/Icons/Grid.svg";
 
@@ -121,13 +153,16 @@ public partial class FileBrowserViewModel : ViewModelBase
 				entry.PropertyChanged -= OnEntryPropertyChanged;
 
 		foreach (var entry in newValue)
-		{
-			entry.IsSelected = false;
-			entry.IsPinned = entry.IsDirectory && _settings.IsPinned(entry.FullPath);
-			entry.PropertyChanged += OnEntryPropertyChanged;
-		}
+			AttachEntry(entry);
 
 		NotifySelectionChanged();
+	}
+
+	private void AttachEntry(FileSystemEntry entry)
+	{
+		entry.IsSelected = false;
+		entry.IsPinned = entry.IsDirectory && _settings.IsPinned(entry.FullPath);
+		entry.PropertyChanged += OnEntryPropertyChanged;
 	}
 
 	partial void OnSelectedEntryChanged(FileSystemEntry? value)
@@ -156,9 +191,12 @@ public partial class FileBrowserViewModel : ViewModelBase
 
 	public async Task LoadEntriesAsync()
 	{
+		CancelOcr();
+
 		IsSearchResult = false;
 		SelectedEntry = null;
 		_activeSearchTerm = string.Empty;
+		_activeSearchIsOcr = false;
 
 		if (string.Equals(_navigation.CurrentPath, NavigationService.HomePath, StringComparison.OrdinalIgnoreCase))
 		{
@@ -196,10 +234,32 @@ public partial class FileBrowserViewModel : ViewModelBase
 	[RelayCommand]
 	private async Task ClearSearch()
 	{
+		CancelOcr();
+		IsOcrMode = false;
 		SearchTerm = string.Empty;
 
 		if (IsSearchResult)
 			await LoadEntriesAsync();
+	}
+
+	[RelayCommand]
+	private void ToggleOcrMode()
+	{
+		IsOcrMode = !IsOcrMode;
+		IsSearchBarOpen = true;
+	}
+
+	[RelayCommand]
+	private void CancelOcr()
+	{
+		try
+		{
+			_ocrCts?.Cancel();
+		}
+		catch (ObjectDisposedException ex)
+		{
+			Debug.WriteLine(ex.Message);
+		}
 	}
 
 	[RelayCommand]
@@ -212,10 +272,19 @@ public partial class FileBrowserViewModel : ViewModelBase
 			return;
 		}
 
-		if (IsSearchResult && string.Equals(SearchTerm, _activeSearchTerm, StringComparison.OrdinalIgnoreCase))
+		if (IsSearchResult && _activeSearchIsOcr == IsOcrMode &&
+		    string.Equals(SearchTerm, _activeSearchTerm, StringComparison.OrdinalIgnoreCase))
 			return;
 
 		_activeSearchTerm = SearchTerm;
+		_activeSearchIsOcr = IsOcrMode;
+
+		if (IsOcrMode)
+		{
+			await OcrSearchAsync(SearchTerm);
+			return;
+		}
+
 		IsLoading = true;
 		IsSearchResult = true;
 		SelectedEntry = null;
@@ -233,6 +302,104 @@ public partial class FileBrowserViewModel : ViewModelBase
 		{
 			await Task.Delay(300);
 			IsLoading = false;
+		}
+	}
+
+	private async Task OcrSearchAsync(string term)
+	{
+		CancelOcr();
+
+		var cts = new CancellationTokenSource();
+		_ocrCts = cts;
+
+		IsSearchResult = true;
+		SelectedEntry = null;
+		Entries = [];
+		OcrDone = 0;
+		OcrTotal = 0;
+		IsOcrScanning = true;
+
+		var results = Entries;
+		var root = _navigation.CurrentPath;
+		var processed = 0;
+
+		try
+		{
+			var images = await FileSystemService.ListImagesRecursiveAsync(root);
+			OcrTotal = images.Length;
+
+			var options = new ParallelOptions
+			{
+				MaxDegreeOfParallelism = OcrService.Degree,
+				CancellationToken = cts.Token
+			};
+
+			await Parallel.ForEachAsync(images, options, async (entry, token) =>
+			{
+				var text = await _ocr.ExtractTextAsync(entry.FullPath, token);
+				var matched = OcrService.Matches(text, term, out var snippet);
+
+				if (matched)
+				{
+					entry.OcrSnippet = snippet;
+					entry.RelativeFolder = GetRelativeFolder(root, entry.FullPath);
+				}
+
+				var count = Interlocked.Increment(ref processed);
+
+				Dispatcher.UIThread.Post(() => PublishOcrResult(results, matched ? entry : null, count));
+			});
+		}
+		catch (OperationCanceledException)
+		{
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine(ex.Message);
+		}
+		finally
+		{
+			IsOcrScanning = false;
+			_ocr.SaveCache();
+
+			if (ReferenceEquals(_ocrCts, cts))
+				_ocrCts = null;
+
+			cts.Dispose();
+		}
+	}
+
+	private void PublishOcrResult(ObservableCollection<FileSystemEntry> target, FileSystemEntry? match, int done)
+	{
+		if (!ReferenceEquals(Entries, target))
+			return;
+
+		if (match is not null)
+		{
+			AttachEntry(match);
+			target.Add(match);
+			NotifySelectionChanged();
+			OnPropertyChanged(nameof(NoResultsFound));
+		}
+
+		OcrDone = done;
+	}
+
+	private static string GetRelativeFolder(string root, string fullPath)
+	{
+		try
+		{
+			var folder = Path.GetDirectoryName(fullPath);
+			if (string.IsNullOrEmpty(folder))
+				return "—";
+
+			var relative = Path.GetRelativePath(root, folder);
+			return relative == "." ? "—" : relative;
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine(ex.Message);
+			return "—";
 		}
 	}
 

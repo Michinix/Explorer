@@ -1,3 +1,6 @@
+using System;
+using System.ComponentModel;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
@@ -10,9 +13,54 @@ namespace Explorer.Controls;
 
 public partial class FileBrowser : UserControl
 {
+	private FileBrowserViewModel? _observed;
+
 	public FileBrowser()
 	{
 		InitializeComponent();
+	}
+
+	protected override void OnDataContextChanged(EventArgs e)
+	{
+		base.OnDataContextChanged(e);
+
+		if (_observed is not null)
+			_observed.PropertyChanged -= OnViewModelPropertyChanged;
+
+		_observed = DataContext as FileBrowserViewModel;
+
+		if (_observed is not null)
+			_observed.PropertyChanged += OnViewModelPropertyChanged;
+
+		ApplyOcrColumns();
+	}
+
+	private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+	{
+		if (e.PropertyName is not (nameof(FileBrowserViewModel.IsOcrMode) or
+		    nameof(FileBrowserViewModel.IsSearchResult)))
+			return;
+
+		ApplyOcrColumns();
+	}
+
+	private void ApplyOcrColumns()
+	{
+		var showOcr = _observed is { IsOcrMode: true, IsSearchResult: true };
+
+		SetColumnVisible("TEXTE TROUVÉ", showOcr);
+		SetColumnVisible("DOSSIER", showOcr);
+		SetColumnVisible("TAILLE", !showOcr);
+		SetColumnVisible("TYPE", !showOcr);
+		SetColumnVisible("MODIFIÉ LE", !showOcr);
+	}
+
+	private void SetColumnVisible(string header, bool isVisible)
+	{
+		var column = EntriesGrid.Columns.FirstOrDefault(c => Equals(c.Header, header));
+
+		if (column is not null)
+			column.IsVisible = isVisible;
 	}
 
 	private void OnRowDoubleTapped(object? sender, TappedEventArgs e)

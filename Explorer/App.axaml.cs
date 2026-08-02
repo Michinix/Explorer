@@ -22,6 +22,7 @@ public class App : Application
 		services.AddSingleton<NavigationService>();
 		services.AddSingleton<ClipboardService>();
 		services.AddSingleton<SettingsService>();
+		services.AddSingleton<OcrService>();
 		services.AddSingleton<FileOperationsViewModel>();
 		services.AddTransient<HomeViewModel>();
 		services.AddTransient<MainWindowViewModel>();

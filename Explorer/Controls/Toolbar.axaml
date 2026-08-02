@@ -45,6 +45,14 @@
 
 			<Border Width="1" Height="30" Background="{StaticResource BorderDefault}" />
 
+			<primitives:IconButton IconPath="/Assets/Icons/Ocr.svg"
+			                       IconCss="{Binding FileBrowser.OcrIconCss}"
+			                       Command="{Binding FileBrowser.ToggleOcrModeCommand}"
+			                       IsEnabled="{Binding !Navigation.IsHome}"
+			                       ToolTip.Tip="Rechercher du texte dans les images" />
+
+			<Border Width="1" Height="30" Background="{StaticResource BorderDefault}" />
+
 			<primitives:IconButton IconPath="{Binding FileBrowser.ViewToggleIconPath}"
 			                       Command="{Binding FileBrowser.ToggleViewCommand}" />
 		</StackPanel>

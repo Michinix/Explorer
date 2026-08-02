@@ -50,6 +50,7 @@
 			                       SearchPlaceholder="{Binding FileBrowser.SearchPlaceholder}"
 			                       SearchCommand="{Binding FileBrowser.SearchCommand}"
 			                       ClearSearchCommand="{Binding FileBrowser.ClearSearchCommand}"
+			                       IsSearching="{Binding FileBrowser.IsSearchBarOpen, Mode=TwoWay}"
 			                       VerticalAlignment="Center"
 			                       Margin="3,0,3,0" />
 

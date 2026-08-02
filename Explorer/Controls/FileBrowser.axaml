@@ -148,7 +148,8 @@
 			</ContextMenu>
 		</Grid.ContextMenu>
 
-		<DataGrid SelectedItem="{Binding SelectedEntry}"
+		<DataGrid x:Name="EntriesGrid"
+		          SelectedItem="{Binding SelectedEntry}"
 		          DoubleTapped="OnRowDoubleTapped"
 		          LoadingRow="OnDataGridLoadingRow"
 		          IsVisible="{Binding !IsGridView}"
@@ -209,6 +210,20 @@
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
+
+				<DataGridTextColumn Header="TEXTE TROUVÉ"
+				                    Binding="{Binding OcrSnippet, Mode=OneWay}"
+				                    Width="2*"
+				                    IsVisible="False"
+				                    CanUserSort="False"
+				                    CellStyleClasses="colMeta has-border" />
+
+				<DataGridTextColumn Header="DOSSIER"
+				                    Binding="{Binding RelativeFolder, Mode=OneWay}"
+				                    Width="140"
+				                    IsVisible="False"
+				                    CanUserSort="False"
+				                    CellStyleClasses="colMeta has-border" />
 
 				<DataGridTextColumn Header="TAILLE"
 				                    Binding="{Binding DisplaySize, Mode=OneWay}"
@@ -287,6 +302,14 @@
 							                     EntryPath="{Binding FullPath}" />
 
 							<TextBlock Text="{Binding Name}" IsVisible="{Binding !IsEditing}" />
+
+							<TextBlock Text="{Binding OcrSnippet}"
+							           IsVisible="{Binding HasOcrSnippet}"
+							           FontSize="10"
+							           MaxLines="2"
+							           TextWrapping="Wrap"
+							           TextTrimming="CharacterEllipsis"
+							           Foreground="{StaticResource ForegroundMuted}" />
 
 							<TextBox Classes="RenameInput"
 							         Text="{Binding EditableName}"

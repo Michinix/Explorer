@@ -13,12 +13,13 @@
 			<Setter Property="IsHitTestVisible" Value="False" />
 		</Style>
 
-		<Style Selector="Button:disabled Svg">
-			<Setter Property="Css" Value="* { opacity: 0.35 }" />
+		<Style Selector="Button:disabled">
+			<Setter Property="Opacity" Value="0.35" />
 		</Style>
 	</UserControl.Styles>
 
 	<Button Classes="ghost" Command="{Binding Command, ElementName=IconButtonControl}">
-		<Svg Path="{Binding IconPath, ElementName=IconButtonControl}" />
+		<Svg Path="{Binding IconPath, ElementName=IconButtonControl}"
+		     Css="{Binding IconCss, ElementName=IconButtonControl}" />
 	</Button>
 </UserControl>

@@ -9,6 +9,9 @@ public partial class IconButton : UserControl
 	public static readonly StyledProperty<string?> IconPathProperty =
 		AvaloniaProperty.Register<IconButton, string?>(nameof(IconPath));
 
+	public static readonly StyledProperty<string?> IconCssProperty =
+		AvaloniaProperty.Register<IconButton, string?>(nameof(IconCss));
+
 	public static readonly StyledProperty<ICommand?> CommandProperty =
 		AvaloniaProperty.Register<IconButton, ICommand?>(nameof(Command));
 
@@ -21,6 +24,12 @@ public partial class IconButton : UserControl
 	{
 		get => GetValue(IconPathProperty);
 		set => SetValue(IconPathProperty, value);
+	}
+
+	public string? IconCss
+	{
+		get => GetValue(IconCssProperty);
+		set => SetValue(IconCssProperty, value);
 	}
 
 	public ICommand? Command
