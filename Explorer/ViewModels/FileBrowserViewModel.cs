@@ -29,6 +29,9 @@ public partial class FileBrowserViewModel : ViewModelBase
 
 	private string _activeSearchTerm = string.Empty;
 
+	private readonly Dictionary<string, SearchSnapshot> _searchSnapshots = new(StringComparer.OrdinalIgnoreCase);
+	private string _trackedPath;
+
 	[ObservableProperty] [NotifyPropertyChangedFor(nameof(NoResultsFound))]
 	private ObservableCollection<FileSystemEntry> _entries = [];
 
@@ -74,10 +77,18 @@ public partial class FileBrowserViewModel : ViewModelBase
 		_clipboard = clipboard;
 		_isGridView = settings.IsGridView;
 		_isDetailsPaneVisible = settings.IsDetailsPaneVisible;
+		_trackedPath = navigation.CurrentPath;
 
 		WeakReferenceMessenger.Default.Register<CurrentPathChangedMessage>(this, (r, m) =>
 		{
+			SaveSearchSnapshot(_trackedPath);
+			_trackedPath = m.NewPath;
+
 			CancelOcr();
+
+			if (TryRestoreSearchSnapshot(m.NewPath))
+				return;
+
 			IsOcrMode = false;
 			IsSearchBarOpen = false;
 			SearchTerm = string.Empty;
@@ -186,6 +197,9 @@ public partial class FileBrowserViewModel : ViewModelBase
 		entry.IsPinned = entry.IsDirectory && _settings.IsPinned(entry.FullPath);
 		ApplyClipboardState(entry);
 		entry.PropertyChanged += OnEntryPropertyChanged;
+
+		entry.HasAppeared = false;
+		Dispatcher.UIThread.Post(() => entry.HasAppeared = true, DispatcherPriority.Background);
 	}
 
 	partial void OnSelectedEntryChanged(FileSystemEntry? value)
@@ -212,6 +226,36 @@ public partial class FileBrowserViewModel : ViewModelBase
 		FileOps?.NotifySelectionChanged();
 	}
 
+	private void SaveSearchSnapshot(string path)
+	{
+		if (!IsSearchResult || IsOcrScanning || string.IsNullOrWhiteSpace(SearchTerm))
+		{
+			_searchSnapshots.Remove(path);
+			return;
+		}
+
+		_searchSnapshots[path] = new SearchSnapshot(SearchTerm, IsOcrMode, IsSearchBarOpen, Entries);
+	}
+
+	private bool TryRestoreSearchSnapshot(string path)
+	{
+		if (!_searchSnapshots.TryGetValue(path, out var snapshot))
+			return false;
+
+		_activeSearchTerm = snapshot.SearchTerm;
+		_activeSearchIsOcr = snapshot.IsOcrMode;
+
+		IsOcrMode = snapshot.IsOcrMode;
+		IsSearchBarOpen = snapshot.IsSearchBarOpen;
+		SearchTerm = snapshot.SearchTerm;
+		IsSearchResult = true;
+		SelectedEntry = null;
+		Entries = snapshot.Entries;
+
+		OnPropertyChanged(nameof(SearchPlaceholder));
+		return true;
+	}
+
 	public async Task LoadEntriesAsync()
 	{
 		CancelOcr();
@@ -221,9 +265,10 @@ public partial class FileBrowserViewModel : ViewModelBase
 		_activeSearchTerm = string.Empty;
 		_activeSearchIsOcr = false;
 
+		Entries = [];
+
 		if (string.Equals(_navigation.CurrentPath, NavigationService.HomePath, StringComparison.OrdinalIgnoreCase))
 		{
-			Entries = [];
 			IsLoading = false;
 			return;
 		}
@@ -232,8 +277,8 @@ public partial class FileBrowserViewModel : ViewModelBase
 
 		try
 		{
-			Entries = new ObservableCollection<FileSystemEntry>(
-				await FileSystemService.ListEntriesAsync(_navigation.CurrentPath));
+			var loaded = await FileSystemService.ListEntriesAsync(_navigation.CurrentPath);
+			Entries = new ObservableCollection<FileSystemEntry>(loaded);
 		}
 		catch (UnauthorizedAccessException ex)
 		{
@@ -249,7 +294,6 @@ public partial class FileBrowserViewModel : ViewModelBase
 		}
 		finally
 		{
-			await Task.Delay(300);
 			IsLoading = false;
 		}
 	}
@@ -260,6 +304,7 @@ public partial class FileBrowserViewModel : ViewModelBase
 		CancelOcr();
 		IsOcrMode = false;
 		SearchTerm = string.Empty;
+		_searchSnapshots.Remove(_navigation.CurrentPath);
 
 		if (IsSearchResult)
 			await LoadEntriesAsync();
@@ -345,7 +390,6 @@ public partial class FileBrowserViewModel : ViewModelBase
 		}
 		finally
 		{
-			await Task.Delay(300);
 			IsLoading = false;
 		}
 	}
@@ -531,4 +575,10 @@ public partial class FileBrowserViewModel : ViewModelBase
 	{
 		Entries.Remove(entry);
 	}
+
+	private sealed record SearchSnapshot(
+		string SearchTerm,
+		bool IsOcrMode,
+		bool IsSearchBarOpen,
+		ObservableCollection<FileSystemEntry> Entries);
 }

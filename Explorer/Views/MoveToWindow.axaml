@@ -1,0 +1,234 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:Explorer.ViewModels"
+        xmlns:models="using:Explorer.Models"
+        mc:Ignorable="d"
+        x:Name="RootWindow"
+        x:Class="Explorer.Views.MoveToWindow"
+        x:DataType="vm:MoveToViewModel"
+        Icon="/Assets/Logo.ico"
+        WindowDecorations="None"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaTitleBarHeightHint="0"
+        Background="Transparent"
+        TransparencyLevelHint="Transparent"
+        CanResize="False"
+        ShowInTaskbar="False"
+        WindowStartupLocation="Manual"
+        UseLayoutRounding="True"
+        Width="900"
+        Height="650">
+
+	<Window.Styles>
+		<Style Selector="TextBlock.SidebarSectionTitle">
+			<Setter Property="FontSize" Value="11" />
+			<Setter Property="Foreground" Value="{StaticResource ForegroundMuted}" />
+			<Setter Property="Margin" Value="6,0,0,0" />
+		</Style>
+
+		<Style Selector="Button.SidebarItem">
+			<Setter Property="Background" Value="Transparent" />
+			<Setter Property="BorderThickness" Value="0" />
+			<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+			<Setter Property="HorizontalAlignment" Value="Stretch" />
+			<Setter Property="Padding" Value="6,5" />
+			<Setter Property="CornerRadius" Value="4" />
+			<Setter Property="Cursor" Value="Hand" />
+		</Style>
+
+		<Style Selector="Button.SidebarItem:pointerover /template/ ContentPresenter">
+			<Setter Property="Background" Value="{StaticResource AccentSelection}" />
+		</Style>
+
+		<Style Selector="ListBox#DirectoriesList ListBoxItem">
+			<Setter Property="Padding" Value="8,6" />
+			<Setter Property="CornerRadius" Value="4" />
+			<Setter Property="Cursor" Value="Hand" />
+		</Style>
+
+		<Style Selector="Button.ghost:disabled Svg">
+			<Setter Property="Css" Value="* { opacity: 0.35 }" />
+		</Style>
+	</Window.Styles>
+
+	<Grid>
+		<Border Margin="1"
+		        Background="{StaticResource OverlayDim}"
+		        CornerRadius="10"
+		        PointerPressed="OnOverlayPointerPressed" />
+
+		<Border Width="640"
+		        Height="460"
+		        HorizontalAlignment="Center"
+		        VerticalAlignment="Center"
+		        Background="{StaticResource BackgroundDefault}"
+		        BorderBrush="{StaticResource BorderDefault}"
+		        BorderThickness="1"
+		        CornerRadius="10"
+		        ClipToBounds="True">
+
+		<Grid RowDefinitions="Auto,Auto,*,Auto">
+
+			<Border Grid.Row="0"
+			        Background="{StaticResource SurfaceElevated}"
+			        BorderBrush="{StaticResource BorderDefault}"
+			        BorderThickness="0,0,0,1"
+			        CornerRadius="10,10,0,0"
+			        Padding="15,12">
+				<Grid ColumnDefinitions="*,Auto">
+					<TextBlock Grid.Column="0"
+					           Text="{Binding Title}"
+					           FontSize="14"
+					           VerticalAlignment="Center"
+					           Foreground="{StaticResource ColorWhiteBrush}" />
+
+					<Button Grid.Column="1"
+					        Classes="ghost"
+					        Command="{Binding CancelCommand}"
+					        Padding="4">
+						<Svg Path="/Assets/Icons/Close.svg" Width="12" Height="12" Css="path { fill: white }" />
+					</Button>
+				</Grid>
+			</Border>
+
+			<Border Grid.Row="1"
+			        Padding="15,10"
+			        BorderBrush="{StaticResource BorderDefault}"
+			        BorderThickness="0,0,0,1">
+				<Grid ColumnDefinitions="Auto,Auto,*">
+					<Button Grid.Column="0"
+					        Classes="ghost"
+					        Command="{Binding GoBackCommand}"
+					        Margin="0,0,4,0"
+					        Padding="6">
+						<Svg Path="/Assets/Icons/Left.svg" Width="14" Height="14" Css="path { stroke: white }" />
+					</Button>
+
+					<Button Grid.Column="1"
+					        Classes="ghost"
+					        Command="{Binding GoUpCommand}"
+					        Margin="0,0,8,0"
+					        Padding="6">
+						<Svg Path="/Assets/Icons/Top.svg" Width="14" Height="14" Css="path { stroke: white }" />
+					</Button>
+
+					<Border Grid.Column="2"
+					        Background="{StaticResource TextBoxBackground}"
+					        CornerRadius="3"
+					        Padding="12,6">
+						<TextBlock Text="{Binding CurrentPath}"
+						           FontSize="12"
+						           Foreground="{StaticResource ForegroundPrimary}"
+						           TextTrimming="CharacterEllipsis"
+						           TextWrapping="NoWrap" />
+					</Border>
+				</Grid>
+			</Border>
+
+			<Grid Grid.Row="2" ColumnDefinitions="160,1,*">
+
+				<ScrollViewer Grid.Column="0"
+				              VerticalScrollBarVisibility="Hidden"
+				              HorizontalScrollBarVisibility="Disabled">
+					<StackPanel Margin="10,12" Spacing="14">
+
+						<StackPanel Spacing="6" IsVisible="{Binding Drives.Count}">
+							<TextBlock Classes="SidebarSectionTitle" Text="LECTEURS" />
+
+							<ItemsControl ItemsSource="{Binding Drives}">
+								<ItemsControl.ItemsPanel>
+									<ItemsPanelTemplate>
+										<StackPanel Orientation="Vertical" Spacing="2" />
+									</ItemsPanelTemplate>
+								</ItemsControl.ItemsPanel>
+								<ItemsControl.ItemTemplate>
+									<DataTemplate x:DataType="models:DriveItem">
+										<Button Classes="SidebarItem"
+										        Command="{Binding #RootWindow.DataContext.NavigateToCommand}"
+										        CommandParameter="{Binding FullPath}"
+										        x:CompileBindings="False">
+											<StackPanel Orientation="Horizontal" Spacing="8">
+												<Svg Path="/Assets/Icons/Drive.svg" Width="14" Height="14" />
+												<TextBlock Text="{Binding DisplayName}" FontSize="12"
+												           TextTrimming="CharacterEllipsis" />
+											</StackPanel>
+										</Button>
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
+						</StackPanel>
+
+						<StackPanel Spacing="6" IsVisible="{Binding CloudStorage.Count}">
+							<TextBlock Classes="SidebarSectionTitle" Text="CLOUD" />
+
+							<ItemsControl ItemsSource="{Binding CloudStorage}">
+								<ItemsControl.ItemsPanel>
+									<ItemsPanelTemplate>
+										<StackPanel Orientation="Vertical" Spacing="2" />
+									</ItemsPanelTemplate>
+								</ItemsControl.ItemsPanel>
+								<ItemsControl.ItemTemplate>
+									<DataTemplate x:DataType="models:DriveItem">
+										<Button Classes="SidebarItem"
+										        Command="{Binding #RootWindow.DataContext.NavigateToCommand}"
+										        CommandParameter="{Binding FullPath}"
+										        x:CompileBindings="False">
+											<StackPanel Orientation="Horizontal" Spacing="8">
+												<Svg Path="/Assets/Icons/Cloud.svg" Width="14" Height="14" />
+												<TextBlock Text="{Binding DisplayName}" FontSize="12"
+												           TextTrimming="CharacterEllipsis" />
+											</StackPanel>
+										</Button>
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
+						</StackPanel>
+
+					</StackPanel>
+				</ScrollViewer>
+
+				<Border Grid.Column="1" Background="{StaticResource BorderDefault}" />
+
+				<Grid Grid.Column="2">
+					<ListBox x:Name="DirectoriesList"
+					         ItemsSource="{Binding Directories}"
+					         Background="Transparent"
+					         BorderThickness="0"
+					         Padding="10"
+					         DoubleTapped="OnDirectoryDoubleTapped"
+					         IsVisible="{Binding Directories.Count}">
+						<ListBox.ItemTemplate>
+							<DataTemplate x:DataType="models:FileSystemEntry">
+								<StackPanel Orientation="Horizontal" Spacing="8">
+									<Svg Path="/Assets/Icons/Directory.svg" Width="16" Height="18"
+									     Css="path { fill: #00AAFF; stroke: #00AAFF }" />
+									<TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontSize="13" />
+								</StackPanel>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+
+					<TextBlock Text="Aucun sous-dossier"
+					           HorizontalAlignment="Center"
+					           VerticalAlignment="Center"
+					           Foreground="{StaticResource ForegroundMuted}"
+					           IsVisible="{Binding !Directories.Count}" />
+				</Grid>
+			</Grid>
+
+			<Border Grid.Row="3"
+			        Padding="15,12"
+			        BorderBrush="{StaticResource BorderDefault}"
+			        BorderThickness="0,1,0,0">
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+					<Button Content="Annuler" Command="{Binding CancelCommand}" />
+					<Button Content="Déplacer ici" Command="{Binding ConfirmCommand}" />
+				</StackPanel>
+			</Border>
+
+		</Grid>
+		</Border>
+	</Grid>
+</Window>

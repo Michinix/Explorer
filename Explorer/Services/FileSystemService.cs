@@ -63,6 +63,24 @@ public static class FileSystemService
 		});
 	}
 
+	public static Task<FileSystemEntry[]> ListDirectoriesAsync(string path)
+	{
+		return Task.Run(() =>
+		{
+			var options = new EnumerationOptions
+			{
+				IgnoreInaccessible = true,
+				AttributesToSkip = FileAttributes.Hidden | FileAttributes.System
+			};
+
+			return new DirectoryInfo(path)
+				.EnumerateDirectories("*", options)
+				.OrderBy(d => d.Name, StringComparer.OrdinalIgnoreCase)
+				.Select(MapToEntry)
+				.ToArray();
+		});
+	}
+
 	public static Task<FileSystemEntry[]> ListEntriesAsync(string path)
 	{
 		return Task.Run(() =>
@@ -191,6 +209,26 @@ public static class FileSystemService
 				Directory.Move(entry.FullPath, destination);
 			else
 				File.Move(entry.FullPath, destination);
+		});
+	}
+
+	public static Task MoveEntriesAsync(IEnumerable<FileSystemEntry> entries, string destinationFolder)
+	{
+		return Task.Run(() =>
+		{
+			foreach (var entry in entries)
+			{
+				if (string.Equals(Path.GetDirectoryName(entry.FullPath), destinationFolder,
+					    StringComparison.OrdinalIgnoreCase))
+					continue;
+
+				var destination = Path.Combine(destinationFolder, entry.Name);
+
+				if (entry.IsDirectory)
+					Directory.Move(entry.FullPath, destination);
+				else
+					File.Move(entry.FullPath, destination);
+			}
 		});
 	}
 

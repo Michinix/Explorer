@@ -21,6 +21,7 @@ public partial class FileSystemEntry(
 
 	[ObservableProperty]
 	[NotifyPropertyChangedFor(nameof(ClipboardOpacity))]
+	[NotifyPropertyChangedFor(nameof(EffectiveOpacity))]
 	[NotifyPropertyChangedFor(nameof(IsClipboardStaged))]
 	[NotifyPropertyChangedFor(nameof(ClipboardIconPath))]
 	[NotifyPropertyChangedFor(nameof(ClipboardIconCss))]
@@ -28,6 +29,7 @@ public partial class FileSystemEntry(
 
 	[ObservableProperty]
 	[NotifyPropertyChangedFor(nameof(ClipboardOpacity))]
+	[NotifyPropertyChangedFor(nameof(EffectiveOpacity))]
 	[NotifyPropertyChangedFor(nameof(IsClipboardStaged))]
 	[NotifyPropertyChangedFor(nameof(ClipboardIconPath))]
 	[NotifyPropertyChangedFor(nameof(ClipboardIconCss))]
@@ -37,6 +39,9 @@ public partial class FileSystemEntry(
 	[ObservableProperty] private bool _isNew;
 	[ObservableProperty] private bool _isPinned;
 	[ObservableProperty] private bool _isSelected;
+
+	[ObservableProperty] [NotifyPropertyChangedFor(nameof(EffectiveOpacity))]
+	private bool _hasAppeared = true;
 
 	[ObservableProperty] [NotifyPropertyChangedFor(nameof(HasOcrSnippet))]
 	private string? _ocrSnippet;
@@ -60,6 +65,7 @@ public partial class FileSystemEntry(
 
 	public bool IsClipboardStaged => IsCut || IsCopied;
 	public double ClipboardOpacity => IsCut ? 0.4 : 1;
+	public double EffectiveOpacity => HasAppeared ? ClipboardOpacity : 0;
 	public string ClipboardIconPath => IsCut ? "/Assets/Icons/Cut.svg" : "/Assets/Icons/Copy.svg";
 	public string ClipboardIconCss => IsCut ? "path { fill: #F5A623 }" : "path { fill: #00AAFF }";
 

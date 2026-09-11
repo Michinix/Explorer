@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Explorer.Models;
 using Explorer.Services;
 
@@ -24,6 +26,7 @@ public partial class FileOperationsViewModel(
 		RenameCommand.NotifyCanExecuteChanged();
 		CopyCommand.NotifyCanExecuteChanged();
 		CutCommand.NotifyCanExecuteChanged();
+		MoveToCommand.NotifyCanExecuteChanged();
 		DeleteSelectedCommand.NotifyCanExecuteChanged();
 	}
 
@@ -126,6 +129,28 @@ public partial class FileOperationsViewModel(
 		try
 		{
 			await Clipboard.PasteAsync(navigation.CurrentPath);
+			await fileBrowser.LoadEntriesAsync();
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine(ex.Message);
+		}
+	}
+
+	[RelayCommand(CanExecute = nameof(CanModifySelection))]
+	private void MoveTo()
+	{
+		var targets = fileBrowser.SelectionTargets;
+		if (targets.Count == 0) return;
+
+		WeakReferenceMessenger.Default.Send(new MoveRequestedMessage(targets, navigation.CurrentPath));
+	}
+
+	public async Task MoveEntriesAsync(IReadOnlyList<FileSystemEntry> entries, string destination)
+	{
+		try
+		{
+			await FileSystemService.MoveEntriesAsync(entries, destination);
 			await fileBrowser.LoadEntriesAsync();
 		}
 		catch (Exception ex)

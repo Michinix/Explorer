@@ -10,7 +10,7 @@
              x:Class="Explorer.Views.HomeView"
              x:DataType="vm:HomeViewModel">
 
-	<Grid RowDefinitions="Auto, *, Auto">
+	<Grid RowDefinitions="Auto, *, Auto" PointerPressed="OnPointerPressed">
 
 		<StackPanel Grid.Row="0">
 			<primitives:Chrome Height="40" />

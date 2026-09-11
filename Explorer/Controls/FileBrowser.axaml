@@ -69,11 +69,11 @@
 			<Setter Property="Background" Value="{StaticResource AccentSelection}" />
 		</Style>
 
-		<Style Selector="ListBox.Tiles ListBoxItem:selected /template/ ContentPresenter">
+		<Style Selector="ListBox.Tiles ListBoxItem.selected /template/ ContentPresenter">
 			<Setter Property="Background" Value="{StaticResource AccentSelection}" />
 		</Style>
 
-		<Style Selector="ListBox.Tiles ListBoxItem:selected TextBlock">
+		<Style Selector="ListBox.Tiles ListBoxItem.selected TextBlock">
 			<Setter Property="Foreground" Value="{StaticResource AccentPrimary}" />
 		</Style>
 
@@ -85,14 +85,16 @@
 			<Setter Property="TextTrimming" Value="CharacterEllipsis" />
 		</Style>
 
-		<Style Selector="Border.LoadingOverlay">
-			<Setter Property="Background" Value="#80000000" />
-			<Setter Property="HorizontalAlignment" Value="Stretch" />
-			<Setter Property="VerticalAlignment" Value="Stretch" />
-		</Style>
-
 		<Style Selector="DataGridRow" x:DataType="models:FileSystemEntry">
-			<Setter Property="Opacity" Value="{Binding ClipboardOpacity}" />
+			<Setter Property="Opacity" Value="{Binding EffectiveOpacity}" />
+			<Setter Property="RenderTransform" Value="translateY(6px)" />
+			<Setter Property="Classes.entered" Value="{Binding HasAppeared}" />
+			<Setter Property="Transitions">
+				<Transitions>
+					<DoubleTransition Property="Opacity" Duration="0:0:0.28" Easing="CubicEaseOut" />
+					<TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.28" Easing="CubicEaseOut" />
+				</Transitions>
+			</Setter>
 			<Setter Property="ContextMenu">
 				<ContextMenu>
 					<primitives:ActionMenuItem Text="Épingler ce dossier"
@@ -116,6 +118,9 @@
 					                           IconPath="/Assets/Icons/Paste.svg"
 					                           Command="{Binding ((vm:FileBrowserViewModel)DataContext)?.FileOps.PasteCommand, ElementName=FileBrowserControl}"
 					                           IsEnabled="{Binding ((vm:FileBrowserViewModel)DataContext).FileOps.Clipboard.CanPaste, ElementName=FileBrowserControl}" />
+					<primitives:ActionMenuItem Text="Déplacer vers..."
+					                           IconPath="/Assets/Icons/Move.svg"
+					                           Command="{Binding ((vm:FileBrowserViewModel)DataContext)?.FileOps.MoveToCommand, ElementName=FileBrowserControl}" />
 					<primitives:ActionMenuItem Text="Renommer"
 					                           IconPath="/Assets/Icons/Rename.svg"
 					                           Command="{Binding ((vm:FileBrowserViewModel)DataContext)?.FileOps.RenameCommand, ElementName=FileBrowserControl}" />
@@ -125,6 +130,10 @@
 					                           Command="{Binding ((vm:FileBrowserViewModel)DataContext)?.FileOps.DeleteSelectedCommand, ElementName=FileBrowserControl}" />
 				</ContextMenu>
 			</Setter>
+		</Style>
+
+		<Style Selector="DataGridRow.entered">
+			<Setter Property="RenderTransform" Value="translateY(0)" />
 		</Style>
 	</UserControl.Styles>
 
@@ -260,11 +269,29 @@
 		         x:Name="TilesListBox"
 		         ItemsSource="{Binding Entries}"
 		         SelectedItem="{Binding SelectedEntry}"
-		         SelectionMode="Single"
+		         SelectionMode="Multiple"
 		         DoubleTapped="OnTileDoubleTapped"
 		         IsVisible="{Binding IsGridView}"
 		         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 		         ScrollViewer.VerticalScrollBarVisibility="Hidden">
+
+			<ListBox.Styles>
+				<Style Selector="ListBoxItem" x:DataType="models:FileSystemEntry">
+					<Setter Property="Classes.selected" Value="{Binding IsSelected}" />
+					<Setter Property="Classes.entered" Value="{Binding HasAppeared}" />
+					<Setter Property="RenderTransform" Value="translateY(6px)" />
+					<Setter Property="Transitions">
+						<Transitions>
+							<TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.28"
+							                               Easing="CubicEaseOut" />
+						</Transitions>
+					</Setter>
+				</Style>
+
+				<Style Selector="ListBoxItem.entered">
+					<Setter Property="RenderTransform" Value="translateY(0)" />
+				</Style>
+			</ListBox.Styles>
 
 			<ListBox.ItemsPanel>
 				<ItemsPanelTemplate>
@@ -274,8 +301,15 @@
 
 			<ListBox.ItemTemplate>
 				<DataTemplate x:DataType="models:FileSystemEntry">
-					<Border Background="Transparent" Padding="8" ContextRequested="OnEntryContextRequested"
-					        Opacity="{Binding ClipboardOpacity}">
+					<Border Background="Transparent" Padding="8"
+					        ContextRequested="OnEntryContextRequested"
+					        PointerPressed="OnTilePointerPressed"
+					        Opacity="{Binding EffectiveOpacity}">
+						<Border.Transitions>
+							<Transitions>
+								<DoubleTransition Property="Opacity" Duration="0:0:0.28" Easing="CubicEaseOut" />
+							</Transitions>
+						</Border.Transitions>
 						<Border.ContextMenu>
 							<ContextMenu>
 								<primitives:ActionMenuItem Text="Épingler ce dossier"
@@ -360,11 +394,16 @@
 			<TextBlock Text="Aucune correspondance trouvée" />
 		</StackPanel>
 
-		<Border Classes="LoadingOverlay" IsVisible="{Binding IsLoading}">
-			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
-				<ProgressBar IsIndeterminate="True" Width="120" />
-				<TextBlock Text="Chargement..." Foreground="{StaticResource ColorWhite}" HorizontalAlignment="Center" />
-			</StackPanel>
-		</Border>
+		<ProgressBar IsIndeterminate="True"
+		             IsVisible="{Binding IsLoading}"
+		             IsHitTestVisible="False"
+		             VerticalAlignment="Top"
+		             HorizontalAlignment="Stretch"
+		             Height="2"
+		             Margin="0"
+		             Padding="0"
+		             BorderThickness="0"
+		             Background="Transparent"
+		             Foreground="{StaticResource AccentPrimary}" />
 	</Grid>
 </UserControl>

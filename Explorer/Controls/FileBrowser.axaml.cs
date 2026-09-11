@@ -1,13 +1,16 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.VisualTree;
+using CommunityToolkit.Mvvm.Messaging;
 using Explorer.Models;
 using Explorer.ViewModels;
+using Explorer.Views;
 
 namespace Explorer.Controls;
 
@@ -18,6 +21,29 @@ public partial class FileBrowser : UserControl
 	public FileBrowser()
 	{
 		InitializeComponent();
+
+		WeakReferenceMessenger.Default.Register<MoveRequestedMessage>(this,
+			(_, message) => _ = ShowMoveToDialogAsync(message));
+	}
+
+	private async Task ShowMoveToDialogAsync(MoveRequestedMessage message)
+	{
+		if (DataContext is not FileBrowserViewModel vm) return;
+		if (TopLevel.GetTopLevel(this) is not Window owner) return;
+
+		var moveToViewModel = new MoveToViewModel(message.Entries, message.SourcePath);
+		var window = new MoveToWindow
+		{
+			DataContext = moveToViewModel,
+			Position = owner.Position,
+			Width = owner.Bounds.Width,
+			Height = owner.Bounds.Height
+		};
+
+		var destination = await window.ShowDialog<string?>(owner);
+
+		if (!string.IsNullOrEmpty(destination))
+			await vm.FileOps.MoveEntriesAsync(message.Entries, destination);
 	}
 
 	protected override void OnDataContextChanged(EventArgs e)
@@ -79,6 +105,33 @@ public partial class FileBrowser : UserControl
 
 		if (DataContext is FileBrowserViewModel vm)
 			vm.EntryDoubleClickedCommand.Execute(null);
+	}
+
+	private void OnTilePointerPressed(object? sender, PointerPressedEventArgs e)
+	{
+		if (sender is not Control { DataContext: FileSystemEntry entry } control) return;
+		if (DataContext is not FileBrowserViewModel vm) return;
+
+		if (!e.GetCurrentPoint(control).Properties.IsLeftButtonPressed) return;
+
+		var isMultiSelect = OperatingSystem.IsMacOS()
+			? e.KeyModifiers.HasFlag(KeyModifiers.Meta)
+			: e.KeyModifiers.HasFlag(KeyModifiers.Control);
+
+		if (isMultiSelect)
+		{
+			entry.IsSelected = !entry.IsSelected;
+		}
+		else
+		{
+			foreach (var other in vm.Entries)
+				other.IsSelected = false;
+
+			entry.IsSelected = true;
+		}
+
+		vm.SelectedEntry = entry;
+		e.Handled = true;
 	}
 
 	private void OnDataGridLoadingRow(object? sender, DataGridRowEventArgs e)
