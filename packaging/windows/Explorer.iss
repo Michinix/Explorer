@@ -16,10 +16,10 @@
 #define AppName "Explorer"
 #define AppPublisher "Michinix"
 #define AppExeName "Explorer.exe"
-#define AppId "{276E4906-1EE7-4711-9F6F-288BBEE10CE6}"
+#define AppId "276E4906-1EE7-4711-9F6F-288BBEE10CE6"
 
 [Setup]
-AppId={#AppId}
+AppId={{#AppId}
 AppName={#AppName}
 AppVersion={#AppVersion}
 AppPublisher={#AppPublisher}
