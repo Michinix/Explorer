@@ -44,6 +44,10 @@ jobs:
             $version = "0.0.0"
           }
 
+          if ($version -notmatch '^\d+\.\d+\.\d+(\.\d+)?(-[0-9A-Za-z.-]+)?$') {
+            throw "Version invalide : '$version' (format attendu : x.y.z, ex. tag 'v1.1.0')"
+          }
+
           Write-Host "Version : $version"
           "version=$version" >> $env:GITHUB_OUTPUT
 
