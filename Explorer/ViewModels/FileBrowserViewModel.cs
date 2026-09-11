@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Threading;
@@ -67,6 +68,8 @@ public partial class FileBrowserViewModel : ViewModelBase
 
 	[ObservableProperty] private string _searchTerm = string.Empty;
 	[ObservableProperty] private FileSystemEntry? _selectedEntry;
+
+	public string AppVersion { get; } = BuildAppVersionText();
 
 	public FileBrowserViewModel(NavigationService navigation, SettingsService settings, OcrService ocr,
 		ClipboardService clipboard)
@@ -155,6 +158,18 @@ public partial class FileBrowserViewModel : ViewModelBase
 	public bool HasSelectionTargets => SelectionTargets.Count > 0;
 
 	public bool CanOpenInVsCode => ExternalToolsService.IsVsCodeAvailable;
+
+	private static string BuildAppVersionText()
+	{
+		var version = Assembly.GetEntryAssembly()?
+			.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
+			.InformationalVersion;
+
+		if (string.IsNullOrWhiteSpace(version))
+			return "Explorer";
+
+		return $"Explorer v{version}";
+	}
 
 	private void UpdatePinnedStates()
 	{

@@ -1,0 +1,105 @@
+name: Release Windows
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version à builder (ex: 1.2.3) — utilisée uniquement en déclenchement manuel"
+        required: false
+        default: "0.0.0"
+
+permissions:
+  contents: write
+
+env:
+  PROJECT_PATH: Explorer/Explorer.csproj
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Résoudre la version
+        id: version
+        shell: pwsh
+        run: |
+          if ($env:GITHUB_REF -like "refs/tags/v*") {
+            $version = $env:GITHUB_REF -replace '^refs/tags/v', ''
+          }
+          else {
+            $version = "${{ inputs.version }}"
+          }
+
+          if ([string]::IsNullOrWhiteSpace($version)) {
+            $version = "0.0.0"
+          }
+
+          Write-Host "Version : $version"
+          "version=$version" >> $env:GITHUB_OUTPUT
+
+      - name: Publier l'application (win-x64, self-contained)
+        shell: pwsh
+        run: |
+          dotnet publish "${{ env.PROJECT_PATH }}" -c Release -r win-x64 --self-contained true `
+            -p:Version="${{ steps.version.outputs.version }}" `
+            -o publish
+
+      - name: Compiler l'installateur (Inno Setup)
+        shell: pwsh
+        run: |
+          $iscc = "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) { throw "ISCC.exe introuvable ($iscc) — Inno Setup n'est pas installé sur ce runner." }
+
+          $publishPath = (Resolve-Path "publish").Path
+          $distPath = Join-Path (Get-Location) "dist"
+          New-Item -ItemType Directory -Force -Path $distPath | Out-Null
+
+          & $iscc "packaging\windows\Explorer.iss" `
+            "/DAppVersion=${{ steps.version.outputs.version }}" `
+            "/DSourceDir=$publishPath" `
+            "/DOutputDir=$distPath"
+
+          if ($LASTEXITCODE -ne 0) { throw "Échec de la compilation de l'installateur" }
+
+      - name: Créer l'archive portable (sans installateur)
+        shell: pwsh
+        run: Compress-Archive -Path publish\* -DestinationPath dist\Explorer-win-x64-portable.zip -Force
+
+      - name: Publier la Release GitHub
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = "${{ github.ref_name }}"
+          $assets = @("dist\ExplorerSetup.exe", "dist\Explorer-win-x64-portable.zip")
+
+          gh release view $tag *> $null
+          if ($LASTEXITCODE -eq 0) {
+            gh release upload $tag @assets --clobber
+          }
+          else {
+            gh release create $tag @assets --title "Explorer $tag" --generate-notes
+          }
+
+          if ($LASTEXITCODE -ne 0) { throw "Échec de la publication de la release GitHub" }
+
+      - name: Publier les artefacts (déclenchement manuel)
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Explorer-windows-${{ steps.version.outputs.version }}
+          path: |
+            dist/ExplorerSetup.exe
+            dist/Explorer-win-x64-portable.zip
+          if-no-files-found: error
