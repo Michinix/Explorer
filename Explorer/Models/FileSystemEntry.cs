@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Explorer.Models;
@@ -48,6 +49,9 @@ public partial class FileSystemEntry(
 
 	[ObservableProperty] private string? _relativeFolder;
 
+	[ObservableProperty] [NotifyPropertyChangedFor(nameof(HasPreviewThumbnail))]
+	private Bitmap? _previewThumbnail;
+
 	public string Name { get; } = name;
 	public string FullPath { get; } = fullPath;
 	public string Type { get; } = type;
@@ -60,6 +64,10 @@ public partial class FileSystemEntry(
 	public string TypeLabel => IsDirectory ? "DOSSIER" : Type;
 	public bool IsImage => !IsDirectory && ImageTypes.Contains(Type);
 	public bool HasOcrSnippet => !string.IsNullOrEmpty(OcrSnippet);
+	public bool HasPreviewThumbnail => PreviewThumbnail is not null;
+
+	public static bool IsImageExtension(string extension) =>
+		ImageTypes.Contains(extension.TrimStart('.'));
 	public bool ShowPinAction => IsDirectory && !IsPinned;
 	public bool ShowUnpinAction => IsDirectory && IsPinned;
 

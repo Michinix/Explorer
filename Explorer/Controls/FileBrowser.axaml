@@ -271,6 +271,9 @@
 		         SelectedItem="{Binding SelectedEntry}"
 		         SelectionMode="Multiple"
 		         DoubleTapped="OnTileDoubleTapped"
+		         PointerPressed="OnTilesBackgroundPointerPressed"
+		         PointerMoved="OnTilesPointerMoved"
+		         PointerReleased="OnTilesPointerReleased"
 		         IsVisible="{Binding IsGridView}"
 		         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 		         ScrollViewer.VerticalScrollBarVisibility="Hidden">
@@ -390,6 +393,15 @@
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
+
+		<Canvas IsHitTestVisible="False" IsVisible="{Binding IsGridView}">
+			<Border x:Name="SelectionBox"
+			        IsVisible="False"
+			        Background="#4D00AAFF"
+			        BorderBrush="#8000AAFF"
+			        BorderThickness="1"
+			        CornerRadius="2" />
+		</Canvas>
 
 		<StackPanel Classes="EmptyState" IsVisible="{Binding NoResultsFound}">
 			<Svg Path="/Assets/Icons/Search.svg" Width="20" Height="20" Css="path { stroke: white }, circle { stroke: white }"

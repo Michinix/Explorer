@@ -48,6 +48,10 @@
 			<Setter Property="Cursor" Value="Hand" />
 		</Style>
 
+		<Style Selector="ListBox#DirectoriesList ListBoxItem:selected /template/ ContentPresenter">
+			<Setter Property="Background" Value="{StaticResource AccentSelection}" />
+		</Style>
+
 		<Style Selector="Button.ghost:disabled Svg">
 			<Setter Property="Css" Value="* { opacity: 0.35 }" />
 		</Style>
@@ -194,6 +198,7 @@
 				<Grid Grid.Column="2">
 					<ListBox x:Name="DirectoriesList"
 					         ItemsSource="{Binding Directories}"
+					         SelectedItem="{Binding SelectedEntry}"
 					         Background="Transparent"
 					         BorderThickness="0"
 					         Padding="10"
@@ -202,8 +207,15 @@
 						<ListBox.ItemTemplate>
 							<DataTemplate x:DataType="models:FileSystemEntry">
 								<StackPanel Orientation="Horizontal" Spacing="8">
-									<Svg Path="/Assets/Icons/Directory.svg" Width="16" Height="18"
-									     Css="path { fill: #00AAFF; stroke: #00AAFF }" />
+									<Panel Width="18" Height="18">
+										<Svg Path="/Assets/Icons/Directory.svg" Width="16" Height="18"
+										     IsVisible="{Binding !HasPreviewThumbnail}"
+										     Css="path { fill: #00AAFF; stroke: #00AAFF }" />
+										<Image Source="{Binding PreviewThumbnail}"
+										       IsVisible="{Binding HasPreviewThumbnail}"
+										       Width="18" Height="18"
+										       Stretch="UniformToFill" />
+									</Panel>
 									<TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontSize="13" />
 								</StackPanel>
 							</DataTemplate>
@@ -224,7 +236,7 @@
 			        BorderThickness="0,1,0,0">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
 					<Button Content="Annuler" Command="{Binding CancelCommand}" />
-					<Button Content="Déplacer ici" Command="{Binding ConfirmCommand}" />
+					<Button Content="{Binding ConfirmLabel}" Command="{Binding ConfirmCommand}" />
 				</StackPanel>
 			</Border>
 

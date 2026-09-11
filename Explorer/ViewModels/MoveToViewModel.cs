@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Explorer.Models;
@@ -20,7 +21,13 @@ public partial class MoveToViewModel : ViewModelBase
 
 	[ObservableProperty]
 	[NotifyCanExecuteChangedFor(nameof(ConfirmCommand), nameof(GoUpCommand))]
+	[NotifyPropertyChangedFor(nameof(Destination))]
 	private string _currentPath;
+
+	[ObservableProperty]
+	[NotifyCanExecuteChangedFor(nameof(ConfirmCommand))]
+	[NotifyPropertyChangedFor(nameof(Destination), nameof(ConfirmLabel))]
+	private FileSystemEntry? _selectedEntry;
 
 	[ObservableProperty] private ObservableCollection<FileSystemEntry> _directories = [];
 	[ObservableProperty] private ICollection<DriveItem> _cloudStorage = [];
@@ -50,7 +57,13 @@ public partial class MoveToViewModel : ViewModelBase
 		? $"Déplacer « {_entries[0].Name} »"
 		: $"Déplacer {_entries.Count} éléments";
 
-	public bool CanConfirm => !string.IsNullOrEmpty(CurrentPath) && !IsBlockedDestination(CurrentPath);
+	public string Destination => SelectedEntry?.FullPath ?? CurrentPath;
+
+	public string ConfirmLabel => SelectedEntry is not null
+		? $"Déplacer dans « {SelectedEntry.Name} »"
+		: "Déplacer ici";
+
+	public bool CanConfirm => !string.IsNullOrEmpty(Destination) && !IsBlockedDestination(Destination);
 
 	public bool CanGoBack => _backStack.Count > 0;
 
@@ -95,6 +108,7 @@ public partial class MoveToViewModel : ViewModelBase
 
 	partial void OnCurrentPathChanged(string value)
 	{
+		SelectedEntry = null;
 		_ = LoadDirectoriesAsync();
 	}
 
@@ -107,7 +121,11 @@ public partial class MoveToViewModel : ViewModelBase
 		{
 			var result = await FileSystemService.ListDirectoriesAsync(path);
 			if (path == CurrentPath)
+			{
 				Directories = new ObservableCollection<FileSystemEntry>(result);
+				foreach (var directory in result)
+					_ = LoadPreviewThumbnailAsync(directory, path);
+			}
 		}
 		catch (Exception ex)
 		{
@@ -119,6 +137,22 @@ public partial class MoveToViewModel : ViewModelBase
 		{
 			if (path == CurrentPath)
 				IsLoading = false;
+		}
+	}
+
+	private async Task LoadPreviewThumbnailAsync(FileSystemEntry directory, string requestedForPath)
+	{
+		var imagePath = await FileSystemService.FindFirstImageAsync(directory.FullPath);
+		if (imagePath is null || requestedForPath != CurrentPath) return;
+
+		try
+		{
+			await using var stream = File.OpenRead(imagePath);
+			directory.PreviewThumbnail = Bitmap.DecodeToWidth(stream, 40);
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine(ex.Message);
 		}
 	}
 
@@ -172,7 +206,7 @@ public partial class MoveToViewModel : ViewModelBase
 	[RelayCommand(CanExecute = nameof(CanConfirm))]
 	private void Confirm()
 	{
-		Confirmed?.Invoke(this, CurrentPath);
+		Confirmed?.Invoke(this, Destination);
 	}
 
 	[RelayCommand]

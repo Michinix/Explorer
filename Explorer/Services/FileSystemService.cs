@@ -63,6 +63,33 @@ public static class FileSystemService
 		});
 	}
 
+	public static Task<string?> FindFirstImageAsync(string directoryPath)
+	{
+		return Task.Run(() =>
+		{
+			try
+			{
+				var options = new EnumerationOptions
+				{
+					IgnoreInaccessible = true,
+					AttributesToSkip = FileAttributes.Hidden | FileAttributes.System
+				};
+
+				return new DirectoryInfo(directoryPath)
+					.EnumerateFiles("*", options)
+					.Where(f => FileSystemEntry.IsImageExtension(f.Extension))
+					.OrderBy(f => f.Name, StringComparer.OrdinalIgnoreCase)
+					.Select(f => f.FullName)
+					.FirstOrDefault();
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex.Message);
+				return null;
+			}
+		});
+	}
+
 	public static Task<FileSystemEntry[]> ListDirectoriesAsync(string path)
 	{
 		return Task.Run(() =>
