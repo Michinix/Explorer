@@ -80,7 +80,7 @@
 
 				<TextBlock FontSize="11"
 				           VerticalAlignment="Center"
-				           Text="Explorer v1.0.0" />
+				           Text="Explorer v1.1.0" />
 			</StackPanel>
 		</Grid>
 	</Border>
