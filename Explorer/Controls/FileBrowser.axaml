@@ -333,6 +333,9 @@
 								                           IconPath="/Assets/Icons/Paste.svg"
 								                           Command="{Binding ((vm:FileBrowserViewModel)DataContext)?.FileOps.PasteCommand, ElementName=FileBrowserControl}"
 								                           IsEnabled="{Binding ((vm:FileBrowserViewModel)DataContext).FileOps.Clipboard.CanPaste, ElementName=FileBrowserControl}" />
+								<primitives:ActionMenuItem Text="Déplacer vers..."
+								                           IconPath="/Assets/Icons/Move.svg"
+								                           Command="{Binding ((vm:FileBrowserViewModel)DataContext)?.FileOps.MoveToCommand, ElementName=FileBrowserControl}" />
 								<primitives:ActionMenuItem Text="Renommer"
 								                           IconPath="/Assets/Icons/Rename.svg"
 								                           Command="{Binding ((vm:FileBrowserViewModel)DataContext)?.FileOps.RenameCommand, ElementName=FileBrowserControl}" />
