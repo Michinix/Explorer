@@ -55,6 +55,10 @@
 		<Style Selector="Button.ghost:disabled Svg">
 			<Setter Property="Css" Value="* { opacity: 0.35 }" />
 		</Style>
+
+		<Style Selector="Button.NavArrow:pointerover /template/ ContentPresenter, Button.NavArrow:pressed /template/ ContentPresenter">
+			<Setter Property="Background" Value="{StaticResource AccentSelection}" />
+		</Style>
 	</Window.Styles>
 
 	<Grid>
@@ -103,18 +107,18 @@
 			        BorderThickness="0,0,0,1">
 				<Grid ColumnDefinitions="Auto,Auto,*">
 					<Button Grid.Column="0"
-					        Classes="ghost"
+					        Classes="ghost NavArrow"
 					        Command="{Binding GoBackCommand}"
 					        Margin="0,0,4,0"
-					        Padding="6">
+					        Padding="9">
 						<Svg Path="/Assets/Icons/Left.svg" Width="14" Height="14" Css="path { stroke: white }" />
 					</Button>
 
 					<Button Grid.Column="1"
-					        Classes="ghost"
+					        Classes="ghost NavArrow"
 					        Command="{Binding GoUpCommand}"
 					        Margin="0,0,8,0"
-					        Padding="6">
+					        Padding="9">
 						<Svg Path="/Assets/Icons/Top.svg" Width="14" Height="14" Css="path { stroke: white }" />
 					</Button>
 
